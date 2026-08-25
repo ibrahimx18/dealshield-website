@@ -558,7 +558,7 @@ footer { background: var(--bg-2); border-top:1px solid var(--border); padding: 6
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
 const API = 'http://15.204.248.160:8000';
-const BOT = 'http://15.204.248.160:5000';
+const BOT = '/api';  // Vercel serverless proxy → bot on :5000
 let token = localStorage.getItem('safepay_token');
 let userName = localStorage.getItem('safepay_name');
 let currentFilter = 'all';
