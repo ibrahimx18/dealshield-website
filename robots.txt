@@ -1,0 +1,10 @@
+# SafePay robots.txt
+# Allow all crawlers full access
+User-agent: *
+Allow: /
+
+# Disallow API endpoints from indexing
+Disallow: /api/
+
+# Reference sitemap
+Sitemap: https://safepay-website.vercel.app/sitemap.xml
