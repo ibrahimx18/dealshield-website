@@ -1,4 +1,4 @@
-# SafePay robots.txt
+# DealShield robots.txt
 # Allow all crawlers full access
 User-agent: *
 Allow: /
@@ -7,4 +7,4 @@ Allow: /
 Disallow: /api/
 
 # Reference sitemap
-Sitemap: https://safepay-website.vercel.app/sitemap.xml
+Sitemap: https://dealshield-website.vercel.app/sitemap.xml
