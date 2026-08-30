@@ -1,4 +1,4 @@
-// SafePay Chat Proxy — Vercel Serverless Function
+// DealShield Chat Proxy — Vercel Serverless Function
 // Routes chat requests from the website (HTTPS) to the WhatsApp bot (HTTP)
 // This avoids the "mixed content" browser block.
 
