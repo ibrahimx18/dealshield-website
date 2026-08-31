@@ -1,491 +1,540 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- === PRIMARY SEO META === -->
-<title>DealShield — Nigeria's Premier Escrow & Deal Protection Platform</title>
+<title>DealShield — Sovereign Escrow & Deal Protection Protocol</title>
 <meta name="title" content="DealShield — Escrow Protection for High-Value Deals in Nigeria">
-<meta name="description" content="DealShield is Nigeria's trusted escrow platform for Cars, Gold, Dollars, Land, Oil, Cement, Crypto (USDT/BTC) & Gift Cards. Protect your capital with AI fraud detection, verified traders, and direct settlements.">
-<meta name="keywords" content="escrow Nigeria, USDT escrow Nigeria, gift card escrow, cement dealer escrow, safe car buying Nigeria, gold trading escrow, dollar exchange escrow, DealShield">
-<meta name="author" content="DealShield">
-<meta name="theme-color" content="#030712">
+<meta name="description" content="Nigeria's institutional-grade escrow platform for Cars, Gold, FX Dollars, Real Estate, Crypto (USDT/BTC) & Commodities. Ironclad AI fraud protection, verified counterparty verification, and instant bank settlements.">
+<meta name="keywords" content="escrow Nigeria, USDT escrow Nigeria, safe car buying Nigeria, gold trading escrow, dollar exchange escrow, real estate escrow Nigeria, DealShield">
+<meta name="author" content="DealShield Technologies">
+<meta name="theme-color" content="#08080C">
 
 <!-- === FAVICON === -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/200/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23030712'/%3E%3Cpath d='M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z' fill='none' stroke='%23F5C518' stroke-width='6'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-family='sans-serif' font-size='32' font-weight='900' fill='%23F5C518'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/200/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2308080C'/%3E%3Cpath d='M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z' fill='none' stroke='%23D4AF37' stroke-width='6'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-family='sans-serif' font-size='32' font-weight='900' fill='%23D4AF37'%3EDS%3C/text%3E%3C/svg%3E">
 
-<!-- === TYPOGRAPHY & ICONS (Cabinet Grotesk & Outfit) === -->
+<!-- === FONTS & LIBRARIES === -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- GSAP & ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          dark: '#08080C',
+          card: 'rgba(16, 18, 27, 0.75)',
+          gold: {
+            400: '#F3E5AB',
+            500: '#D4AF37',
+            600: '#AA820A',
+          },
+          accent: '#3B82F6'
+        },
+        fontFamily: {
+          syne: ['Syne', 'sans-serif'],
+          sans: ['Plus Jakarta Sans', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
 
 <style>
-:root {
-  --bg-dark: #030712;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(30, 41, 59, 0.85);
-  --border-glass: rgba(245, 197, 24, 0.2);
+  body {
+    background-color: #08080C;
+    color: #F3F4F6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+  }
   
-  /* Marcelo Design Palette */
-  --gold: #F5C518;
-  --gold-glow: rgba(245, 197, 24, 0.35);
-  --gold-gradient: linear-gradient(135deg, #F5C518 0%, #D49B00 100%);
-  
-  --text-primary: #FFFFFF;
-  --text-secondary: #94A3B8;
-  --green: #10B981;
-  --blue: #3B82F6;
-  
-  /* Premium Fonts */
-  --font-heading: 'Space Grotesk', -apple-system, sans-serif;
-  --font-body: 'Outfit', -apple-system, sans-serif;
-}
+  /* Noise Texture Overlay */
+  .noise-bg {
+    position: fixed; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/200/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1;
+  }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: var(--bg-dark); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+  /* Glow Orbs */
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(140px); pointer-events: none; opacity: 0.18;
+  }
 
-/* AMBIENT GLOW & BACKDROP */
-.ambient-glow {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0;
-  background: 
-    radial-gradient(circle at 50% 0%, rgba(245, 197, 24, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 60%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 45%);
-}
+  .glass-card {
+    background: rgba(16, 18, 27, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
 
-/* NAVIGATION */
-nav {
-  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-  width: 92%; max-width: 1240px; padding: 14px 28px;
-  background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(24px);
-  border: 1px solid var(--border-glass); border-radius: 50px;
-  display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-}
+  .glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-card-hover:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.15);
+  }
 
-.logo { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 700; color: var(--gold); letter-spacing: -0.5px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
-.logo span { color: var(--text-primary); }
-.logo-icon { width: 36px; height: 36px; background: var(--gold-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--bg-dark); font-weight: 900; font-size: 1.1rem; box-shadow: 0 0 15px var(--gold-glow); }
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #FFF 20%, #D4AF37 70%, #AA820A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-.nav-links { display: flex; gap: 30px; align-items: center; }
-.nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: all 0.3s; cursor: pointer; }
-.nav-link:hover { color: var(--gold); }
-.nav-btn { background: var(--gold-gradient); color: var(--bg-dark); padding: 12px 28px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; }
-.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--gold-glow); }
+  .gold-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%);
+    box-shadow: 0 4px 25px rgba(212, 175, 55, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gold-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 35px rgba(212, 175, 55, 0.4);
+  }
 
-/* HERO SECTION */
-.hero { position: relative; z-index: 1; padding: 180px 20px 100px; max-width: 1240px; margin: 0 auto; text-align: center; }
-.badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; background: rgba(245, 197, 24, 0.1); border: 1px solid var(--border-glass); border-radius: 30px; color: var(--gold); font-size: 0.85rem; font-weight: 700; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
-.hero h1 { font-family: var(--font-heading); font-size: 4.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1.5px; }
-.hero h1 span { background: linear-gradient(135deg, #FFFFFF 30%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 760px; margin: 0 auto 44px; font-weight: 400; }
-
-.hero-actions { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
-.btn-primary { background: var(--gold-gradient); color: var(--bg-dark); padding: 18px 40px; border-radius: 40px; font-weight: 800; font-size: 1.05rem; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 35px var(--gold-glow); transition: all 0.3s; border: none; cursor: pointer; }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 45px rgba(245, 197, 24, 0.5); }
-.btn-secondary { background: var(--bg-card); color: var(--text-primary); padding: 18px 40px; border-radius: 40px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 1px solid var(--border-glass); transition: all 0.3s; cursor: pointer; }
-.btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); }
-
-/* STATS BAR */
-.stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1100px; margin: 70px auto 0; padding: 30px; background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 24px; backdrop-filter: blur(16px); }
-.stat-item { text-align: center; }
-.stat-value { font-family: var(--font-heading); font-size: 2.4rem; font-weight: 700; color: var(--gold); }
-.stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 600; }
-
-/* 3-STEP PROCESS SECTION */
-.section { position: relative; z-index: 1; padding: 110px 20px; max-width: 1240px; margin: 0 auto; }
-.section-title { font-family: var(--font-heading); text-align: center; font-size: 2.8rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -1px; }
-.section-subtitle { text-align: center; color: var(--text-secondary); font-size: 1.15rem; max-width: 650px; margin: 0 auto 60px; }
-
-.process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-.process-card { background: var(--bg-card); border: 1px solid var(--border-glass); padding: 44px 32px; border-radius: 24px; text-align: left; transition: all 0.3s; backdrop-filter: blur(16px); }
-.process-card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.7); }
-
-.step-badge { width: 54px; height: 54px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900; color: var(--bg-dark); margin-bottom: 24px; box-shadow: 0 0 25px var(--gold-glow); }
-.process-card h3 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
-.process-card p { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; }
-
-/* MARKETPLACE & REAL NIGERIAN LOCATIONS */
-.tabs-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 44px; flex-wrap: wrap; }
-.tab-btn { background: var(--bg-card); border: 1px solid var(--border-glass); color: var(--text-secondary); padding: 12px 24px; border-radius: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; }
-.tab-btn.active, .tab-btn:hover { background: var(--gold); color: var(--bg-dark); border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
-
-.listings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
-.listing-card { background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 20px; overflow: hidden; transition: all 0.3s; }
-.listing-card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-.listing-img { width: 100%; height: 220px; background-size: cover; background-position: center; position: relative; }
-.category-pill { position: absolute; top: 14px; left: 14px; background: rgba(3,7,18,0.88); backdrop-filter: blur(12px); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; color: var(--gold); border: 1px solid var(--border-glass); text-transform: uppercase; }
-.listing-body { padding: 24px; }
-.listing-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-.listing-price { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
-.listing-location { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
-.listing-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px; }
-
-/* FOOTER */
-footer { position: relative; z-index: 1; background: #02040A; border-top: 1px solid var(--border-glass); padding: 70px 20px 35px; text-align: center; }
-.footer-logo { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: var(--gold); margin-bottom: 16px; }
-.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; }
-.footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.3s; }
-.footer-links a:hover { color: var(--gold); }
-.copyright { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
-
-/* FLOATING AI CHAT */
-.float-ai { position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-dark); font-size: 1.9rem; box-shadow: 0 10px 30px var(--gold-glow); cursor: pointer; z-index: 999; transition: transform 0.3s; }
-.float-ai:hover { transform: scale(1.1); }
-
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2.7rem; }
-  nav { width: 95%; padding: 12px 18px; }
-  .nav-links { display: none; }
-}
-
-/* AI CHAT MODAL */
-.chat-modal-overlay {
-  position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(12px);
-  z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.chat-modal-overlay.active { display: flex; }
-.chat-modal {
-  width: 100%; max-width: 480px; height: 600px; max-height: 85vh;
-  background: #0B0F17; border: 1px solid var(--border-glass); border-radius: 24px;
-  display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-}
-.chat-header {
-  background: rgba(15, 23, 42, 0.95); padding: 18px 24px; border-bottom: 1px solid var(--border-glass);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.chat-header-info { display: flex; align-items: center; gap: 12px; }
-.chat-avatar {
-  width: 40px; height: 40px; border-radius: 12px; background: var(--gold-gradient);
-  display: flex; align-items: center; justify-content: center; font-size: 18px; color: #030712; font-weight: 800;
-}
-.chat-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #FFF; }
-.chat-subtitle { font-size: 0.75rem; color: #10B981; display: flex; align-items: center; gap: 6px; }
-.chat-subtitle::before { content: ""; width: 6px; height: 6px; background: #10B981; border-radius: 50%; display: inline-block; }
-.chat-close { background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; padding: 4px; }
-.chat-close:hover { color: #FFF; }
-.chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-.chat-msg { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 0.92rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
-.chat-msg-bot { background: rgba(30, 41, 59, 0.8); color: #F8FAFC; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
-.chat-msg-user { background: var(--gold-gradient); color: #030712; font-weight: 600; align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-typing { font-size: 0.8rem; color: var(--gold); padding: 4px 12px; align-self: flex-start; display: none; }
-.chat-quick-replies { padding: 10px 20px; display: flex; gap: 8px; overflow-x: auto; background: rgba(15, 23, 42, 0.5); border-top: 1px solid rgba(255,255,255,0.05); }
-.chat-quick-btn {
-  background: rgba(245, 197, 24, 0.1); border: 1px solid var(--border-glass); color: var(--gold);
-  padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.2s;
-}
-.chat-quick-btn:hover { background: rgba(245, 197, 24, 0.2); }
-.chat-input-area { padding: 16px 20px; background: rgba(15, 23, 42, 0.95); border-top: 1px solid var(--border-glass); display: flex; gap: 10px; }
-.chat-input-area input {
-  flex: 1; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px;
-  padding: 12px 20px; color: #FFF; font-size: 0.9rem; outline: none; font-family: var(--font-body);
-}
-.chat-input-area input:focus { border-color: var(--gold); }
-.chat-input-area button {
-  background: var(--gold-gradient); color: #030712; border: none; border-radius: 30px; padding: 12px 24px;
-  font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s;
-}
-.chat-input-area button:hover { transform: scale(1.05); }
-.float-ai { cursor: pointer; transition: transform 0.3s; }
-.float-ai:hover { transform: scale(1.1); }
-
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #08080C; }
+  ::-webkit-scrollbar-thumb { background: #1E2230; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
 </style>
 </head>
-<body>
+<body class="relative min-h-screen selection:bg-gold-500 selection:text-dark">
 
-<div class="ambient-glow"></div>
+<div class="noise-bg"></div>
 
-<!-- NAVIGATION -->
-<nav>
-  <div class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    <div class="logo-icon">DS</div>
-    Deal<span>Shield</span>
-  </div>
-  <div class="nav-links">
-    <a class="nav-link" href="#process">How It Works</a>
-    <a class="nav-link" href="#marketplace">Marketplace</a>
-    <a class="nav-link" href="#locations">Top Locations</a>
-  </div>
-  <a class="nav-btn" href="/download/dealshield.apk" download>Download App (APK)</a>
-</nav>
+<!-- Ambient Lighting -->
+<div class="orb w-[500px] h-[500px] bg-gold-500 top-[-100px] left-[50%] translate-x-[-50%]"></div>
+<div class="orb w-[400px] h-[400px] bg-blue-600 top-[40%] left-[-100px]"></div>
+<div class="orb w-[450px] h-[450px] bg-emerald-600 top-[70%] right-[-100px]"></div>
 
-<!-- HERO SECTION -->
-<section class="hero">
-  <div class="badge">🛡️ Nigeria's Premier Multi-Category Escrow</div>
-  <h1>Protect Every Deal. <span>Zero Fraud.</span></h1>
-  <p>DealShield holds transaction funds safely in escrow for Cars & Vehicles, Crypto (USDT/BTC), Real Estate, FX/Dollars, Gold Bullion, and High-Value Commerce across Nigeria.</p>
-  
-  <div class="hero-actions">
-    <a class="btn-primary" href="#marketplace">Create Protected Deal</a>
-    <a class="btn-secondary" href="#process">See How It Works</a>
-  </div>
+<!-- === NAVIGATION === -->
+<header class="fixed top-5 inset-x-0 z-50 px-4">
+  <nav class="max-w-6xl mx-auto glass-card rounded-full px-6 py-3.5 flex items-center justify-between shadow-2xl">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center text-dark font-syne font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
+        DS
+      </div>
+      <span class="font-syne text-xl font-bold tracking-tight text-white group-hover:text-gold-400 transition-colors">
+        Deal<span class="text-gold-500">Shield</span>
+      </span>
+    </a>
 
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-value">₦500M+</div>
-      <div class="stat-label">Volume Protected</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">Instant</div>
-      <div class="stat-label">Crypto & FX P2P Settlement</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">₦10/Bag</div>
-      <div class="stat-label">Cement Dealer Rate</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">100%</div>
-      <div class="stat-label">Verified Traders</div>
-    </div>
-  </div>
-</section>
-
-<!-- 3-STEP PROCESS SECTION -->
-<section class="section" id="process">
-  <div class="section-title">Three Steps to a Safe Deal</div>
-  <div class="section-subtitle">No stories. No excuses. Capital stays locked safely until physical or digital inspection passes.</div>
-
-  <div class="process-grid">
-    <div class="process-card">
-      <div class="step-badge">1</div>
-      <h3>Deposit Funds</h3>
-      <p>Buyer deposits Naira (Virtual Account / Bank Transfer), USDT, or Gift Card codes into DealShield's secure escrow vault.</p>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+      <a href="#how-it-works" class="hover:text-gold-400 transition-colors">Protocol</a>
+      <a href="#categories" class="hover:text-gold-400 transition-colors">Markets</a>
+      <a href="#calculator" class="hover:text-gold-400 transition-colors">Fee Calculator</a>
+      <a href="#verify" class="hover:text-gold-400 transition-colors">Verify Deal</a>
     </div>
 
-    <div class="process-card">
-      <div class="step-badge">2</div>
-      <h3>Deliver & Inspect</h3>
-      <p>Seller delivers the vehicle, cement truck, or gold bullion. Buyer inspects quality and verifies authenticity.</p>
+    <div class="flex items-center gap-3">
+      <a href="/download/dealshield.apk" download class="gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span>Get App (APK)</span>
+      </a>
     </div>
+  </nav>
+</header>
 
-    <div class="process-card">
-      <div class="step-badge">3</div>
-      <h3>Instant Settlement</h3>
-      <p>Once buyer approves, DealShield immediately releases funds directly into the seller's bank account or wallet.</p>
-    </div>
-  </div>
-</section>
-
-<!-- REAL NIGERIAN LISTINGS & LOCATIONS -->
-<section class="section" id="marketplace">
-  <div class="section-title">Verified Trades Nationwide</div>
-  <div class="section-subtitle">Browse pre-verified listings across major hubs in Nigeria or generate your own protected escrow link.</div>
-
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="filterTab('all', this)">🔥 All Deals</button>
-    <button class="tab-btn" onclick="filterTab('cement', this)">🏗️ Cement Dealers</button>
-    <button class="tab-btn" onclick="filterTab('cars', this)">🚗 Cars & Autos</button>
-    <button class="tab-btn" onclick="filterTab('gold', this)">🪙 Gold Bullion</button>
-    <button class="tab-btn" onclick="filterTab('crypto', this)">₿ Crypto (USDT/BTC)</button>
-    <button class="tab-btn" onclick="filterTab('giftcards', this)">🎁 Gift Cards</button>
+<!-- === HERO SECTION === -->
+<section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
+  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-gold-400 text-xs font-semibold uppercase tracking-widest mb-8 border border-gold-500/20 shadow-inner">
+    <i data-lucide="shield-check" class="w-4 h-4 text-gold-500"></i>
+    <span>Autonomous Escrow Infrastructure for Nigeria</span>
   </div>
 
-  <div class="listings-grid">
-    <!-- Cement Listing (Sagamu/Ibeto Onitsha) -->
-    <div class="listing-card" data-cat="cement">
-      <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80');">
-        <div class="category-pill">🏗️ CEMENT DEALER</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-title">Dangote Cement — 600 Bags (30-Ton Trailer)</div>
-        <div class="listing-price">₦4,800,000</div>
-        <div class="listing-location">📍 Sagamu Plant, Ogun State → Delivery to Abuja / Lagos</div>
-        <div class="listing-meta">
-          <span>Escrow Fee: <strong>₦6,000 (₦10/bag)</strong></span>
-          <span style="color:var(--green)">Verified Distributor ✓</span>
-        </div>
-      </div>
-    </div>
+  <h1 class="font-syne text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8">
+    Zero Risk For High-Value <br class="hidden sm:inline" />
+    <span class="gold-gradient-text">Nigerian Transactions.</span>
+  </h1>
 
-    <!-- Car Listing (Berger Auto Market Lagos) -->
-    <div class="listing-card" data-cat="cars">
-      <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80');">
-        <div class="category-pill">🚗 CARS & AUTOS</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-title">Toyota Camry 2021 (Tokunbo) — First Body</div>
-        <div class="listing-price">₦18,500,000</div>
-        <div class="listing-location">📍 Berger Auto Market, Ikeja, Lagos</div>
-        <div class="listing-meta">
-          <span>Escrow Fee: <strong>0.5% Capped</strong></span>
-          <span style="color:var(--green)">Verified Auto Dealer ✓</span>
-        </div>
-      </div>
-    </div>
+  <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
+    Lock funds securely in neutral escrow. Settle Cars, Gold, FX Dollars, Real Estate, and Crypto P2P with verified counterparties and automated dispute resolution.
+  </p>
 
-    <!-- Gold Listing (Kano Sabon Gari Gold Market) -->
-    <div class="listing-card" data-cat="gold">
-      <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=800&q=80');">
-        <div class="category-pill">🪙 GOLD BULLION</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-title">22K Gold Bars — 1.5kg Assayed Lot</div>
-        <div class="listing-price">₦112,000,000</div>
-        <div class="listing-location">📍 Sabon Gari Market, Kano / Vault Verification</div>
-        <div class="listing-meta">
-          <span>Escrow Fee: <strong>₦100,000 (Max Cap)</strong></span>
-          <span style="color:var(--green)">Assayed Vault ✓</span>
-        </div>
-      </div>
-    </div>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="https://wa.me/2348000000000?text=Hello%20DealShield,%20I%20want%20to%20create%20an%20escrow%20deal" target="_blank" class="w-full sm:w-auto gold-btn px-8 py-4 rounded-full text-dark font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-3">
+      <i data-lucide="shield-alert" class="w-5 h-5"></i>
+      <span>Start Protection Deal</span>
+    </a>
+    <a href="#how-it-works" class="w-full sm:w-auto glass-card px-8 py-4 rounded-full text-white font-semibold text-sm hover:border-gold-500/50 transition-all flex items-center justify-center gap-2">
+      <span>See How It Works</span>
+      <i data-lucide="arrow-down" class="w-4 h-4 text-gold-400"></i>
+    </a>
+  </div>
 
-    <!-- Crypto Listing (P2P Lagos/Abuja) -->
-    <div class="listing-card" data-cat="crypto">
-      <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80');">
-        <div class="category-pill">₿ CRYPTO P2P</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-title">10,000 USDT (TRC-20) — Bulk Merchant Trade</div>
-        <div class="listing-price">₦1,620 / USDT</div>
-        <div class="listing-location">📍 Instant Escrow — Nationwide P2P</div>
-        <div class="listing-meta">
-          <span>Escrow Fee: <strong>0.5% Flat</strong></span>
-          <span style="color:var(--green)">Pro Merchant ✓</span>
-        </div>
-      </div>
+  <!-- STATS BAR -->
+  <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 glass-card p-6 sm:p-8 rounded-3xl border border-gold-500/10">
+    <div class="text-center p-2">
+      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">₦2.4B+</div>
+      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Escrow Volume</div>
     </div>
-
-    <!-- Gift Card Listing -->
-    <div class="listing-card" data-cat="giftcards">
-      <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80');">
-        <div class="category-pill">🎁 GIFT CARDS</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-title">$500 Apple / Steam Physical Cards</div>
-        <div class="listing-price">₦1,250 / $1</div>
-        <div class="listing-location">📍 Instant Digital Lock & Balance Verification</div>
-        <div class="listing-meta">
-          <span>Escrow Fee: <strong>1.0% Flat</strong></span>
-          <span style="color:var(--green)">Verified Trader ✓</span>
-        </div>
-      </div>
+    <div class="text-center p-2 border-l border-white/5">
+      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">100%</div>
+      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Fund Protection</div>
+    </div>
+    <div class="text-center p-2 border-l border-white/5">
+      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">&lt; 3 mins</div>
+      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Deal Setup</div>
+    </div>
+    <div class="text-center p-2 border-l border-white/5">
+      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">0.5%</div>
+      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Lowest Crypto Fee</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Deal<span>Shield</span></div>
-  <div class="footer-links">
-    <a href="#process">How It Works</a>
-    <a href="#marketplace">Marketplace</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
+<!-- === CORE MARKETS & CATEGORIES === -->
+<section id="categories" class="relative z-10 py-20 px-4 max-w-6xl mx-auto">
+  <div class="text-center mb-16">
+    <h2 class="font-syne text-3xl sm:text-4xl font-extrabold mb-4">Supported Market Verticals</h2>
+    <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Specialized escrow protection tailored to the unique verification procedures of Nigeria's high-value commerce.</p>
   </div>
-  <div class="copyright">© 2026 DealShield Technologies Nigeria. All rights reserved.</div>
-</footer>
 
-<div class="float-ai" title="Chat with DealShield AI" onclick="openChat()">💬</div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Card 1: Cars / Autos -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-6">
+          <i data-lucide="car" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">Car & Auto Sales</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Berger Auto Market, United Automobile, & Direct Import deals. Funds are held while mechanic verifies engine block, VIN, chassis numbers, and Custom papers.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-gold-400">
+        <span>Inspection Period: 24h - 72h</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
 
-<!-- AI CHAT MODAL -->
-<div class="chat-modal-overlay" id="chatModal">
-  <div class="chat-modal">
-    <div class="chat-header">
-      <div class="chat-header-info">
-        <div class="chat-avatar">🛡️</div>
+    <!-- Card 2: Crypto & USDT P2P -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+          <i data-lucide="bitcoin" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">Crypto & USDT P2P</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Over-the-Counter (OTC) USDT & Bitcoin swaps. Zero chargeback risk. Flat 0.5% escrow rate with multi-sig release guarantees.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-emerald-400">
+        <span>Flat 0.5% Fee Structure</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- Card 3: Real Estate & Land -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6">
+          <i data-lucide="building-2" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">Real Estate & Land</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Lekki Phase 1, Maitama, & Airport Road plots. Funds locked during lawyer's Deed of Assignment verification and Ministry of Lands searches.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-blue-400">
+        <span>Legal Doc Search Window</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- Card 4: Gold & Bullion -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 mb-6">
+          <i data-lucide="gem" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">Gold Bullion Trading</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Raw karats & refined bullion. Escrow disbursement released upon lab purity test and physical density assay confirmation.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-yellow-400">
+        <span>Assay Verification Required</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- Card 5: FX Dollars & Bureau De Change -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6">
+          <i data-lucide="banknote" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">FX & BDC Transfers</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Wuse Zone 4 & BDC currency swaps. Instant escrow confirmation before cash or bank wire distribution.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-indigo-400">
+        <span>Parallel Market Rates</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- Card 6: Bulk Commodities & Cement -->
+    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6">
+          <i data-lucide="truck" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-syne text-xl font-bold mb-3 text-white">Bulk Commodities</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Heavy freight, Dangote/BUA cement trucks, & agricultural produce. Disbursement triggered on weighbridge ticket verification.
+        </p>
+      </div>
+      <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-purple-400">
+        <span>₦10/bag Flat Cement Rate</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === INTERACTIVE FEE CALCULATOR === -->
+<section id="calculator" class="relative z-10 py-20 px-4 max-w-4xl mx-auto">
+  <div class="glass-card p-8 sm:p-12 rounded-3xl border border-gold-500/20 shadow-2xl">
+    <div class="text-center mb-10">
+      <h2 class="font-syne text-3xl font-extrabold mb-2">Transparent Fee Calculator</h2>
+      <p class="text-sm text-gray-400">Calculate exact protection charges for your transaction before locking funds.</p>
+    </div>
+
+    <div class="space-y-6">
+      <div>
+        <label class="block text-xs uppercase tracking-wider font-bold text-gray-300 mb-2">Select Category</label>
+        <select id="calc-category" onchange="calculateFee()" class="w-full bg-dark/80 border border-white/10 rounded-2xl px-5 py-4 text-white font-medium outline-none focus:border-gold-500 transition-colors">
+          <option value="standard">General Deals (Cars, Land, FX, Gold)</option>
+          <option value="crypto">Crypto P2P / USDT Swaps (0.5%)</option>
+          <option value="cement">Cement Logistics (₦10 per bag)</option>
+        </select>
+      </div>
+
+      <div>
+        <label id="amount-label" class="block text-xs uppercase tracking-wider font-bold text-gray-300 mb-2">Transaction Amount (₦)</label>
+        <input type="number" id="calc-amount" value="5000000" oninput="calculateFee()" placeholder="Enter amount in Naira" class="w-full bg-dark/80 border border-white/10 rounded-2xl px-5 py-4 text-white font-medium outline-none focus:border-gold-500 transition-colors">
+      </div>
+
+      <div class="p-6 rounded-2xl bg-dark/60 border border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div>
-          <div class="chat-title">DealShield AI</div>
-          <div class="chat-subtitle">Online • Deal Protection Assistant</div>
+          <span class="text-xs uppercase text-gray-400 font-semibold block">Estimated Protection Fee</span>
+          <span id="fee-breakdown-text" class="text-xs text-gold-400 font-medium">1.0% Bracket (₦500k – ₦5M)</span>
+        </div>
+        <div id="calc-result" class="font-syne text-4xl font-extrabold text-gold-500">
+          ₦50,000
         </div>
       </div>
-      <button class="chat-close" onclick="closeChat()">✕</button>
     </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="chat-msg chat-msg-bot">🛡️ Welcome to DealShield! I am your AI deal protector. Ask me how to protect a deal, check cement rates, or create an escrow transaction.</div>
+  </div>
+</section>
+
+<!-- === HOW IT WORKS PROTOCOL === -->
+<section id="how-it-works" class="relative z-10 py-20 px-4 max-w-6xl mx-auto">
+  <div class="text-center mb-16">
+    <h2 class="font-syne text-3xl sm:text-4xl font-extrabold mb-4">The DealShield Protocol</h2>
+    <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Four automated steps engineered to guarantee neither party gets scammed.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="glass-card p-6 rounded-3xl relative">
+      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">1</div>
+      <h3 class="font-syne text-lg font-bold mb-2">Initiate Deal</h3>
+      <p class="text-xs text-gray-400 leading-relaxed">Buyer or Seller creates agreement terms, sets inspection timeline, and specifies counterparty.</p>
     </div>
-    <div class="chat-typing" id="chatTyping">🛡️ DealShield is thinking...</div>
-    <div class="chat-quick-replies">
-      <button class="chat-quick-btn" onclick="sendQuickMsg('How to buy cars safely?')">🚗 Car Escrow</button>
-      <button class="chat-quick-btn" onclick="sendQuickMsg('What are the escrow fees?')">💰 Escrow Fees</button>
-      <button class="chat-quick-btn" onclick="sendQuickMsg('How to buy cars safely?')">🚗 Car Escrow</button>
+
+    <div class="glass-card p-6 rounded-3xl relative">
+      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">2</div>
+      <h3 class="font-syne text-lg font-bold mb-2">Lock Escrow</h3>
+      <p class="text-xs text-gray-400 leading-relaxed">Buyer deposits funds into dynamic bank vault or USDT escrow address. Funds are isolated instantly.</p>
     </div>
-    <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="Ask DealShield AI..." onkeypress="handleKeyPress(event)">
-      <button onclick="sendChatMessage()">Send</button>
+
+    <div class="glass-card p-6 rounded-3xl relative">
+      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">3</div>
+      <h3 class="font-syne text-lg font-bold mb-2">Fulfill & Inspect</h3>
+      <p class="text-xs text-gray-400 leading-relaxed">Seller delivers goods/services. Buyer inspects cars, land papers, or gold assays during the countdown.</p>
+    </div>
+
+    <div class="glass-card p-6 rounded-3xl relative">
+      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">4</div>
+      <h3 class="font-syne text-lg font-bold mb-2">Instant Release</h3>
+      <p class="text-xs text-gray-400 leading-relaxed">Buyer clicks release or auto-timer expires. Seller receives instant payout directly to bank account.</p>
+    </div>
+  </div>
+</section>
+
+<!-- === AI CHAT MODAL TRIGGER === -->
+<div id="ai-chat-trigger" onclick="toggleChatModal()" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full gold-btn flex items-center justify-center text-dark cursor-pointer shadow-2xl">
+  <i data-lucide="bot" class="w-7 h-7"></i>
+</div>
+
+<!-- === AI CHAT MODAL === -->
+<div id="chat-modal-overlay" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
+  <div class="w-full max-w-md h-[550px] glass-card rounded-3xl flex flex-col overflow-hidden shadow-2xl border border-gold-500/30">
+    <div class="p-4 bg-dark/80 border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gold-500 text-dark flex items-center justify-center font-bold">
+          <i data-lucide="shield" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="font-syne font-bold text-sm text-white">DealShield AI Assistant</div>
+          <div class="text-[10px] text-emerald-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online • Escrow Expert
+          </div>
+        </div>
+      </div>
+      <button onclick="toggleChatModal()" class="text-gray-400 hover:text-white p-1">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+      <div class="bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200">
+        Hello! I am your DealShield assistant. Ask me anything about car escrow, land verification, USDT P2P protection, or fees!
+      </div>
+    </div>
+
+    <div class="p-3 border-t border-white/10 bg-dark/90 flex gap-2">
+      <input type="text" id="chat-input" onkeypress="handleChatKey(event)" placeholder="Ask about escrow terms or fees..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-xs text-white outline-none focus:border-gold-500">
+      <button onclick="sendChatMessage()" class="gold-btn px-4 py-2.5 rounded-full text-dark font-bold text-xs">
+        <i data-lucide="send" class="w-4 h-4"></i>
+      </button>
     </div>
   </div>
 </div>
 
+<!-- === FOOTER === -->
+<footer class="relative z-10 border-t border-white/10 py-12 px-4 text-center bg-dark/90">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center text-dark font-syne font-bold text-sm">DS</div>
+      <span class="font-syne font-bold text-white text-lg">DealShield</span>
+    </div>
+    <div class="text-xs text-gray-400">
+      © 2026 DealShield Technologies Ltd. Licensed Escrow Infrastructure.
+    </div>
+    <div class="flex gap-6 text-xs text-gray-400">
+      <a href="/terms.html" class="hover:text-gold-400">Terms of Service</a>
+      <a href="/privacy.html" class="hover:text-gold-400">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-function filterTab(category, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  // Initialize Lucide Icons
+  lucide.createIcons();
 
-  const cards = document.querySelectorAll('.listing-card');
-  cards.forEach(card => {
-    if (category === 'all' || card.dataset.cat === category) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
+  // GSAP Animations
+  gsap.from("h1", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
+  gsap.from(".glass-card-hover", { 
+    opacity: 0, 
+    y: 40, 
+    duration: 0.8, 
+    stagger: 0.15,
+    scrollTrigger: { trigger: "#categories", start: "top 80%" }
   });
-}
 
-function openChat() {
-  document.getElementById('chatModal').classList.add('active');
-  document.getElementById('chatInput').focus();
-}
+  // Fee Calculator Logic
+  function calculateFee() {
+    const cat = document.getElementById('calc-category').value;
+    const amountInput = document.getElementById('calc-amount');
+    const amountLabel = document.getElementById('amount-label');
+    const breakdownText = document.getElementById('fee-breakdown-text');
+    const resultEl = document.getElementById('calc-result');
 
-function closeChat() {
-  document.getElementById('chatModal').classList.remove('active');
-}
+    let val = parseFloat(amountInput.value) || 0;
+    let fee = 0;
 
-document.getElementById('chatModal').addEventListener('click', function(e) {
-  if (e.target === this) closeChat();
-});
+    if (cat === 'cement') {
+      amountLabel.innerText = "Number of Cement Bags";
+      fee = val * 10;
+      breakdownText.innerText = `Flat Rate: ₦10 per bag (${val.toLocaleString()} bags)`;
+    } else if (cat === 'crypto') {
+      amountLabel.innerText = "Transaction Amount (₦)";
+      fee = val * 0.005;
+      breakdownText.innerText = "Flat Rate: 0.5% OTC/USDT Escrow Rate";
+    } else {
+      amountLabel.innerText = "Transaction Amount (₦)";
+      if (val < 500000) {
+        fee = val * 0.015;
+        breakdownText.innerText = "1.5% Bracket (Under ₦500,000)";
+      } else if (val <= 5000000) {
+        fee = val * 0.01;
+        breakdownText.innerText = "1.0% Bracket (₦500,000 – ₦5,000,000)";
+      } else if (val <= 20000000) {
+        fee = val * 0.005;
+        breakdownText.innerText = "0.5% Bracket (₦5,000,000 – ₦20,000,000)";
+      } else {
+        fee = 100000;
+        breakdownText.innerText = "Maximum Fee Cap (Above ₦20,000,000)";
+      }
+    }
 
-function handleKeyPress(e) {
-  if (e.key === 'Enter') sendChatMessage();
-}
-
-function sendQuickMsg(text) {
-  sendChatMessage(text);
-}
-
-async function sendChatMessage(overrideText) {
-  const input = document.getElementById('chatInput');
-  const msg = overrideText || input.value.trim();
-  if (!msg) return;
-
-  if (!overrideText) input.value = '';
-
-  const msgContainer = document.getElementById('chatMessages');
-  const userDiv = document.createElement('div');
-  userDiv.className = 'chat-msg chat-msg-user';
-  userDiv.textContent = msg;
-  msgContainer.appendChild(userDiv);
-  msgContainer.scrollTop = msgContainer.scrollHeight;
-
-  const typing = document.getElementById('chatTyping');
-  typing.style.display = 'block';
-
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: msg })
-    });
-    const data = await res.json();
-    typing.style.display = 'none';
-
-    const botDiv = document.createElement('div');
-    botDiv.className = 'chat-msg chat-msg-bot';
-    botDiv.textContent = data.reply || data.error || 'Sorry, I could not process your request.';
-    msgContainer.appendChild(botDiv);
-    msgContainer.scrollTop = msgContainer.scrollHeight;
-  } catch (err) {
-    typing.style.display = 'none';
-    const errDiv = document.createElement('div');
-    errDiv.className = 'chat-msg chat-msg-bot';
-    errDiv.textContent = '⚠️ Network error. Please try again.';
-    msgContainer.appendChild(errDiv);
-    msgContainer.scrollTop = msgContainer.scrollHeight;
+    resultEl.innerText = "₦" + Math.round(fee).toLocaleString();
   }
-}
 
+  // AI Chat Modal Toggle
+  function toggleChatModal() {
+    const modal = document.getElementById('chat-modal-overlay');
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+  }
+
+  function handleChatKey(e) {
+    if (e.key === 'Enter') sendChatMessage();
+  }
+
+  async function sendChatMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const messages = document.getElementById('chat-messages');
+    
+    // Append User Message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'bg-gold-500 text-dark font-medium p-3 rounded-2xl max-w-[85%] ml-auto';
+    userDiv.innerText = text;
+    messages.appendChild(userDiv);
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Fetch API response
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      const data = await res.json();
+      
+      const botDiv = document.createElement('div');
+      botDiv.className = 'bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200';
+      botDiv.innerText = data.reply || "DealShield escrow protection guarantees funds are held securely until deal completion.";
+      messages.appendChild(botDiv);
+      messages.scrollTop = messages.scrollHeight;
+    } catch (err) {
+      const botDiv = document.createElement('div');
+      botDiv.className = 'bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200';
+      botDiv.innerText = "DealShield protects high-value deals across Nigeria. You can lock escrow funds via bank transfer or USDT.";
+      messages.appendChild(botDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  }
 </script>
-
 </body>
 </html>
