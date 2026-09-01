@@ -13,12 +13,12 @@
 <meta name="theme-color" content="#08080C">
 
 <!-- === FAVICON === -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/200/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2308080C'/%3E%3Cpath d='M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z' fill='none' stroke='%23D4AF37' stroke-width='6'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-family='sans-serif' font-size='32' font-weight='900' fill='%23D4AF37'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
 <!-- === FONTS & LIBRARIES === -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Tailwind CSS via CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Lucide Icons -->
@@ -71,20 +71,31 @@
     position: absolute; border-radius: 50%; filter: blur(140px); pointer-events: none; opacity: 0.18;
   }
 
+  /* Glassmorphism Refinements */
   .glass-card {
-    background: rgba(16, 18, 27, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(212, 175, 55, 0.15);
+    background: rgba(16, 18, 27, 0.75);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 
   .glass-card-hover {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-card-hover:hover {
-    transform: translateY(-6px);
-    border-color: rgba(212, 175, 55, 0.45);
-    box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.15);
+    transform: translateY(-8px) scale(1.01);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.25);
+  }
+
+  /* Micro-interactions & animations */
+  .hover-glow {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    transform: scale(1.03);
   }
 
   .gold-gradient-text {
@@ -139,9 +150,16 @@
     </div>
 
     <div class="flex items-center gap-3">
-      <a href="/download/dealshield.apk" download class="gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2">
-        <i data-lucide="download" class="w-4 h-4"></i>
-        <span>Get App (APK)</span>
+      <button onclick="openAuthModal('login')" class="glass-card hover:border-gold-500/50 text-white px-4 py-2.5 rounded-full font-semibold text-xs tracking-wider transition-all">
+        Log In
+      </button>
+      <button onclick="openAuthModal('register')" class="gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+        <i data-lucide="user-plus" class="w-4 h-4" aria-hidden="true"></i>
+        <span>Sign Up / Register</span>
+      </button>
+      <a href="/download/dealshield.apk" download class="hidden sm:flex glass-card border-gold-500/20 text-gold-400 hover:text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider items-center gap-2">
+        <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i>
+        <span>APK</span>
       </a>
     </div>
   </nav>
@@ -149,6 +167,8 @@
 
 <!-- === HERO SECTION === -->
 <section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
+  <!-- Subtle Background Grid/Dot Pattern -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
   <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-gold-400 text-xs font-semibold uppercase tracking-widest mb-8 border border-gold-500/20 shadow-inner">
     <i data-lucide="shield-check" class="w-4 h-4 text-gold-500"></i>
     <span>Autonomous Escrow Infrastructure for Nigeria</span>
@@ -378,7 +398,7 @@
 </section>
 
 <!-- === AI CHAT MODAL TRIGGER === -->
-<div id="ai-chat-trigger" onclick="toggleChatModal()" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full gold-btn flex items-center justify-center text-dark cursor-pointer shadow-2xl">
+<div id="ai-chat-trigger" onclick="toggleChatModal()" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full gold-btn flex items-center justify-center text-dark cursor-pointer shadow-2xl" aria-label="Open DealShield AI Assistant">
   <i data-lucide="bot" class="w-7 h-7"></i>
 </div>
 
@@ -438,15 +458,39 @@
   // Initialize Lucide Icons
   lucide.createIcons();
 
-  // GSAP Animations
-  gsap.from("h1", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-  gsap.from(".glass-card-hover", { 
-    opacity: 0, 
-    y: 40, 
-    duration: 0.8, 
-    stagger: 0.15,
-    scrollTrigger: { trigger: "#categories", start: "top 80%" }
-  });
+  // GSAP ScrollTrigger Animations
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from("h1", { opacity: 0, y: 40, duration: 1, delay: 0.2, ease: "power3.out" });
+    
+    gsap.from("#categories .glass-card-hover", { 
+      opacity: 0, 
+      y: 50, 
+      duration: 0.8, 
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: { trigger: "#categories", start: "top 80%" }
+    });
+
+    gsap.from("#how-it-works .glass-card", {
+      opacity: 0,
+      scale: 0.95,
+      y: 30,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "back.out(1.7)",
+      scrollTrigger: { trigger: "#how-it-works", start: "top 75%" }
+    });
+
+    gsap.from("#calculator", {
+      opacity: 0,
+      y: 40,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: { trigger: "#calculator", start: "top 80%" }
+    });
+  }
 
   // Fee Calculator Logic
   function calculateFee() {
@@ -536,5 +580,135 @@
     }
   }
 </script>
+<!-- Auth & KYC Modal -->
+<div id="auth-modal" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
+  <div class="w-full max-w-md bg-dark/90 glass-card rounded-3xl p-6 relative">
+    <button onclick="closeAuthModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div id="auth-tabs" class="flex mb-4 border-b border-gray-700">
+      <button id="login-tab" class="flex-1 text-center py-2 font-semibold text-gray-300 border-b-2 border-gold-500" onclick="showLogin()">Log In</button>
+      <button id="register-tab" class="flex-1 text-center py-2 font-semibold text-gray-300" onclick="showRegister()">Register</button>
+    </div>
+    <!-- Login Form -->
+    <form id="login-form" class="space-y-4" onsubmit="submitLogin(event)">
+      <label class="block"><span class="text-gray-300">Email or Phone</span>
+        <input type="text" name="identifier" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">Password</span>
+        <input type="password" name="password" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <button type="submit" class="w-full gold-btn text-sm font-bold">Log In</button>
+    </form>
+    <!-- Register Form -->
+    <form id="register-form" class="space-y-4 hidden" onsubmit="submitRegister(event)">
+      <label class="block"><span class="text-gray-300">Full Name</span>
+        <input type="text" name="name" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">Phone</span>
+        <input type="tel" name="phone" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">Email</span>
+        <input type="email" name="email" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">Password</span>
+        <input type="password" name="password" required minlength="8" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <button type="submit" class="w-full gold-btn text-sm font-bold">Register</button>
+    </form>
+    <!-- KYC Form (shown after successful registration) -->
+    <form id="kyc-form" class="space-y-4 hidden" onsubmit="submitKYC(event)">
+      <h3 class="text-center text-gold-400 font-semibold mb-2">Complete KYC</h3>
+      <label class="block"><span class="text-gray-300">NIN (National ID)</span>
+        <input type="text" name="nin" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">BVN (Bank Verification No.)</span>
+        <input type="text" name="bvn" required pattern="\d{11}" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <label class="block"><span class="text-gray-300">Business Name (optional)</span>
+        <input type="text" name="business_name" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
+      </label>
+      <button type="submit" class="w-full gold-btn text-sm font-bold">Submit KYC</button>
+    </form>
+    <div id="auth-message" class="mt-4 text-center text-sm text-gray-400"></div>
+  </div>
+</div>
+
+<script>
+  function openAuthModal(mode) {
+    const modal = document.getElementById('auth-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (mode === 'login') showLogin(); else if (mode === 'register') showRegister();
+  }
+  function closeAuthModal() {
+    const modal = document.getElementById('auth-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.getElementById('auth-message').textContent = '';
+    document.getElementById('login-form').reset();
+    document.getElementById('register-form').reset();
+    document.getElementById('kyc-form').reset();
+    showLogin();
+  }
+  function showLogin() {
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('register-form').classList.add('hidden');
+    document.getElementById('kyc-form').classList.add('hidden');
+    document.getElementById('login-tab').classList.add('border-gold-500');
+    document.getElementById('register-tab').classList.remove('border-gold-500');
+  }
+  function showRegister() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('register-form').classList.remove('hidden');
+    document.getElementById('kyc-form').classList.add('hidden');
+    document.getElementById('register-tab').classList.add('border-gold-500');
+    document.getElementById('login-tab').classList.remove('border-gold-500');
+  }
+  async function submitLogin(e) {
+    e.preventDefault();
+    const f = e.target;
+    const data = { email_or_phone: f.identifier.value, password: f.password.value };
+    try {
+      const res = await fetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.detail || 'Login failed');
+      localStorage.setItem('access_token', json.access_token);
+      document.getElementById('auth-message').textContent = 'Logged in successfully.';
+      setTimeout(closeAuthModal, 1200);
+    } catch (err) { document.getElementById('auth-message').textContent = err.message; }
+  }
+  async function submitRegister(e) {
+    e.preventDefault();
+    const f = e.target;
+    const data = { name: f.name.value, phone: f.phone.value, email: f.email.value, password: f.password.value };
+    try {
+      const res = await fetch('/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.detail || 'Registration failed');
+      localStorage.setItem('access_token', json.access_token);
+      document.getElementById('register-form').classList.add('hidden');
+      document.getElementById('kyc-form').classList.remove('hidden');
+      document.getElementById('auth-message').textContent = 'Registration successful – complete KYC.';
+    } catch (err) { document.getElementById('auth-message').textContent = err.message; }
+  }
+  async function submitKYC(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('access_token');
+    if (!token) return document.getElementById('auth-message').textContent = 'You must be logged in.';
+    const f = e.target;
+    const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
+    try {
+      await fetch('/auth/verify-nin', { method: 'POST', headers, body: JSON.stringify({}) });
+      await fetch('/auth/verify-bvn', { method: 'POST', headers, body: JSON.stringify({ bvn: f.bvn.value }) });
+      if (f.business_name.value.trim()) {
+        await fetch('/auth/verify-business', { method: 'POST', headers, body: JSON.stringify({ business_name: f.business_name.value }) });
+      }
+      document.getElementById('auth-message').textContent = 'KYC completed successfully.';
+      setTimeout(closeAuthModal, 1500);
+    } catch (err) { document.getElementById('auth-message').textContent = err.message || 'KYC failed'; }
+  }
+</script>
+
 </body>
 </html>
