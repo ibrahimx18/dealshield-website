@@ -171,6 +171,162 @@
 </header>
 
 <!-- === HERO SECTION === -->
+  <section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-gold-400 text-xs font-semibold uppercase tracking-widest mb-8 border border-gold-500/20 shadow-inner">
+      <i data-lucide="shield-check" class="w-4 h-4 text-gold-500"></i>
+      <span>Autonomous Escrow Infrastructure for Nigeria</span>
+    </div>
+
+    <h1 class="font-syne text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8">
+      Zero Risk For High-Value <br class="hidden sm:inline" />
+      <span class="gold-gradient-text">Nigerian Transactions.</span>
+    </h1>
+
+    <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
+      Lock funds securely in neutral escrow. Settle Cars, Gold, FX Dollars, Real Estate, and Crypto P2P with verified counterparties and automated dispute resolution.
+    </p>
+    <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-300 italic mt-4">
+      a business is not concluded until the buyer and seller get the value they deserve.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="https://wa.me/2348000000000?text=Hello%20DealShield,%20I%20want%20to%20create%20an%20escrow%20deal" target="_blank" class="w-full sm:w-auto gold-btn px-8 py-4 rounded-full text-dark font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-3">
+        <i data-lucode="shield-alert" class="w-5 h-5"></i>
+        <span>Start Protection Deal (WhatsApp)</span>
+      </a>
+      <!-- New Create Deal Button -->
+      <button onclick="openDealModal()" class="w-full sm:w-auto glass-card px-8 py-4 rounded-full text-white font-semibold text-sm hover:border-gold-500/50 transition-all flex items-center justify-center gap-2">
+        <i data-lucide="folder-plus" class="w-5 h-5"></i>
+        <span>Create Protected Deal</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Deal Creation Modal -->
+  <div id="deal-modal" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-dark/90 glass-card rounded-3xl p-6 relative">
+      <button onclick="closeDealModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h2 class="font-syne text-2xl font-extrabold mb-4 text-white">Create Protected Deal</h2>
+      <form id="deal-form" class="space-y-4" onsubmit="submitDeal(event)">
+        <label class="block"><span class="text-gray-300">Counterparty Email / Phone</span>
+          <input type="text" name="counterparty" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
+          <label class="block"><span class="text-gray-300">Deal Title (optional)</span>
+            <input type="text" name="title" placeholder="e.g., Toyota Camry Sale" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
+          </label>
+          <label class="block"><span class="text-gray-300">Supporting Documents (optional)</span>
+            <input type="file" name="docs" multiple class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
+          </label>
+        </label>
+        <label class="block"><span class="text-gray-300">Deal Category</span>
+          <select name="category" id="deal-category" onchange="updateCategoryInfo()" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500">
+            <option value="cars">Car & Auto Sales</option>
+            <option value="crypto">Crypto & USDT P2P</option>
+            <option value="realestate">Real Estate & Land</option>
+            <option value="gold">Gold Bullion Trading</option>
+            <option value="fx">FX & BDC Transfers</option>
+          </select>
+        </label>
+        <label class="block"><span class="text-gray-300" id="amount-label">Transaction Amount (₦)</span>
+          <input type="number" name="amount" id="deal-amount" value="5000000" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
+        </label>
+        <label class="block"><span class="text-gray-300">Inspection / Verification Window (hours)</span>
+          <input type="number" name="inspection" value="48" min="1" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
+        </label>
+        <label class="block"><span class="text-gray-300">Additional Agreed Terms (optional)</span>
+          <textarea name="terms" rows="3" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" placeholder="e.g., payment split, delivery method, warranty..."></textarea>
+        </label>
+        <div class="p-4 bg-dark/30 border border-gold-500/20 rounded-lg">
+          <span class="block text-xs text-gray-400 mb-1" id="fee-breakdown-text">Fee will be calculated below</span>
+          <span class="block font-syne text-3xl font-extrabold text-gold-500" id="deal-fee">₦0</span>
+        </div>
+        <button type="submit" class="w-full gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-sm">
+          Create Deal & Lock Funds
+        </button>
+      </form>
+      <div id="deal-message" class="mt-4 text-center text-sm text-gray-400"></div>
+    </div>
+  </div>
+
+  <script>
+    function openDealModal() { document.getElementById('deal-modal').classList.remove('hidden'); document.getElementById('deal-modal').classList.add('flex'); calculateDealFee(); }
+    function closeDealModal() { document.getElementById('deal-modal').classList.add('hidden'); document.getElementById('deal-modal').classList.remove('flex'); document.getElementById('deal-form').reset(); document.getElementById('deal-message').textContent=''; }
+    function updateCategoryInfo() { calculateDealFee(); }
+    function calculateDealFee() {
+      const cat = document.getElementById('deal-category').value;
+      const amount = parseFloat(document.getElementById('deal-amount').value) || 0;
+      let fee = 0;
+      if (cat === 'crypto') {
+        fee = amount * 0.005; // 0.5% flat
+        document.getElementById('fee-breakdown-text').innerText = 'Flat 0.5% crypto escrow fee';
+      } else if (cat === 'cars' || cat === 'realestate' || cat === 'gold' || cat === 'fx') {
+        if (amount < 500000) { fee = amount * 0.015; document.getElementById('fee-breakdown-text').innerText = '1.5% (under ₦500k)'; }
+        else if (amount <= 5000000) { fee = amount * 0.01; document.getElementById('fee-breakdown-text').innerText = '1.0% (₦500k‑₦5M)'; }
+        else if (amount <= 20000000) { fee = amount * 0.005; document.getElementById('fee-breakdown-text').innerText = '0.5% (₦5M‑₦20M)'; }
+        else { fee = 100000; document.getElementById('fee-breakdown-text').innerText = 'Maximum ₦100k cap'; }
+      }
+      document.getElementById('deal-fee').innerText = '₦' + Math.round(fee).toLocaleString();
+    }
+    document.getElementById('deal-amount').addEventListener('input', calculateDealFee);
+    document.getElementById('deal-category').addEventListener('change', calculateDealFee);
+    async function submitDeal(e) {
+      e.preventDefault();
+      const form = e.target;
+      // Build a temporary deal object for review (no API call yet)
+      const tempDeal = {
+        counterparty: form.counterparty.value,
+        title: form.title ? form.title.value : '',
+        category: form.category.value,
+        amount: parseFloat(form.amount.value),
+        inspection_hours: parseInt(form.inspection.value),
+        terms: form.terms.value,
+        fee: document.getElementById('deal-fee').innerText.replace('₦','').replace(/,/g,'')
+      };
+      // Populate summary view
+      const sumDiv = document.getElementById('summary-content');
+      sumDiv.innerHTML = `
+        <p><strong>Counterparty:</strong> ${tempDeal.counterparty}</p>
+        ${tempDeal.title ? `<p><strong>Title:</strong> ${tempDeal.title}</p>` : ''}
+        <p><strong>Category:</strong> ${tempDeal.category}</p>
+        <p><strong>Amount:</strong> ₦${tempDeal.amount.toLocaleString()}</p>
+        <p><strong>Inspection Window:</strong> ${tempDeal.inspection_hours} hrs</p>
+        ${tempDeal.terms ? `<p><strong>Additional Terms:</strong> ${tempDeal.terms}</p>` : ''}
+        <p><strong>Escrow Fee:</strong> ₦${parseInt(tempDeal.fee).toLocaleString()}</p>
+      `;
+      // Hide form controls, show summary & action buttons
+      document.getElementById('deal-form').classList.add('hidden');
+      document.getElementById('deal-summary').classList.remove('hidden');
+      // Store tempDeal for final confirmation
+      window._pendingDeal = tempDeal;
+    }
+
+    // Called when user clicks "Confirm & Lock Funds"
+    async function confirmDeal() {
+      const data = window._pendingDeal;
+      try {
+        const res = await fetch('/api/deal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.detail || 'Deal creation failed');
+        document.getElementById('deal-message').textContent = `Deal created! ID: ${json.deal_id}. Funds are now locked in escrow.`;
+        // Reset UI
+        setTimeout(closeDealModal, 2000);
+      } catch (err) {
+        document.getElementById('deal-message').textContent = err.message;
+      }
+    }
+
+    // Return to edit mode
+    function editDeal() {
+      document.getElementById('deal-summary').classList.add('hidden');
+      document.getElementById('deal-form').classList.remove('hidden');
+    }
+  </script>
+
 <section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
   <!-- Subtle Background Grid/Dot Pattern -->
   <div class="absolute inset-0 -z-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
@@ -186,6 +342,9 @@
 
   <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
     Lock funds securely in neutral escrow. Settle Cars, Gold, FX Dollars, Real Estate, and Crypto P2P with verified counterparties and automated dispute resolution.
+  </p>
+  <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-300 italic mt-4">
+    a business is not concluded until the buyer and seller get the value they deserve.
   </p>
 
   <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
