@@ -7,4 +7,4 @@ Allow: /
 Disallow: /api/
 
 # Reference sitemap
-Sitemap: https://dealshield-website.vercel.app/sitemap.xml
+Sitemap: https://dealshield.ng/sitemap.xml
