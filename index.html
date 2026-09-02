@@ -5,27 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- === PRIMARY SEO META === -->
-<title>DealShield — Sovereign Escrow & Deal Protection Protocol</title>
-<meta name="title" content="DealShield — Escrow Protection for High-Value Deals in Nigeria">
-<meta name="description" content="Nigeria's institutional-grade escrow platform for Cars, Gold, FX Dollars, Real Estate, Crypto (USDT/BTC) & Commodities. Ironclad AI fraud protection, verified counterparty verification, and instant bank settlements.">
+<title>DealShield — Escrow Protection for High-Value Transactions in Nigeria</title>
+<meta name="title" content="DealShield — Escrow Protection for High-Value Transactions in Nigeria">
+<meta name="description" content="Neutral escrow protection for Cars, Gold, FX Dollars, Real Estate, Crypto (USDT/BTC) and bulk commodities. Verified counterparties, structured verification and controlled fund release.">
 <meta name="keywords" content="escrow Nigeria, USDT escrow Nigeria, safe car buying Nigeria, gold trading escrow, dollar exchange escrow, real estate escrow Nigeria, DealShield">
 <meta name="author" content="DealShield Technologies">
-<meta name="theme-color" content="#08080C">
+<meta name="theme-color" content="#0B0F1A">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dealshield.ng/">
+<meta property="og:title" content="DealShield — Escrow Protection for High-Value Transactions in Nigeria">
+<meta property="og:description" content="Neutral escrow protection for Cars, Gold, FX, Real Estate, Crypto and bulk commodities. Verified counterparties, structured verification and controlled fund release.">
 
 <!-- === FAVICON === -->
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
-<!-- === FONTS & LIBRARIES === -->
+<!-- === FONTS === -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Three.js for 3D animated canvas background -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Tailwind CSS via CDN -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- === LIBRARIES === -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Lucide Icons -->
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
 <script src="https://unpkg.com/lucide@latest"></script>
-<!-- GSAP & ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -35,715 +39,953 @@
     theme: {
       extend: {
         colors: {
-          dark: '#08080C',
-          card: 'rgba(16, 18, 27, 0.75)',
-          gold: {
-            400: '#F3E5AB',
-            500: '#D4AF37',
-            600: '#AA820A',
+          ink: {
+            900: '#0B0F1A',
+            800: '#0F1420',
+            700: '#161C2C',
+            600: '#1E2536',
+            500: '#2A3346',
+            400: '#3D4860',
+            300: '#6B7693',
+            200: '#9BA5BC',
+            100: '#C9D1E0',
           },
-          accent: '#3B82F6'
+          brand: {
+            DEFAULT: '#C8A45C',
+            light: '#E0C180',
+            dark: '#9A7B3E',
+          },
+          surface: '#FFFFFF',
+          positive: '#22C55E',
+          warning: '#F59E0B',
+          danger: '#EF4444',
         },
         fontFamily: {
-          syne: ['Cabinet Grotesk', 'sans-serif'],
-          sans: ['Space Grotesk', 'sans-serif']
-        }
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        maxWidth: {
+          '7xl': '1280px',
+        },
+        spacing: {
+          '18': '4.5rem',
+        },
       }
     }
   }
 </script>
 
 <style>
+  /* ── DESIGN SYSTEM ── */
+  :root {
+    --color-bg: #0B0F1A;
+    --color-surface: #0F1420;
+    --color-border: rgba(255,255,255,0.06);
+    --color-border-strong: rgba(255,255,255,0.12);
+    --color-accent: #C8A45C;
+    --color-text-primary: #F8FAFC;
+    --color-text-secondary: #9BA5BC;
+    --color-text-muted: #6B7693;
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 40px;
+    --space-6: 56px;
+    --space-7: 72px;
+    --space-8: 96px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
   body {
-    background-color: #08080C;
-    color: #F3F4F6;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
-  }
-  
-  /* Noise Texture Overlay */
-  .noise-bg {
-    position: fixed; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/200/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 1;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    letter-spacing: -0.01em;
   }
 
-  /* Glow Orbs */
-  .orb {
-    position: absolute; border-radius: 50%; filter: blur(140px); pointer-events: none; opacity: 0.18;
+  /* ── Typography ── */
+  h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
-  /* Glassmorphism Refinements */
-  .glass-card {
-    background: rgba(16, 18, 27, 0.75);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* ── Surfaces ── */
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .card-hover:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
   }
 
-  .glass-card-hover {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .input-field {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    color: var(--color-text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
   }
-  .glass-card-hover:hover {
-    transform: translateY(-8px) scale(1.01);
-    border-color: rgba(212, 175, 55, 0.6);
-    box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.25);
+  .input-field:focus {
+    border-color: var(--color-accent);
+  }
+  .input-field::placeholder { color: var(--color-text-muted); }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    background: var(--color-accent);
+    color: #0B0F1A;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 20px rgba(200,164,92,0.3);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-strong);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    background: rgba(200,164,92,0.05);
+  }
+  .btn-secondary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .btn-ghost:hover { color: var(--color-text-primary); }
+
+  /* ── Layout ── */
+  .container-px { padding-left: 24px; padding-right: 24px; }
+  @media (max-width: 640px) {
+    .container-px { padding-left: 16px; padding-right: 16px; }
   }
 
-  /* Micro-interactions & animations */
-  .hover-glow {
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-    transform: scale(1.03);
+  .section-pad { padding-top: 72px; padding-bottom: 72px; }
+  @media (max-width: 768px) { .section-pad { padding-top: 48px; padding-bottom: 48px; } }
+
+  /* ── Nav ── */
+  .nav-blur {
+    background: rgba(11,15,26,0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .gold-gradient-text {
-    background: linear-gradient(135deg, #FFF 20%, #D4AF37 70%, #AA820A 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* ── Process Timeline ── */
+  .timeline-line {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border-strong) 15%, var(--color-border-strong) 85%, transparent);
   }
 
+  .timeline-step {
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .timeline-step:hover .timeline-dot {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* ── Transaction Card (hero visual) ── */
+  .tx-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .tx-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .tx-row:last-child { border-bottom: none; }
+  .tx-label { font-size: 13px; color: var(--color-text-muted); font-weight: 500; }
+  .tx-value { font-size: 13px; color: var(--color-text-primary); font-weight: 600; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
+  .status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
+  .status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
+  .status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+  /* ── Chat Modal ── */
+  .chat-trigger {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #0B0F1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.2s ease;
+  }
+  .chat-trigger:hover { transform: scale(1.05); }
+
+  /* ── Code for JS compatibility ── */
+  /* Keep old classes working for auth & chat JS */
   .gold-btn {
-    background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%);
-    box-shadow: 0 4px 25px rgba(212, 175, 55, 0.25);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--color-accent);
+    color: #0B0F1A;
+    font-weight: 700;
+    transition: all 0.2s ease;
   }
-  .gold-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 35px rgba(212, 175, 55, 0.4);
+  .glass-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(20px);
   }
+  .font-syne { font-family: 'Inter', sans-serif; }
+  .gold-gradient-text { color: var(--color-accent); }
+  .gold-400 { color: var(--color-accent); }
+  .gold-500 { color: var(--color-accent); }
+  .gold-600 { color: var(--color-accent); }
+  .text-dark { color: #0B0F1A; }
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: #08080C; }
-  ::-webkit-scrollbar-thumb { background: #1E2230; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+  /* ── Animations ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in { animation: fadeIn 0.6s ease forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
 </style>
 </head>
-<body class="relative min-h-screen selection:bg-gold-500 selection:text-dark">
+<body class="relative min-h-screen">
 
-<!-- === LIVE 3D INTERACTIVE CANVAS BACKGROUND === -->
-<canvas id="hero-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
-
-<div class="noise-bg"></div>
-
-<!-- Ambient Lighting -->
-<div class="orb w-[500px] h-[500px] bg-gold-500 top-[-100px] left-[50%] translate-x-[-50%]"></div>
-<div class="orb w-[400px] h-[400px] bg-blue-600 top-[40%] left-[-100px]"></div>
-<div class="orb w-[450px] h-[450px] bg-emerald-600 top-[70%] right-[-100px]"></div>
-
-<!-- === NAVIGATION === -->
-<header class="fixed top-5 inset-x-0 z-50 px-4">
-  <nav class="max-w-6xl mx-auto glass-card rounded-full px-6 py-3.5 flex items-center justify-between shadow-2xl">
-    <a href="#" class="flex items-center gap-3 group">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center text-dark font-syne font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
-        DS
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<header class="fixed top-0 inset-x-0 z-50 nav-blur">
+  <nav class="max-w-7xl mx-auto container-px h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+        <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+        </svg>
       </div>
-      <span class="font-syne text-xl font-bold tracking-tight text-white group-hover:text-gold-400 transition-colors">
-        Deal<span class="text-gold-500">Shield</span>
-      </span>
+      <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
     </a>
 
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-      <a href="#how-it-works" class="hover:text-gold-400 transition-colors">Protocol</a>
-      <a href="#categories" class="hover:text-gold-400 transition-colors">Markets</a>
-      <a href="#calculator" class="hover:text-gold-400 transition-colors">Fee Calculator</a>
-      <a href="#verify" class="hover:text-gold-400 transition-colors">Verify Deal</a>
+    <!-- Center nav -->
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="#how-it-works" class="btn-ghost">How It Works</a>
+      <a href="#solutions" class="btn-ghost">Solutions</a>
+      <a href="#calculator" class="btn-ghost">Fees</a>
+      <a href="#security" class="btn-ghost">Security</a>
+      <a href="#about" class="btn-ghost">About</a>
     </div>
 
-    <div class="flex items-center gap-3">
-      <button onclick="openAuthModal('login')" class="glass-card hover:border-gold-500/50 text-white px-4 py-2.5 rounded-full font-semibold text-xs tracking-wider transition-all">
-        Log In
+    <!-- Right side -->
+    <div class="flex items-center gap-2">
+      <button onclick="location.href='/login.html'" class="btn-ghost hidden sm:inline-flex">Log In</button>
+      <button onclick="location.href='/create-deal.html'" class="btn-primary text-[13px]">
+        <i data-lucide="shield-plus" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Create Protected Deal</span>
+        <span class="sm:hidden">Deal</span>
       </button>
-      <button onclick="openAuthModal('register')" class="gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2">
-        <i data-lucide="user-plus" class="w-4 h-4" aria-hidden="true"></i>
-        <span>Sign Up / Register</span>
-      </button>
-      <a href="/download/dealshield.apk" download class="hidden sm:flex glass-card border-gold-500/20 text-gold-400 hover:text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider items-center gap-2">
-        <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i>
-        <span>APK</span>
+      <a href="/download/dealshield.apk" download class="btn-secondary hidden md:inline-flex text-[13px]">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        APK
       </a>
     </div>
   </nav>
 </header>
 
-<!-- === HERO SECTION === -->
-  <section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-gold-400 text-xs font-semibold uppercase tracking-widest mb-8 border border-gold-500/20 shadow-inner">
-      <i data-lucide="shield-check" class="w-4 h-4 text-gold-500"></i>
-      <span>Autonomous Escrow Infrastructure for Nigeria</span>
-    </div>
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="relative pt-32 pb-16 section-pad overflow-hidden">
+  <!-- Subtle grid background -->
+  <div class="absolute inset-0 opacity-[0.015] pointer-events-none" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 64px 64px;"></div>
 
-    <h1 class="font-syne text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8">
-      Zero Risk For High-Value <br class="hidden sm:inline" />
-      <span class="gold-gradient-text">Nigerian Transactions.</span>
-    </h1>
+  <div class="max-w-7xl mx-auto container-px relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-    <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
-      Lock funds securely in neutral escrow. Settle Cars, Gold, FX Dollars, Real Estate, and Crypto P2P with verified counterparties and automated dispute resolution.
-    </p>
-    <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-300 italic mt-4">
-      a business is not concluded until the buyer and seller get the value they deserve.
-    </p>
-
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="https://wa.me/2348000000000?text=Hello%20DealShield,%20I%20want%20to%20create%20an%20escrow%20deal" target="_blank" class="w-full sm:w-auto gold-btn px-8 py-4 rounded-full text-dark font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-3">
-        <i data-lucode="shield-alert" class="w-5 h-5"></i>
-        <span>Start Protection Deal (WhatsApp)</span>
-      </a>
-      <!-- New Create Deal Button -->
-      <button onclick="openDealModal()" class="w-full sm:w-auto glass-card px-8 py-4 rounded-full text-white font-semibold text-sm hover:border-gold-500/50 transition-all flex items-center justify-center gap-2">
-        <i data-lucide="folder-plus" class="w-5 h-5"></i>
-        <span>Create Protected Deal</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- Deal Creation Modal -->
-  <div id="deal-modal" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
-    <div class="w-full max-w-lg bg-dark/90 glass-card rounded-3xl p-6 relative">
-      <button onclick="closeDealModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white p-1">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-      <h2 class="font-syne text-2xl font-extrabold mb-4 text-white">Create Protected Deal</h2>
-      <form id="deal-form" class="space-y-4" onsubmit="submitDeal(event)">
-        <label class="block"><span class="text-gray-300">Counterparty Email / Phone</span>
-          <input type="text" name="counterparty" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
-          <label class="block"><span class="text-gray-300">Deal Title (optional)</span>
-            <input type="text" name="title" placeholder="e.g., Toyota Camry Sale" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
-          </label>
-          <label class="block"><span class="text-gray-300">Supporting Documents (optional)</span>
-            <input type="file" name="docs" multiple class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
-          </label>
-        </label>
-        <label class="block"><span class="text-gray-300">Deal Category</span>
-          <select name="category" id="deal-category" onchange="updateCategoryInfo()" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500">
-            <option value="cars">Car & Auto Sales</option>
-            <option value="crypto">Crypto & USDT P2P</option>
-            <option value="realestate">Real Estate & Land</option>
-            <option value="gold">Gold Bullion Trading</option>
-            <option value="fx">FX & BDC Transfers</option>
-          </select>
-        </label>
-        <label class="block"><span class="text-gray-300" id="amount-label">Transaction Amount (₦)</span>
-          <input type="number" name="amount" id="deal-amount" value="5000000" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
-        </label>
-        <label class="block"><span class="text-gray-300">Inspection / Verification Window (hours)</span>
-          <input type="number" name="inspection" value="48" min="1" required class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" />
-        </label>
-        <label class="block"><span class="text-gray-300">Additional Agreed Terms (optional)</span>
-          <textarea name="terms" rows="3" class="w-full bg-dark/80 border border-white/10 rounded px-3 py-2 text-white focus:border-gold-500" placeholder="e.g., payment split, delivery method, warranty..."></textarea>
-        </label>
-        <div class="p-4 bg-dark/30 border border-gold-500/20 rounded-lg">
-          <span class="block text-xs text-gray-400 mb-1" id="fee-breakdown-text">Fee will be calculated below</span>
-          <span class="block font-syne text-3xl font-extrabold text-gold-500" id="deal-fee">₦0</span>
-        </div>
-        <button type="submit" class="w-full gold-btn px-5 py-2.5 rounded-full text-dark font-bold text-sm">
-          Create Deal & Lock Funds
-        </button>
-      </form>
-      <div id="deal-message" class="mt-4 text-center text-sm text-gray-400"></div>
-    </div>
-  </div>
-
-  <script>
-    function openDealModal() { document.getElementById('deal-modal').classList.remove('hidden'); document.getElementById('deal-modal').classList.add('flex'); calculateDealFee(); }
-    function closeDealModal() { document.getElementById('deal-modal').classList.add('hidden'); document.getElementById('deal-modal').classList.remove('flex'); document.getElementById('deal-form').reset(); document.getElementById('deal-message').textContent=''; }
-    function updateCategoryInfo() { calculateDealFee(); }
-    function calculateDealFee() {
-      const cat = document.getElementById('deal-category').value;
-      const amount = parseFloat(document.getElementById('deal-amount').value) || 0;
-      let fee = 0;
-      if (cat === 'crypto') {
-        fee = amount * 0.005; // 0.5% flat
-        document.getElementById('fee-breakdown-text').innerText = 'Flat 0.5% crypto escrow fee';
-      } else if (cat === 'cars' || cat === 'realestate' || cat === 'gold' || cat === 'fx') {
-        if (amount < 500000) { fee = amount * 0.015; document.getElementById('fee-breakdown-text').innerText = '1.5% (under ₦500k)'; }
-        else if (amount <= 5000000) { fee = amount * 0.01; document.getElementById('fee-breakdown-text').innerText = '1.0% (₦500k‑₦5M)'; }
-        else if (amount <= 20000000) { fee = amount * 0.005; document.getElementById('fee-breakdown-text').innerText = '0.5% (₦5M‑₦20M)'; }
-        else { fee = 100000; document.getElementById('fee-breakdown-text').innerText = 'Maximum ₦100k cap'; }
-      }
-      document.getElementById('deal-fee').innerText = '₦' + Math.round(fee).toLocaleString();
-    }
-    document.getElementById('deal-amount').addEventListener('input', calculateDealFee);
-    document.getElementById('deal-category').addEventListener('change', calculateDealFee);
-    async function submitDeal(e) {
-      e.preventDefault();
-      const form = e.target;
-      // Build a temporary deal object for review (no API call yet)
-      const tempDeal = {
-        counterparty: form.counterparty.value,
-        title: form.title ? form.title.value : '',
-        category: form.category.value,
-        amount: parseFloat(form.amount.value),
-        inspection_hours: parseInt(form.inspection.value),
-        terms: form.terms.value,
-        fee: document.getElementById('deal-fee').innerText.replace('₦','').replace(/,/g,'')
-      };
-      // Populate summary view
-      const sumDiv = document.getElementById('summary-content');
-      sumDiv.innerHTML = `
-        <p><strong>Counterparty:</strong> ${tempDeal.counterparty}</p>
-        ${tempDeal.title ? `<p><strong>Title:</strong> ${tempDeal.title}</p>` : ''}
-        <p><strong>Category:</strong> ${tempDeal.category}</p>
-        <p><strong>Amount:</strong> ₦${tempDeal.amount.toLocaleString()}</p>
-        <p><strong>Inspection Window:</strong> ${tempDeal.inspection_hours} hrs</p>
-        ${tempDeal.terms ? `<p><strong>Additional Terms:</strong> ${tempDeal.terms}</p>` : ''}
-        <p><strong>Escrow Fee:</strong> ₦${parseInt(tempDeal.fee).toLocaleString()}</p>
-      `;
-      // Hide form controls, show summary & action buttons
-      document.getElementById('deal-form').classList.add('hidden');
-      document.getElementById('deal-summary').classList.remove('hidden');
-      // Store tempDeal for final confirmation
-      window._pendingDeal = tempDeal;
-    }
-
-    // Called when user clicks "Confirm & Lock Funds"
-    async function confirmDeal() {
-      const data = window._pendingDeal;
-      try {
-        const res = await fetch('/api/deal', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json.detail || 'Deal creation failed');
-        document.getElementById('deal-message').textContent = `Deal created! ID: ${json.deal_id}. Funds are now locked in escrow.`;
-        // Reset UI
-        setTimeout(closeDealModal, 2000);
-      } catch (err) {
-        document.getElementById('deal-message').textContent = err.message;
-      }
-    }
-
-    // Return to edit mode
-    function editDeal() {
-      document.getElementById('deal-summary').classList.add('hidden');
-      document.getElementById('deal-form').classList.remove('hidden');
-    }
-  </script>
-
-<section class="relative z-10 pt-40 pb-20 px-4 max-w-6xl mx-auto text-center">
-  <!-- Subtle Background Grid/Dot Pattern -->
-  <div class="absolute inset-0 -z-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
-  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-gold-400 text-xs font-semibold uppercase tracking-widest mb-8 border border-gold-500/20 shadow-inner">
-    <i data-lucide="shield-check" class="w-4 h-4 text-gold-500"></i>
-    <span>Autonomous Escrow Infrastructure for Nigeria</span>
-  </div>
-
-  <h1 class="font-syne text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8">
-    Zero Risk For High-Value <br class="hidden sm:inline" />
-    <span class="gold-gradient-text">Nigerian Transactions.</span>
-  </h1>
-
-  <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-normal leading-relaxed mb-10">
-    Lock funds securely in neutral escrow. Settle Cars, Gold, FX Dollars, Real Estate, and Crypto P2P with verified counterparties and automated dispute resolution.
-  </p>
-  <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-300 italic mt-4">
-    a business is not concluded until the buyer and seller get the value they deserve.
-  </p>
-
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="https://wa.me/2348000000000?text=Hello%20DealShield,%20I%20want%20to%20create%20an%20escrow%20deal" target="_blank" class="w-full sm:w-auto gold-btn px-8 py-4 rounded-full text-dark font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-3">
-      <i data-lucide="shield-alert" class="w-5 h-5"></i>
-      <span>Start Protection Deal</span>
-    </a>
-    <a href="#how-it-works" class="w-full sm:w-auto glass-card px-8 py-4 rounded-full text-white font-semibold text-sm hover:border-gold-500/50 transition-all flex items-center justify-center gap-2">
-      <span>See How It Works</span>
-      <i data-lucide="arrow-down" class="w-4 h-4 text-gold-400"></i>
-    </a>
-  </div>
-
-  <!-- STATS BAR -->
-  <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 glass-card p-6 sm:p-8 rounded-3xl border border-gold-500/10">
-    <div class="text-center p-2">
-      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">₦2.4B+</div>
-      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Escrow Volume</div>
-    </div>
-    <div class="text-center p-2 border-l border-white/5">
-      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">100%</div>
-      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Fund Protection</div>
-    </div>
-    <div class="text-center p-2 border-l border-white/5">
-      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">&lt; 3 mins</div>
-      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Deal Setup</div>
-    </div>
-    <div class="text-center p-2 border-l border-white/5">
-      <div class="font-syne text-3xl sm:text-4xl font-extrabold text-gold-500">0.5%</div>
-      <div class="text-xs uppercase tracking-wider font-semibold text-gray-400 mt-1">Lowest Crypto Fee</div>
-    </div>
-  </div>
-</section>
-
-<!-- === CORE MARKETS & CATEGORIES === -->
-<section id="categories" class="relative z-10 py-20 px-4 max-w-6xl mx-auto">
-  <div class="text-center mb-16">
-    <h2 class="font-syne text-3xl sm:text-4xl font-extrabold mb-4">Supported Market Verticals</h2>
-    <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Specialized escrow protection tailored to the unique verification procedures of Nigeria's high-value commerce.</p>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <!-- Card 1: Cars / Autos -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400 mb-6 backdrop-blur-md">
-          <i data-lucide="car" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">Car & Auto Sales</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Berger Auto Market, United Automobile, & Direct Import deals. Funds are held while mechanic verifies engine block, VIN, chassis numbers, and Custom papers.
+      <!-- Left: Text -->
+      <div class="fade-in">
+        <div class="eyebrow mb-5">Escrow Infrastructure for Nigeria</div>
+        <h1 class="text-[42px] sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight text-white mb-6">
+          Protect the Deal.<br>
+          Not Just the Money.
+        </h1>
+        <p class="text-[17px] text-ink-200 leading-relaxed max-w-lg mb-8">
+          DealShield provides neutral escrow protection for high-value transactions in Nigeria, giving buyers and sellers a structured process for payment, verification and release.
         </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-gold-400">
-        <span>Inspection Period: 24h - 72h</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-
-    <!-- Card 2: Crypto & USDT P2P -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-6 backdrop-blur-md">
-          <i data-lucide="bitcoin" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">Crypto & USDT P2P</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Over-the-Counter (OTC) USDT & Bitcoin swaps. Zero chargeback risk. Flat 0.5% escrow rate with multi-sig release guarantees.
+        <p class="text-sm text-ink-300 italic mb-8 max-w-lg">
+          A business is not concluded until the buyer and seller get the value they deserve.
         </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-emerald-400">
-        <span>Flat 0.5% Fee Structure</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-
-    <!-- Card 3: Real Estate & Land -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 mb-6 backdrop-blur-md">
-          <i data-lucide="building-2" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">Real Estate & Land</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Lekki Phase 1, Maitama, & Airport Road plots. Funds locked during lawyer's Deed of Assignment verification and Ministry of Lands searches.
-        </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-blue-400">
-        <span>Legal Doc Search Window</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-
-    <!-- Card 4: Gold & Bullion -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 mb-6 backdrop-blur-md">
-          <i data-lucide="gem" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">Gold Bullion Trading</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Raw karats & refined bullion. Escrow disbursement released upon lab purity test and physical density assay confirmation.
-        </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-yellow-400">
-        <span>Assay Verification Required</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-
-    <!-- Card 5: FX Dollars & Bureau De Change -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 mb-6 backdrop-blur-md">
-          <i data-lucide="banknote" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">FX & BDC Transfers</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Wuse Zone 4 & BDC currency swaps. Instant escrow confirmation before cash or bank wire distribution.
-        </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-indigo-400">
-        <span>Parallel Market Rates</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-
-    <!-- Card 6: Bulk Commodities & Cement -->
-    <div class="glass-card glass-card-hover p-8 rounded-3xl flex flex-col justify-between overflow-hidden relative group">
-      <div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-35 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80');"></div>
-      <div class="relative z-10">
-        <div class="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 mb-6 backdrop-blur-md">
-          <i data-lucide="truck" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-syne text-xl font-bold mb-3 text-white">Bulk Commodities</h3>
-        <p class="text-sm text-gray-300 leading-relaxed mb-6">
-          Heavy freight, Dangote/BUA cement trucks, & agricultural produce. Disbursement triggered on weighbridge ticket verification.
-        </p>
-      </div>
-      <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-purple-400">
-        <span>₦10/bag Flat Cement Rate</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- === INTERACTIVE FEE CALCULATOR === -->
-<section id="calculator" class="relative z-10 py-20 px-4 max-w-4xl mx-auto">
-  <div class="glass-card p-8 sm:p-12 rounded-3xl border border-gold-500/20 shadow-2xl">
-    <div class="text-center mb-10">
-      <h2 class="font-syne text-3xl font-extrabold mb-2">Transparent Fee Calculator</h2>
-      <p class="text-sm text-gray-400">Calculate exact protection charges for your transaction before locking funds.</p>
-    </div>
-
-    <div class="space-y-6">
-      <div>
-        <label class="block text-xs uppercase tracking-wider font-bold text-gray-300 mb-2">Select Category</label>
-        <select id="calc-category" onchange="calculateFee()" class="w-full bg-dark/80 border border-white/10 rounded-2xl px-5 py-4 text-white font-medium outline-none focus:border-gold-500 transition-colors">
-          <option value="standard">General Deals (Cars, Land, FX, Gold)</option>
-          <option value="crypto">Crypto P2P / USDT Swaps (0.5%)</option>
-          <option value="cement">Cement Logistics (₦10 per bag)</option>
-        </select>
-      </div>
-
-      <div>
-        <label id="amount-label" class="block text-xs uppercase tracking-wider font-bold text-gray-300 mb-2">Transaction Amount (₦)</label>
-        <input type="number" id="calc-amount" value="5000000" oninput="calculateFee()" placeholder="Enter amount in Naira" class="w-full bg-dark/80 border border-white/10 rounded-2xl px-5 py-4 text-white font-medium outline-none focus:border-gold-500 transition-colors">
-      </div>
-
-      <div class="p-6 rounded-2xl bg-dark/60 border border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div>
-          <span class="text-xs uppercase text-gray-400 font-semibold block">Estimated Protection Fee</span>
-          <span id="fee-breakdown-text" class="text-xs text-gold-400 font-medium">1.0% Bracket (₦500k – ₦5M)</span>
-        </div>
-        <div id="calc-result" class="font-syne text-4xl font-extrabold text-gold-500">
-          ₦50,000
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="location.href='/create-deal.html'" class="btn-primary">
+            <i data-lucide="shield-plus" class="w-4 h-4"></i>
+            Create a Protected Deal
+          </button>
+          <a href="#how-it-works" class="btn-secondary">
+            See How It Works
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- === HOW IT WORKS PROTOCOL === -->
-<section id="how-it-works" class="relative z-10 py-20 px-4 max-w-6xl mx-auto">
-  <div class="text-center mb-16">
-    <h2 class="font-syne text-3xl sm:text-4xl font-extrabold mb-4">The DealShield Protocol</h2>
-    <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Four automated steps engineered to guarantee neither party gets scammed.</p>
-  </div>
+      <!-- Right: Transaction Visualisation -->
+      <div class="fade-in" style="animation-delay: 0.15s;">
+        <div class="tx-card max-w-md mx-auto lg:ml-auto lg:mr-0">
+          <!-- Header -->
+          <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded border border-brand/30 flex items-center justify-center">
+                <i data-lucide="shield" class="w-4 h-4 text-brand"></i>
+              </div>
+              <span class="text-sm font-bold text-white">Escrow Transaction</span>
+            </div>
+            <span class="text-[11px] text-ink-300 font-medium">DS-2026-0048</span>
+          </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    <div class="glass-card p-6 rounded-3xl relative">
-      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">1</div>
-      <h3 class="font-syne text-lg font-bold mb-2">Initiate Deal</h3>
-      <p class="text-xs text-gray-400 leading-relaxed">Buyer or Seller creates agreement terms, sets inspection timeline, and specifies counterparty.</p>
-    </div>
+          <!-- Flow -->
+          <div class="px-5 py-3">
+            <div class="tx-row !px-0 !border-b-0 !py-2.5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+                  <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+                </div>
+                <div>
+                  <div class="tx-value text-[13px]">Buyer</div>
+                  <div class="text-[11px] text-ink-300">Initiated transfer</div>
+                </div>
+              </div>
+              <span class="status-pill status-verified">
+                <i data-lucide="check" class="w-3 h-3"></i> Verified
+              </span>
+            </div>
+            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
+            <div class="tx-row !px-0 !border-b-0 !py-2.5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+                  <i data-lucide="lock" class="w-4 h-4 text-warning"></i>
+                </div>
+                <div>
+                  <div class="tx-value text-[13px]">Funds Protected</div>
+                  <div class="text-[11px] text-ink-300">₦10,000,000 in escrow</div>
+                </div>
+              </div>
+              <span class="status-pill status-locked">
+                <i data-lucide="lock" class="w-3 h-3"></i> Locked
+              </span>
+            </div>
+            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
+            <div class="tx-row !px-0 !border-b-0 !py-2.5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+                  <i data-lucide="search-check" class="w-4 h-4 text-ink-200"></i>
+                </div>
+                <div>
+                  <div class="tx-value text-[13px]">Verification</div>
+                  <div class="text-[11px] text-ink-300">48h inspection window</div>
+                </div>
+              </div>
+              <span class="status-pill status-pending">
+                <i data-lucide="clock" class="w-3 h-3"></i> In Progress
+              </span>
+            </div>
+            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
+            <div class="tx-row !px-0 !border-b-0 !py-2.5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+                  <i data-lucide="user-check" class="w-4 h-4 text-ink-200"></i>
+                </div>
+                <div>
+                  <div class="tx-value text-[13px]">Seller</div>
+                  <div class="text-[11px] text-ink-300">Awaiting release</div>
+                </div>
+              </div>
+              <span class="status-pill status-released">
+                <i data-lucide="unlock" class="w-3 h-3"></i> Pending
+              </span>
+            </div>
+          </div>
 
-    <div class="glass-card p-6 rounded-3xl relative">
-      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">2</div>
-      <h3 class="font-syne text-lg font-bold mb-2">Lock Escrow</h3>
-      <p class="text-xs text-gray-400 leading-relaxed">Buyer deposits funds into dynamic bank vault or USDT escrow address. Funds are isolated instantly.</p>
-    </div>
-
-    <div class="glass-card p-6 rounded-3xl relative">
-      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">3</div>
-      <h3 class="font-syne text-lg font-bold mb-2">Fulfill & Inspect</h3>
-      <p class="text-xs text-gray-400 leading-relaxed">Seller delivers goods/services. Buyer inspects cars, land papers, or gold assays during the countdown.</p>
-    </div>
-
-    <div class="glass-card p-6 rounded-3xl relative">
-      <div class="w-10 h-10 rounded-full bg-gold-500 text-dark font-syne font-extrabold flex items-center justify-center text-lg mb-4">4</div>
-      <h3 class="font-syne text-lg font-bold mb-2">Instant Release</h3>
-      <p class="text-xs text-gray-400 leading-relaxed">Buyer clicks release or auto-timer expires. Seller receives instant payout directly to bank account.</p>
-    </div>
-  </div>
-</section>
-
-<!-- === AI CHAT MODAL TRIGGER === -->
-<div id="ai-chat-trigger" onclick="toggleChatModal()" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full gold-btn flex items-center justify-center text-dark cursor-pointer shadow-2xl" aria-label="Open DealShield AI Assistant">
-  <i data-lucide="bot" class="w-7 h-7"></i>
-</div>
-
-<!-- === AI CHAT MODAL === -->
-<div id="chat-modal-overlay" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
-  <div class="w-full max-w-md h-[550px] glass-card rounded-3xl flex flex-col overflow-hidden shadow-2xl border border-gold-500/30">
-    <div class="p-4 bg-dark/80 border-b border-white/10 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gold-500 text-dark flex items-center justify-center font-bold">
-          <i data-lucide="shield" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <div class="font-syne font-bold text-sm text-white">DealShield AI Assistant</div>
-          <div class="text-[10px] text-emerald-400 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online • Escrow Expert
+          <!-- Footer bar -->
+          <div class="px-5 py-3 border-t border-[var(--color-border)] flex items-center justify-between">
+            <span class="text-[11px] text-ink-300">Transaction Amount</span>
+            <span class="text-sm font-bold text-white">₦10,000,000</span>
           </div>
         </div>
       </div>
-      <button onclick="toggleChatModal()" class="text-gray-400 hover:text-white p-1">
-        <i data-lucide="x" class="w-6 h-6"></i>
-      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TRUST STRIP ═══════════════ -->
+<section class="border-y border-[var(--color-border)] bg-ink-800/50">
+  <div class="max-w-7xl mx-auto container-px py-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-[var(--color-border)]">
+      <div class="lg:px-8">
+        <div class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">₦2.4B+</div>
+        <div class="text-[12px] text-ink-300 font-medium mt-1 tracking-wide uppercase">Escrow Volume</div>
+      </div>
+      <div class="lg:px-8">
+        <div class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">100%</div>
+        <div class="text-[12px] text-ink-300 font-medium mt-1 tracking-wide uppercase">Fund Protection</div>
+      </div>
+      <div class="lg:px-8">
+        <div class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">&lt;3 min</div>
+        <div class="text-[12px] text-ink-300 font-medium mt-1 tracking-wide uppercase">Deal Setup</div>
+      </div>
+      <div class="lg:px-8">
+        <div class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">0.5%</div>
+        <div class="text-[12px] text-ink-300 font-medium mt-1 tracking-wide uppercase">Lowest Crypto Fee</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SOLUTIONS ═══════════════ -->
+<section id="solutions" class="section-pad">
+  <div class="max-w-7xl mx-auto container-px">
+    <div class="mb-12">
+      <div class="eyebrow mb-3">Solutions</div>
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">Escrow for every high-value market</h2>
     </div>
 
-    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
-      <div class="bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200">
-        Hello! I am your DealShield assistant. Ask me anything about car escrow, land verification, USDT P2P protection, or fees!
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- Automotive -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="car" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">Automotive</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          Funds held while mechanic verifies engine, VIN, chassis and custom papers.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> VIN verified</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> 24–72h</span>
+        </div>
+      </div>
+
+      <!-- Real Estate -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="building-2" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">Real Estate</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          Funds locked during lawyer's Deed of Assignment and Ministry of Lands search.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Title search</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Legal verified</span>
+        </div>
+      </div>
+
+      <!-- Gold & Bullion -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="gem" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">Gold & Bullion</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          Disbursement released upon lab purity test and physical density assay.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Assay tested</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Purity verified</span>
+        </div>
+      </div>
+
+      <!-- Digital Assets -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="bitcoin" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">Digital Assets</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          OTC USDT and Bitcoin swaps with zero chargeback risk and multi-sig release.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> 0.5% flat fee</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Multi-sig</span>
+        </div>
+      </div>
+
+      <!-- FX Transactions -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="banknote" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">FX Transactions</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          BDC currency swaps with instant escrow confirmation before distribution.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Instant confirm</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Parallel rates</span>
+        </div>
+      </div>
+
+      <!-- Bulk Commodities -->
+      <div class="card card-hover p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg border border-[var(--color-border-strong)] flex items-center justify-center">
+            <i data-lucide="truck" class="w-5 h-5 text-brand"></i>
+          </div>
+          <h3 class="text-[16px] font-bold text-white">Bulk Commodities</h3>
+        </div>
+        <p class="text-[14px] text-ink-200 leading-relaxed mb-4">
+          Dangote/BUA cement trucks and produce. Release on weighbridge ticket.
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> ₦10/bag</span>
+          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Weighbridge</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section id="how-it-works" class="section-pad bg-ink-800/40 border-y border-[var(--color-border)]">
+  <div class="max-w-7xl mx-auto container-px">
+    <div class="mb-14">
+      <div class="eyebrow mb-3">How It Works</div>
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">A structured escrow process</h2>
+    </div>
+
+    <div class="relative">
+      <div class="timeline-line hidden lg:block"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+
+        <div class="timeline-step">
+          <div class="timeline-dot">01</div>
+          <h3 class="text-[15px] font-bold text-white mb-2">Initiate Deal</h3>
+          <p class="text-[13px] text-ink-300 leading-relaxed">Buyer or seller creates the agreement, sets inspection timeline and specifies counterparty.</p>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-dot">02</div>
+          <h3 class="text-[15px] font-bold text-white mb-2">Lock Funds</h3>
+          <p class="text-[13px] text-ink-300 leading-relaxed">Buyer deposits funds into a dynamic bank vault or USDT escrow address. Funds are isolated instantly.</p>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-dot">03</div>
+          <h3 class="text-[15px] font-bold text-white mb-2">Fulfil & Verify</h3>
+          <p class="text-[13px] text-ink-300 leading-relaxed">Seller delivers the asset. Buyer inspects during the verification window — cars, documents, assays.</p>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-dot">04</div>
+          <h3 class="text-[15px] font-bold text-white mb-2">Release</h3>
+          <p class="text-[13px] text-ink-300 leading-relaxed">Funds released when conditions are satisfied. Buyer clicks release or timer auto-expires. Seller gets instant payout.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEE CALCULATOR ═══════════════ -->
+<section id="calculator" class="section-pad">
+  <div class="max-w-3xl mx-auto container-px">
+    <div class="mb-12 text-center">
+      <div class="eyebrow mb-3">Fees</div>
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-4">Know your protection cost<br>before you commit</h2>
+      <p class="text-[15px] text-ink-300 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
+    </div>
+
+    <div class="card p-8 lg:p-10">
+      <div class="space-y-5">
+        <div>
+          <label class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Transaction Category</label>
+          <select id="calc-category" onchange="calculateFee()" class="input-field cursor-pointer">
+            <option value="standard">General Deals (Cars, Land, FX, Gold)</option>
+            <option value="crypto">Crypto P2P / USDT Swaps (0.5%)</option>
+            <option value="cement">Cement Logistics (₦10 per bag)</option>
+          </select>
+        </div>
+
+        <div>
+          <label id="amount-label" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Transaction Amount (₦)</label>
+          <input type="number" id="calc-amount" value="5000000" oninput="calculateFee()" placeholder="Enter amount in Naira" class="input-field">
+        </div>
+
+        <div class="pt-4 border-t border-[var(--color-border)]">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+            <div>
+              <span class="text-[12px] uppercase text-ink-300 font-semibold block mb-1">Estimated Protection Fee</span>
+              <span id="fee-breakdown-text" class="text-[13px] text-brand font-medium">1.0% Bracket (₦500k – ₦5M)</span>
+            </div>
+            <div id="calc-result" class="text-3xl font-extrabold text-white">₦50,000</div>
+          </div>
+          <div class="flex justify-between items-center pt-3 border-t border-[var(--color-border)]">
+            <span class="text-[13px] text-ink-300 font-medium">Total Amount (Fee + Principal)</span>
+            <span id="calc-total" class="text-[15px] font-bold text-white">₦5,050,000</span>
+          </div>
+        </div>
+
+        <button onclick="location.href='/create-deal.html'" class="btn-primary w-full mt-2">
+          <i data-lucide="shield-plus" class="w-4 h-4"></i>
+          Create Protected Deal
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECURITY ═══════════════ -->
+<section id="security" class="section-pad bg-ink-800/40 border-y border-[var(--color-border)]">
+  <div class="max-w-7xl mx-auto container-px">
+    <div class="grid lg:grid-cols-3 gap-12">
+      <div class="lg:col-span-1">
+        <div class="eyebrow mb-3">Security</div>
+        <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-4">Why users trust DealShield</h2>
+        <p class="text-[15px] text-ink-300 leading-relaxed mb-6">
+          Every transaction follows a structured escrow protocol designed to protect both parties throughout the deal lifecycle.
+        </p>
+      </div>
+
+      <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="scale" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Neutral Escrow</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">Funds held by a neutral third party, accessible to neither buyer nor seller until conditions are met.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="badge-check" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Verified Counterparties</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">NIN, BVN, phone and business verification before any deal can be initiated.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="search-check" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Structured Verification</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">Configurable inspection windows for asset delivery, documents and quality checks.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="file-text" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Transaction Records</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">Full audit trail of every action, message and status change for dispute resolution.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="lock-keyhole" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Controlled Fund Release</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">Funds released only on buyer confirmation or automatic timer expiry — no manual override.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <div class="flex items-start gap-3">
+            <i data-lucide="gavel" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h3 class="text-[14px] font-bold text-white mb-1">Dispute Resolution</h3>
+              <p class="text-[13px] text-ink-300 leading-relaxed">Evidence-based dispute process. Both parties submit documentation. Resolution within 48 hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT / FINAL CTA ═══════════════ -->
+<section id="about" class="section-pad">
+  <div class="max-w-4xl mx-auto container-px text-center">
+    <div class="eyebrow mb-4">Get Started</div>
+    <h2 class="text-3xl lg:text-5xl font-extrabold text-white tracking-tight mb-6">
+      Your next high-value transaction<br>deserves protection.
+    </h2>
+    <p class="text-[16px] text-ink-200 leading-relaxed max-w-xl mx-auto mb-8">
+      Bring both sides of the transaction into a structured escrow process designed to protect the buyer, seller and the value of the deal.
+    </p>
+    <button onclick="location.href='/create-deal.html'" class="btn-primary text-[15px] px-8 py-4">
+      <i data-lucide="shield-plus" class="w-5 h-5"></i>
+      Create a Protected Deal
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="border-t border-[var(--color-border)] bg-ink-800/60">
+  <div class="max-w-7xl mx-auto container-px py-14">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- Brand -->
+      <div class="col-span-2 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5 mb-4">
+          <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+              <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+            </svg>
+          </div>
+          <span class="font-bold text-[15px] text-white">DealShield</span>
+        </a>
+        <p class="text-[13px] text-ink-300 leading-relaxed max-w-xs">
+          Neutral escrow infrastructure for high-value transactions in Nigeria. Protect the deal, not just the money.
+        </p>
+      </div>
+
+      <!-- Solutions -->
+      <div>
+        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4">Solutions</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Automotive</a></li>
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Real Estate</a></li>
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Gold & Bullion</a></li>
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Digital Assets</a></li>
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">FX Transactions</a></li>
+          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Bulk Commodities</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4">Company</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#how-it-works" class="text-[13px] text-ink-300 hover:text-brand transition-colors">How It Works</a></li>
+          <li><a href="#security" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Security</a></li>
+          <li><a href="#calculator" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Fees</a></li>
+          <li><a href="/terms.html" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Terms</a></li>
+          <li><a href="/privacy.html" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Privacy</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4">Contact</h4>
+        <ul class="space-y-2.5">
+          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
+          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+        </ul>
       </div>
     </div>
 
-    <div class="p-3 border-t border-white/10 bg-dark/90 flex gap-2">
-      <input type="text" id="chat-input" onkeypress="handleChatKey(event)" placeholder="Ask about escrow terms or fees..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-xs text-white outline-none focus:border-gold-500">
-      <button onclick="sendChatMessage()" class="gold-btn px-4 py-2.5 rounded-full text-dark font-bold text-xs">
+    <div class="pt-8 border-t border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-[12px] text-ink-300">© 2026 DealShield Technologies. Built for Nigeria. Trusted worldwide.</p>
+      <p class="text-[12px] text-ink-300">Governed by the laws of the Federal Republic of Nigeria.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ AI CHAT MODAL ═══════════════ -->
+<div id="ai-chat-trigger" onclick="toggleChatModal()" class="chat-trigger" aria-label="Open DealShield AI Assistant">
+  <i data-lucide="bot" class="w-5 h-5"></i>
+</div>
+
+<div id="chat-modal-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+  <div class="w-full max-w-md h-[520px] card rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-[var(--color-border-strong)]">
+    <div class="px-4 py-3.5 border-b border-[var(--color-border)] flex items-center justify-between bg-ink-800/80">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg border border-brand/30 flex items-center justify-center">
+          <i data-lucide="shield" class="w-4 h-4 text-brand"></i>
+        </div>
+        <div>
+          <div class="font-bold text-[13px] text-white">DealShield Assistant</div>
+          <div class="text-[10px] text-positive flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-positive"></span> Online
+          </div>
+        </div>
+      </div>
+      <button onclick="toggleChatModal()" class="text-ink-300 hover:text-white p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-[13px]">
+      <div class="bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100">
+        Hello! I am your DealShield assistant. Ask me anything about car escrow, land verification, USDT P2P protection, or fees.
+      </div>
+    </div>
+    <div class="p-3 border-t border-[var(--color-border)] flex gap-2 bg-ink-800/90">
+      <input type="text" id="chat-input" onkeypress="handleChatKey(event)" placeholder="Ask about escrow terms or fees..." class="input-field !py-2.5 !text-[13px] flex-1">
+      <button onclick="sendChatMessage()" class="btn-primary !px-4 !py-2.5">
         <i data-lucide="send" class="w-4 h-4"></i>
       </button>
     </div>
   </div>
 </div>
 
-<!-- === FOOTER === -->
-<footer class="relative z-10 border-t border-white/10 py-12 px-4 text-center bg-dark/90">
-  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center text-dark font-syne font-bold text-sm">DS</div>
-      <span class="font-syne font-bold text-white text-lg">DealShield</span>
-    </div>
-    <div class="text-xs text-gray-400">
-      © 2026 DealShield Technologies Ltd. Licensed Escrow Infrastructure.
-    </div>
-    <div class="flex gap-6 text-xs text-gray-400">
-      <a href="/terms.html" class="hover:text-gold-400">Terms of Service</a>
-      <a href="/privacy.html" class="hover:text-gold-400">Privacy Policy</a>
-    </div>
-  </div>
-</footer>
-
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
-  // THREE.JS Interactive 3D Particles + Wave Network Background
-  (function initThreeBackground() {
-    const canvas = document.getElementById('hero-canvas');
-    if (!canvas || !window.THREE) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 400;
-
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Particle Network
-    const particleCount = 1200;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-
-    const goldColor = new THREE.Color('#D4AF37');
-    const blueColor = new THREE.Color('#3B82F6');
-
-    for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 1200;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 800;
-
-      const mixColor = Math.random() > 0.3 ? goldColor : blueColor;
-      colors[i * 3] = mixColor.r;
-      colors[i * 3 + 1] = mixColor.g;
-      colors[i * 3 + 2] = mixColor.b;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const material = new THREE.PointsMaterial({
-      size: 3,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending
-    });
-
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-
-    // Mouse interactive movement
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
-    });
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      particles.rotation.y += 0.001;
-      particles.rotation.x += 0.0005;
-
-      camera.position.x += (mouseX - camera.position.x) * 0.05;
-      camera.position.y += (-mouseY - camera.position.y) * 0.05;
-      camera.lookAt(scene.position);
-
-      renderer.render(scene, camera);
-    }
-    animate();
-  })();
-
-  // Initialize Lucide Icons
+  // ── Initialize Lucide Icons ──
   lucide.createIcons();
 
-  // GSAP ScrollTrigger Animations
+  // ── GSAP Scroll Animations ──
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from("h1", { opacity: 0, y: 40, duration: 1, delay: 0.2, ease: "power3.out" });
-    
-    gsap.from("#categories .glass-card-hover", { 
-      opacity: 0, 
-      y: 50, 
-      duration: 0.8, 
-      stagger: 0.15,
-      ease: "power2.out",
-      scrollTrigger: { trigger: "#categories", start: "top 80%" }
+    gsap.from("#solutions .card", {
+      opacity: 0, y: 30, duration: 0.6, stagger: 0.08, ease: "power2.out",
+      scrollTrigger: { trigger: "#solutions", start: "top 80%" }
     });
 
-    gsap.from("#how-it-works .glass-card", {
-      opacity: 0,
-      scale: 0.95,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "back.out(1.7)",
+    gsap.from("#how-it-works .timeline-step", {
+      opacity: 0, y: 20, duration: 0.5, stagger: 0.12, ease: "power2.out",
       scrollTrigger: { trigger: "#how-it-works", start: "top 75%" }
     });
 
-    gsap.from("#calculator", {
-      opacity: 0,
-      y: 40,
-      duration: 1,
-      ease: "power3.out",
+    gsap.from("#calculator .card", {
+      opacity: 0, y: 30, duration: 0.7, ease: "power3.out",
       scrollTrigger: { trigger: "#calculator", start: "top 80%" }
+    });
+
+    gsap.from("#security .card", {
+      opacity: 0, y: 20, duration: 0.5, stagger: 0.06, ease: "power2.out",
+      scrollTrigger: { trigger: "#security", start: "top 80%" }
     });
   }
 
-  // Fee Calculator Logic
+  // ── Fee Calculator Logic (preserved) ──
   function calculateFee() {
     const cat = document.getElementById('calc-category').value;
     const amountInput = document.getElementById('calc-amount');
     const amountLabel = document.getElementById('amount-label');
     const breakdownText = document.getElementById('fee-breakdown-text');
     const resultEl = document.getElementById('calc-result');
+    const totalEl = document.getElementById('calc-total');
 
     let val = parseFloat(amountInput.value) || 0;
     let fee = 0;
@@ -751,32 +993,36 @@
     if (cat === 'cement') {
       amountLabel.innerText = "Number of Cement Bags";
       fee = val * 10;
-      breakdownText.innerText = `Flat Rate: ₦10 per bag (${val.toLocaleString()} bags)`;
+      breakdownText.innerText = `₦10 per bag (${val.toLocaleString()} bags)`;
     } else if (cat === 'crypto') {
       amountLabel.innerText = "Transaction Amount (₦)";
       fee = val * 0.005;
-      breakdownText.innerText = "Flat Rate: 0.5% OTC/USDT Escrow Rate";
+      breakdownText.innerText = "0.5% OTC/USDT Escrow Rate";
     } else {
       amountLabel.innerText = "Transaction Amount (₦)";
       if (val < 500000) {
         fee = val * 0.015;
-        breakdownText.innerText = "1.5% Bracket (Under ₦500,000)";
+        breakdownText.innerText = "1.5% (Under ₦500,000)";
       } else if (val <= 5000000) {
         fee = val * 0.01;
-        breakdownText.innerText = "1.0% Bracket (₦500,000 – ₦5,000,000)";
+        breakdownText.innerText = "1.0% (₦500k – ₦5M)";
       } else if (val <= 20000000) {
         fee = val * 0.005;
-        breakdownText.innerText = "0.5% Bracket (₦5,000,000 – ₦20,000,000)";
+        breakdownText.innerText = "0.5% (₦5M – ₦20M)";
       } else {
         fee = 100000;
-        breakdownText.innerText = "Maximum Fee Cap (Above ₦20,000,000)";
+        breakdownText.innerText = "Maximum ₦100k cap (Above ₦20M)";
       }
     }
 
-    resultEl.innerText = "₦" + Math.round(fee).toLocaleString();
+    const feeStr = "₦" + Math.round(fee).toLocaleString();
+    resultEl.innerText = feeStr;
+    totalEl.innerText = "₦" + Math.round(val + fee).toLocaleString();
   }
+  // Run on load
+  calculateFee();
 
-  // AI Chat Modal Toggle
+  // ── AI Chat Modal (preserved) ──
   function toggleChatModal() {
     const modal = document.getElementById('chat-modal-overlay');
     modal.classList.toggle('hidden');
@@ -793,16 +1039,14 @@
     if (!text) return;
 
     const messages = document.getElementById('chat-messages');
-    
-    // Append User Message
+
     const userDiv = document.createElement('div');
-    userDiv.className = 'bg-gold-500 text-dark font-medium p-3 rounded-2xl max-w-[85%] ml-auto';
+    userDiv.className = 'bg-brand text-ink-900 font-medium p-3 rounded-lg max-w-[85%] ml-auto';
     userDiv.innerText = text;
     messages.appendChild(userDiv);
     input.value = '';
     messages.scrollTop = messages.scrollHeight;
 
-    // Fetch API response
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -810,148 +1054,19 @@
         body: JSON.stringify({ message: text })
       });
       const data = await res.json();
-      
+
       const botDiv = document.createElement('div');
-      botDiv.className = 'bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200';
+      botDiv.className = 'bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100';
       botDiv.innerText = data.reply || "DealShield escrow protection guarantees funds are held securely until deal completion.";
       messages.appendChild(botDiv);
       messages.scrollTop = messages.scrollHeight;
     } catch (err) {
       const botDiv = document.createElement('div');
-      botDiv.className = 'bg-white/5 border border-white/10 p-3 rounded-2xl max-w-[85%] text-gray-200';
+      botDiv.className = 'bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100';
       botDiv.innerText = "DealShield protects high-value deals across Nigeria. You can lock escrow funds via bank transfer or USDT.";
       messages.appendChild(botDiv);
       messages.scrollTop = messages.scrollHeight;
     }
-  }
-</script>
-<!-- Auth & KYC Modal -->
-<div id="auth-modal" class="fixed inset-0 bg-dark/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4">
-  <div class="w-full max-w-md bg-dark/90 glass-card rounded-3xl p-6 relative">
-    <button onclick="closeAuthModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white">
-      <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
-    <div id="auth-tabs" class="flex mb-4 border-b border-gray-700">
-      <button id="login-tab" class="flex-1 text-center py-2 font-semibold text-gray-300 border-b-2 border-gold-500" onclick="showLogin()">Log In</button>
-      <button id="register-tab" class="flex-1 text-center py-2 font-semibold text-gray-300" onclick="showRegister()">Register</button>
-    </div>
-    <!-- Login Form -->
-    <form id="login-form" class="space-y-4" onsubmit="submitLogin(event)">
-      <label class="block"><span class="text-gray-300">Email or Phone</span>
-        <input type="text" name="identifier" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">Password</span>
-        <input type="password" name="password" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <button type="submit" class="w-full gold-btn text-sm font-bold">Log In</button>
-    </form>
-    <!-- Register Form -->
-    <form id="register-form" class="space-y-4 hidden" onsubmit="submitRegister(event)">
-      <label class="block"><span class="text-gray-300">Full Name</span>
-        <input type="text" name="name" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">Phone</span>
-        <input type="tel" name="phone" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">Email</span>
-        <input type="email" name="email" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">Password</span>
-        <input type="password" name="password" required minlength="8" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <button type="submit" class="w-full gold-btn text-sm font-bold">Register</button>
-    </form>
-    <!-- KYC Form (shown after successful registration) -->
-    <form id="kyc-form" class="space-y-4 hidden" onsubmit="submitKYC(event)">
-      <h3 class="text-center text-gold-400 font-semibold mb-2">Complete KYC</h3>
-      <label class="block"><span class="text-gray-300">NIN (National ID)</span>
-        <input type="text" name="nin" required class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">BVN (Bank Verification No.)</span>
-        <input type="text" name="bvn" required pattern="\d{11}" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <label class="block"><span class="text-gray-300">Business Name (optional)</span>
-        <input type="text" name="business_name" class="w-full bg-dark/80 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-gold-500" />
-      </label>
-      <button type="submit" class="w-full gold-btn text-sm font-bold">Submit KYC</button>
-    </form>
-    <div id="auth-message" class="mt-4 text-center text-sm text-gray-400"></div>
-  </div>
-</div>
-
-<script>
-  function openAuthModal(mode) {
-    const modal = document.getElementById('auth-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    if (mode === 'login') showLogin(); else if (mode === 'register') showRegister();
-  }
-  function closeAuthModal() {
-    const modal = document.getElementById('auth-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.getElementById('auth-message').textContent = '';
-    document.getElementById('login-form').reset();
-    document.getElementById('register-form').reset();
-    document.getElementById('kyc-form').reset();
-    showLogin();
-  }
-  function showLogin() {
-    document.getElementById('login-form').classList.remove('hidden');
-    document.getElementById('register-form').classList.add('hidden');
-    document.getElementById('kyc-form').classList.add('hidden');
-    document.getElementById('login-tab').classList.add('border-gold-500');
-    document.getElementById('register-tab').classList.remove('border-gold-500');
-  }
-  function showRegister() {
-    document.getElementById('login-form').classList.add('hidden');
-    document.getElementById('register-form').classList.remove('hidden');
-    document.getElementById('kyc-form').classList.add('hidden');
-    document.getElementById('register-tab').classList.add('border-gold-500');
-    document.getElementById('login-tab').classList.remove('border-gold-500');
-  }
-  async function submitLogin(e) {
-    e.preventDefault();
-    const f = e.target;
-    const data = { email_or_phone: f.identifier.value, password: f.password.value };
-    try {
-      const res = await fetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.detail || 'Login failed');
-      localStorage.setItem('access_token', json.access_token);
-      document.getElementById('auth-message').textContent = 'Logged in successfully.';
-      setTimeout(closeAuthModal, 1200);
-    } catch (err) { document.getElementById('auth-message').textContent = err.message; }
-  }
-  async function submitRegister(e) {
-    e.preventDefault();
-    const f = e.target;
-    const data = { name: f.name.value, phone: f.phone.value, email: f.email.value, password: f.password.value };
-    try {
-      const res = await fetch('/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.detail || 'Registration failed');
-      localStorage.setItem('access_token', json.access_token);
-      document.getElementById('register-form').classList.add('hidden');
-      document.getElementById('kyc-form').classList.remove('hidden');
-      document.getElementById('auth-message').textContent = 'Registration successful – complete KYC.';
-    } catch (err) { document.getElementById('auth-message').textContent = err.message; }
-  }
-  async function submitKYC(e) {
-    e.preventDefault();
-    const token = localStorage.getItem('access_token');
-    if (!token) return document.getElementById('auth-message').textContent = 'You must be logged in.';
-    const f = e.target;
-    const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
-    try {
-      await fetch('/auth/verify-nin', { method: 'POST', headers, body: JSON.stringify({}) });
-      await fetch('/auth/verify-bvn', { method: 'POST', headers, body: JSON.stringify({ bvn: f.bvn.value }) });
-      if (f.business_name.value.trim()) {
-        await fetch('/auth/verify-business', { method: 'POST', headers, body: JSON.stringify({ business_name: f.business_name.value }) });
-      }
-      document.getElementById('auth-message').textContent = 'KYC completed successfully.';
-      setTimeout(closeAuthModal, 1500);
-    } catch (err) { document.getElementById('auth-message').textContent = err.message || 'KYC failed'; }
   }
 </script>
 

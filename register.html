@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealShield — Create Account</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Libraries -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            900: '#0B0F1A',
+            800: '#0F1420',
+            700: '#161C2C',
+            600: '#1E2536',
+            500: '#2A3346',
+            400: '#3D4860',
+            300: '#6B7693',
+            200: '#9BA5BC',
+            100: '#C9D1E0',
+          },
+          brand: {
+            DEFAULT: '#C8A45C',
+            light: '#E0C180',
+            dark: '#9A7B3E',
+          },
+          surface: '#0F1420',
+          positive: '#22C55E',
+          warning: '#F59E0B',
+          danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+        borderRadius: {
+          sm: '6px',
+          md: '10px',
+          lg: '14px',
+        },
+        boxShadow: {
+          sm: '0 1px 2px rgba(0,0,0,0.3)',
+          md: '0 4px 12px rgba(0,0,0,0.25)',
+          lg: '0 12px 40px rgba(0,0,0,0.3)',
+        },
+      }
+    }
+  };
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A;
+  --color-surface: #0F1420;
+  --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12);
+  --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #9BA5BC;
+  --color-text-muted: #6B7693;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 56px;
+  --space-7: 72px;
+  --space-8: 96px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { background-color: var(--color-bg); color: var(--color-text-primary); font-family: var(--font-sans); overflow-x: hidden; }
+.input-field { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; color: var(--color-text-primary); font-size: 15px; font-weight: 500; outline: none; width: 100%; transition: border-color 0.2s; }
+.input-field:focus { border-color: var(--color-accent); }
+.input-field::placeholder { color: var(--color-text-muted); }
+.input-field.error { border-color: var(--color-danger); }
+.input-with-icon { padding-left: 44px; }
+.btn-primary { background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: var(--radius-md); border: none; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+.link { color: var(--color-accent); text-decoration: underline; font-size: 14px; }
+.error-msg { color: var(--color-danger); margin-top: 8px; font-size: 13px; }
+.field-error { color: var(--color-danger); font-size: 12px; margin-top: 4px; }
+.card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.input-wrap { position: relative; }
+.input-wrap .icon-left { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+.pw-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); cursor: pointer; background: none; border: none; padding: 0; }
+.pw-toggle:hover { color: var(--color-text-secondary); }
+</style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+<header class="fixed top-0 inset-x-0 z-50 bg-ink-800/70 backdrop-blur-sm border-b border-[var(--color-border)] p-4 flex items-center">
+  <a href="/" class="flex items-center gap-2">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] text-white">DealShield</span>
+  </a>
+</header>
+<main class="w-full max-w-md px-4">
+  <div class="card p-6 mt-24 mx-auto shadow-md">
+    <h2 class="text-2xl font-bold text-white mb-1 text-center">Create your DealShield account</h2>
+    <p class="text-[var(--color-text-secondary)] text-sm text-center mb-5">Secure escrow for every transaction on dealshield.ng</p>
+    <form id="register-form" class="space-y-4" novalidate>
+      <!-- Full Name -->
+      <div>
+        <div class="input-wrap">
+          <i data-lucide="user" class="icon-left w-4 h-4"></i>
+          <input type="text" id="name" name="name" placeholder="Full name" class="input-field input-with-icon" required>
+        </div>
+        <div id="name-error" class="field-error hidden"></div>
+      </div>
+      <!-- Phone -->
+      <div>
+        <div class="input-wrap">
+          <i data-lucide="phone" class="icon-left w-4 h-4"></i>
+          <input type="tel" id="phone" name="phone" placeholder="Phone (e.g. 0801 234 5678)" class="input-field input-with-icon" required>
+        </div>
+        <div id="phone-error" class="field-error hidden"></div>
+      </div>
+      <!-- Email -->
+      <div>
+        <div class="input-wrap">
+          <i data-lucide="mail" class="icon-left w-4 h-4"></i>
+          <input type="email" id="email" name="email" placeholder="Email address" class="input-field input-with-icon" required>
+        </div>
+        <div id="email-error" class="field-error hidden"></div>
+      </div>
+      <!-- Password -->
+      <div>
+        <div class="input-wrap">
+          <i data-lucide="lock" class="icon-left w-4 h-4"></i>
+          <input type="password" id="password" name="password" placeholder="Password (min 8 characters)" class="input-field input-with-icon" required minlength="8">
+          <button type="button" class="pw-toggle" onclick="togglePassword()" aria-label="Toggle password visibility">
+            <i data-lucide="eye" id="pw-eye-icon" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="password-error" class="field-error hidden"></div>
+      </div>
+      <button type="submit" id="submit-btn" class="btn-primary w-full flex items-center justify-center">
+        <i data-lucide="user-plus" class="w-4 h-4"></i>
+        Register
+      </button>
+      <div id="error" class="error-msg hidden"></div>
+      <div id="success" class="text-[var(--color-positive)] text-sm text-center hidden"></div>
+    </form>
+    <div class="mt-5 text-center text-sm text-[var(--color-text-secondary)]">
+      Already have an account? <a href="/login.html" class="link">Log in</a>
+    </div>
+  </div>
+  <p class="text-center text-xs text-[var(--color-text-muted)] mt-4">
+    By creating an account you agree to our
+    <a href="/terms.html" class="link">Terms</a> &amp; <a href="/privacy.html" class="link">Privacy Policy</a>.
+  </p>
+</main>
+<script>
+  lucide.createIcons();
+
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    const icon = document.getElementById('pw-eye-icon');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.setAttribute('data-lucide', 'eye-off');
+    } else {
+      pw.type = 'password';
+      icon.setAttribute('data-lucide', 'eye');
+    }
+    lucide.createIcons();
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.field-error').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.input-field').forEach(el => el.classList.remove('error'));
+    document.getElementById('error').classList.add('hidden');
+    document.getElementById('success').classList.add('hidden');
+  }
+
+  function showFieldError(fieldId, message) {
+    const errEl = document.getElementById(fieldId + '-error');
+    const inputEl = document.getElementById(fieldId);
+    errEl.textContent = message;
+    errEl.classList.remove('hidden');
+    inputEl.classList.add('error');
+  }
+
+  function validateForm(data) {
+    let valid = true;
+    if (!data.name || data.name.trim().length < 2) {
+      showFieldError('name', 'Please enter your full name.');
+      valid = false;
+    }
+    if (!data.phone || data.phone.trim().length < 7) {
+      showFieldError('phone', 'Please enter a valid phone number.');
+      valid = false;
+    }
+    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      showFieldError('email', 'Please enter a valid email address.');
+      valid = false;
+    }
+    if (!data.password || data.password.length < 8) {
+      showFieldError('password', 'Password must be at least 8 characters.');
+      valid = false;
+    }
+    return valid;
+  }
+
+  document.getElementById('register-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearErrors();
+
+    const data = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    };
+
+    if (!validateForm(data)) return;
+
+    const btn = document.getElementById('submit-btn');
+    const btnHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Creating account...';
+    lucide.createIcons();
+
+    fetch('/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      return res.json().then(json => ({ ok: res.ok, status: res.status, json }));
+    })
+    .then(({ ok, json }) => {
+      if (!ok) {
+        throw new Error(json.message || json.detail || json.error || 'Registration failed. Please try again.');
+      }
+      if (json.access_token) {
+        localStorage.setItem('access_token', json.access_token);
+        const successEl = document.getElementById('success');
+        successEl.textContent = 'Account created! Redirecting to verification...';
+        successEl.classList.remove('hidden');
+        setTimeout(() => { location.href = '/kyc.html'; }, 600);
+      } else {
+        throw new Error('Missing access token in response.');
+      }
+    })
+    .catch(err => {
+      const errorEl = document.getElementById('error');
+      errorEl.textContent = err.message;
+      errorEl.classList.remove('hidden');
+      btn.disabled = false;
+      btn.innerHTML = btnHtml;
+      lucide.createIcons();
+    });
+  });
+</script>
+</body>
+</html>

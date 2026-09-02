@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — DealShield</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Libraries -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
+            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          },
+          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
+          surface: '#0F1420',
+          positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+        borderRadius: { sm: '6px', md: '10px', lg: '14px' },
+        boxShadow: {
+          sm: '0 1px 2px rgba(0,0,0,0.3)',
+          md: '0 4px 12px rgba(0,0,0,0.25)',
+          lg: '0 12px 40px rgba(0,0,0,0.3)',
+        },
+      }
+    }
+  };
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A;
+  --color-surface: #0F1420;
+  --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12);
+  --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #9BA5BC;
+  --color-text-muted: #6B7693;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02','cv03','cv04','cv11';
+  letter-spacing: -0.01em;
+}
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+.btn-primary {
+  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-secondary {
+  background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
+  cursor: pointer; transition: border-color .2s, background .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-ghost {
+  background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px;
+  padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: color .2s;
+}
+.btn-ghost:hover { color: var(--color-text-primary); }
+
+/* Sidebar */
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-radius: var(--radius-md); color: var(--color-text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: background .15s, color .15s; border: 1px solid transparent;
+}
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+
+/* Status pills */
+.status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+.status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
+.status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
+.status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
+.status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+.status-disputed { background: rgba(239,68,68,0.12); color: #EF4444; }
+
+/* Table */
+.deals-table { width: 100%; border-collapse: collapse; }
+.deals-table th {
+  text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-text-muted); padding: 12px 16px; border-bottom: 1px solid var(--color-border);
+}
+.deals-table td {
+  padding: 14px 16px; font-size: 13px; color: var(--color-text-primary); border-bottom: 1px solid var(--color-border);
+}
+.deals-table tbody tr { transition: background .15s; }
+.deals-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.deals-table tbody tr:last-child td { border-bottom: none; }
+
+/* Activity feed */
+.activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+.activity-item:last-child { border-bottom: none; }
+.activity-dot { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border-strong); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* Mobile sidebar */
+@media (max-width: 1023px) {
+  #sidebar { transform: translateX(-100%); transition: transform 0.25s ease; position: fixed; z-index: 60; }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+}
+#sidebar-overlay { display: none; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+  <!-- Logo -->
+  <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a class="sidebar-link active" onclick="setActiveNav(this)">
+      <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
+      <span class="ml-auto text-[11px] bg-ink-700 text-ink-200 px-1.5 py-0.5 rounded-full">6</span>
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
+      <span class="ml-auto text-[11px] bg-brand/15 text-brand px-1.5 py-0.5 rounded-full">3</span>
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="px-3 py-4 border-t border-[var(--color-border)]">
+    <div class="sidebar-link" onclick="handleLogout()">
+      <i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Log Out
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div class="lg:ml-64 min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+      <h1 class="text-lg font-bold text-white">Dashboard</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span class="hidden md:inline">Create Deal</span>
+      </button>
+      <button class="btn-primary" onclick="location.href='/create-deal.html'">
+        <i data-lucide="shield-plus" class="w-4 h-4"></i>
+        <span>Create Deal</span>
+      </button>
+      <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        </div>
+        <div class="hidden sm:block leading-tight">
+          <div id="user-name" class="text-sm font-semibold text-white">—</div>
+          <div class="text-[11px] text-ink-300">Verified Account</div>
+        </div>
+      </div>
+      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+        <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 p-5 lg:p-6 space-y-6">
+    <!-- Overview Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <!-- Total Escrow Volume -->
+      <div class="card p-5 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Total Escrow Volume</span>
+          <div class="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center">
+            <i data-lucide="wallet" class="w-[18px] h-[18px] text-brand"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-volume">₦0</div>
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-[11px] text-positive font-semibold flex items-center gap-0.5">
+            <i data-lucide="trending-up" class="w-3 h-3"></i> +12.4%
+          </span>
+          <span class="text-[11px] text-ink-300">vs last month</span>
+        </div>
+      </div>
+
+      <!-- Active Deals -->
+      <div class="card p-5 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Active Deals</span>
+          <div class="w-9 h-9 rounded-lg bg-ink-700 flex items-center justify-center">
+            <i data-lucide="briefcase" class="w-[18px] h-[18px] text-ink-100"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-active">0</div>
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-[11px] text-warning font-semibold">2 in inspection</span>
+          <span class="text-[11px] text-ink-300">· 4 in escrow</span>
+        </div>
+      </div>
+
+      <!-- Completed Deals -->
+      <div class="card p-5 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Completed Deals</span>
+          <div class="w-9 h-9 rounded-lg bg-positive/10 flex items-center justify-center">
+            <i data-lucide="check-circle-2" class="w-[18px] h-[18px] text-positive"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-completed">0</div>
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-[11px] text-positive font-semibold flex items-center gap-0.5">
+            <i data-lucide="trending-up" class="w-3 h-3"></i> +3
+          </span>
+          <span class="text-[11px] text-ink-300">this quarter</span>
+        </div>
+      </div>
+
+      <!-- Pending Verification -->
+      <div class="card p-5 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Pending Verification</span>
+          <div class="w-9 h-9 rounded-lg bg-warning/10 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-[18px] h-[18px] text-warning"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-pending">0</div>
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-[11px] text-warning font-semibold">Action required</span>
+          <span class="text-[11px] text-ink-300">on 2 deals</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Deals Table + Activity Feed -->
+    <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <!-- Deals Table -->
+      <div class="card xl:col-span-2 overflow-hidden">
+        <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="list" class="w-[18px] h-[18px] text-brand"></i>
+            <h2 class="text-sm font-bold text-white">Active Deals</h2>
+          </div>
+          <button class="btn-ghost text-[12px] flex items-center gap-1" onclick="location.href='/create-deal.html'">
+            View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="deals-table">
+            <thead>
+              <tr>
+                <th>Deal ID</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Inspection Window</th>
+                <th>Counterparty</th>
+              </tr>
+            </thead>
+            <tbody id="deals-tbody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="card overflow-hidden">
+        <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
+          <i data-lucide="activity" class="w-[18px] h-[18px] text-brand"></i>
+          <h2 class="text-sm font-bold text-white">Recent Activity</h2>
+        </div>
+        <div class="px-5 py-3" id="activity-feed">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // ── Mock data ──
+  const MOCK_USER = { name: 'Adaeze Okonkwo', email: 'adaeze@dealshield.ng' };
+
+  const MOCK_DEALS = [
+    { id: 'DS-2026-0048', category: 'Real Estate',   amount: 45000000, status: 'locked',    inspection: '48h',  counterparty: 'Lekki Homes Ltd.' },
+    { id: 'DS-2026-0047', category: 'Vehicle',       amount: 12500000, status: 'pending',   inspection: '72h',  counterparty: 'Bashir Mohammed' },
+    { id: 'DS-2026-0046', category: 'Gold (LBMA)',   amount: 28000000, status: 'verified',  inspection: '24h',  counterparty: 'Lagos Gold Co.' },
+    { id: 'DS-2026-0045', category: 'FX (USDT)',     amount: 8900000,  status: 'locked',    inspection: '12h',  counterparty: 'CryptoNaija FX' },
+    { id: 'DS-2026-0044', category: 'Commodities',   amount: 15750000, status: 'disputed',  inspection: '48h',  counterparty: 'Northern Grains PLC' },
+    { id: 'DS-2026-0043', category: 'Vehicle',       amount: 9800000,  status: 'verified',  inspection: '24h',  counterparty: 'AutoDealers NG' },
+  ];
+
+  const MOCK_ACTIVITIES = [
+    { icon: 'lock',             color: 'warning',  title: 'Funds locked in escrow',     detail: 'DS-2026-0048 · ₦45,000,000', time: '12 min ago' },
+    { icon: 'check',            color: 'positive', title: 'Deal marked as verified',    detail: 'DS-2026-0046 · Lagos Gold Co.', time: '1 hour ago' },
+    { icon: 'alert-triangle',   color: 'danger',   title: 'Dispute raised on deal',    detail: 'DS-2026-0044 · Northern Grains', time: '3 hours ago' },
+    { icon: 'user-plus',        color: 'brand',    title: 'New counterparty verified', detail: 'Bashir Mohammed · KYC complete', time: '5 hours ago' },
+    { icon: 'arrow-down-left',  color: 'ink-200',  title: 'Funds received into escrow',  detail: 'DS-2026-0045 · ₦8,900,000', time: '8 hours ago' },
+    { icon: 'shield-check',     color: 'positive', title: 'Inspection window opened',  detail: 'DS-2026-0043 · AutoDealers NG', time: '1 day ago' },
+    { icon: 'check-circle-2',   color: 'brand',    title: 'Deal released to seller',   detail: 'DS-2026-0039 · ₦32,000,000', time: '2 days ago' },
+  ];
+
+  const STATUS_MAP = {
+    locked:   { cls: 'status-locked',   icon: 'lock',         label: 'In Escrow' },
+    verified: { cls: 'status-verified', icon: 'check',        label: 'Verified' },
+    pending:  { cls: 'status-pending',  icon: 'clock',         label: 'Pending' },
+    disputed: { cls: 'status-disputed', icon: 'alert-triangle', label: 'Disputed' },
+    released: { cls: 'status-released', icon: 'shield-check', label: 'Released' },
+  };
+
+  const ICON_COLOR_MAP = {
+    warning: '#F59E0B', positive: '#22C55E', danger: '#EF4444', brand: '#C8A45C', 'ink-200': '#9BA5BC',
+  };
+
+  function formatNaira(n) {
+    return '₦' + n.toLocaleString('en-NG');
+  }
+
+  // ── Render ──
+  function renderUser() {
+    document.getElementById('user-name').textContent = MOCK_USER.name;
+  }
+
+  function renderCards() {
+    const totalVolume = MOCK_DEALS.reduce((s, d) => s + d.amount, 0);
+    document.getElementById('card-volume').textContent = formatNaira(totalVolume);
+    document.getElementById('card-active').textContent = MOCK_DEALS.length;
+    document.getElementById('card-completed').textContent = 14;
+    document.getElementById('card-pending').textContent = 3;
+  }
+
+  function renderDeals() {
+    const tbody = document.getElementById('deals-tbody');
+    tbody.innerHTML = MOCK_DEALS.map(d => {
+      const s = STATUS_MAP[d.status];
+      return `
+        <tr>
+          <td class="font-mono font-semibold text-brand">${d.id}</td>
+          <td class="text-ink-100">${d.category}</td>
+          <td class="font-semibold">${formatNaira(d.amount)}</td>
+          <td><span class="status-pill ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}</span></td>
+          <td class="text-ink-200">${d.inspection}</td>
+          <td class="text-ink-100">${d.counterparty}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  function renderActivity() {
+    const feed = document.getElementById('activity-feed');
+    feed.innerHTML = MOCK_ACTIVITIES.map(a => {
+      const color = ICON_COLOR_MAP[a.color];
+      return `
+        <div class="activity-item">
+          <div class="activity-dot">
+            <i data-lucide="${a.icon}" class="w-[14px] h-[14px]" style="color:${color}"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-[13px] font-semibold text-white truncate">${a.title}</div>
+            <div class="text-[12px] text-ink-300 truncate">${a.detail}</div>
+            <div class="text-[11px] text-ink-400 mt-0.5">${a.time}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Nav ──
+  function setActiveNav(el) {
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    el.classList.add('active');
+    if (window.innerWidth < 1024) toggleSidebar(false);
+  }
+
+  function toggleSidebar(force) {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    const open = force !== undefined ? force : !sb.classList.contains('open');
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
+  }
+
+  // ── Auth / Logout ──
+  function handleLogout() {
+    localStorage.clear();
+    location.href = '/login.html';
+  }
+
+  function checkAuth() {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      location.href = '/login.html';
+      return false;
+    }
+    return true;
+  }
+
+  // ── Init ──
+  (function init() {
+    if (!checkAuth()) return;
+    renderUser();
+    renderCards();
+    renderDeals();
+    renderActivity();
+    lucide.createIcons();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealShield — KYC Verification</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Libraries -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            900: '#0B0F1A',
+            800: '#0F1420',
+            700: '#161C2C',
+            600: '#1E2536',
+            500: '#2A3346',
+            400: '#3D4860',
+            300: '#6B7693',
+            200: '#9BA5BC',
+            100: '#C9D1E0',
+          },
+          brand: {
+            DEFAULT: '#C8A45C',
+            light: '#E0C180',
+            dark: '#9A7B3E',
+          },
+          surface: '#0F1420',
+          positive: '#22C55E',
+          warning: '#F59E0B',
+          danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+        borderRadius: {
+          sm: '6px',
+          md: '10px',
+          lg: '14px',
+        },
+        boxShadow: {
+          sm: '0 1px 2px rgba(0,0,0,0.3)',
+          md: '0 4px 12px rgba(0,0,0,0.25)',
+          lg: '0 12px 40px rgba(0,0,0,0.3)',
+        },
+      }
+    }
+  };
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A;
+  --color-surface: #0F1420;
+  --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12);
+  --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #9BA5BC;
+  --color-text-muted: #6B7693;
+  --color-positive: #22C55E;
+  --color-danger: #EF4444;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 56px;
+  --space-7: 72px;
+  --space-8: 96px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { background-color: var(--color-bg); color: var(--color-text-primary); font-family: var(--font-sans); overflow-x: hidden; }
+.input-field { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; color: var(--color-text-primary); font-size: 15px; font-weight: 500; outline: none; width: 100%; transition: border-color 0.2s; }
+.input-field:focus { border-color: var(--color-accent); }
+.input-field::placeholder { color: var(--color-text-muted); }
+.input-field.has-icon { padding-left: 44px; }
+.btn-primary { background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px; padding: 14px 24px; border-radius: var(--radius-md); border: none; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s, opacity .2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+.link { color: var(--color-accent); text-decoration: underline; font-size: 14px; }
+.error-msg { color: var(--color-danger); margin-top: 12px; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+.success-msg { color: var(--color-positive); margin-top: 12px; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+.step-indicator { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--color-text-muted); transition: color .3s; }
+.step-indicator.active { color: var(--color-accent); }
+.step-indicator.done { color: var(--color-positive); }
+.step-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; transition: all .3s; }
+.step-indicator.active .step-dot { background: var(--color-accent); color: #0B0F1A; border-color: var(--color-accent); }
+.step-indicator.done .step-dot { background: var(--color-positive); color: #0B0F1A; border-color: var(--color-positive); }
+.step-line { flex: 1; height: 2px; background: var(--color-border); margin: 0 4px; }
+.field-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 6px; }
+.field-hint { font-size: 12px; color: var(--color-text-muted); margin-top: 4px; }
+.icon-wrap { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+.spinner { width: 16px; height: 16px; border: 2px solid rgba(11,15,26,0.3); border-top-color: #0B0F1A; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.alert-box { animation: fadeIn 0.25s ease-out; }
+</style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+
+<!-- Header -->
+<header class="fixed top-0 inset-x-0 z-50 bg-ink-800/70 backdrop-blur-sm border-b border-[var(--color-border)] p-4 flex items-center">
+  <a href="/" class="flex items-center gap-2">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] text-white">DealShield</span>
+  </a>
+</header>
+
+<!-- Main -->
+<main class="w-full max-w-lg px-4">
+  <div class="mt-28 mb-8 text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl border border-brand/30 bg-brand/10 mb-4">
+      <i data-lucide="shield-check" class="w-7 h-7 text-brand"></i>
+    </div>
+    <h1 class="text-2xl font-bold text-white mb-2">Verify Your Identity</h1>
+    <p class="text-sm text-ink-200 max-w-sm mx-auto">Complete KYC verification to unlock escrow protection on DealShield. Your data is encrypted and securely stored.</p>
+  </div>
+
+  <div class="card p-6 shadow-lg border border-[var(--color-border)]" style="background: var(--color-surface); border-radius: var(--radius-lg);">
+
+    <!-- Step indicators -->
+    <div class="flex items-center mb-6">
+      <div class="step-indicator active" id="step-nin">
+        <span class="step-dot">1</span>
+        <span>NIN</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-indicator" id="step-bvn">
+        <span class="step-dot">2</span>
+        <span>BVN</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-indicator" id="step-business">
+        <span class="step-dot">3</span>
+        <span>Business</span>
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    <div id="error-box" class="error-msg hidden alert-box" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
+      <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+      <span id="error-text"></span>
+    </div>
+    <div id="success-box" class="success-msg hidden alert-box" style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
+      <i data-lucide="check-circle-2" class="w-4 h-4 flex-shrink-0"></i>
+      <span id="success-text"></span>
+    </div>
+
+    <!-- Form -->
+    <form id="kyc-form" class="space-y-5" onsubmit="handleVerify(event)">
+      <!-- NIN -->
+      <div>
+        <label class="field-label" for="nin">National Identification Number (NIN)</label>
+        <div class="relative">
+          <span class="icon-wrap"><i data-lucide="credit-card" class="w-4 h-4"></i></span>
+          <input type="text" id="nin" name="nin" placeholder="Enter your 11-digit NIN" class="input-field has-icon" maxlength="11" pattern="\d{11}" inputmode="numeric" required>
+        </div>
+        <p class="field-hint">11-digit number found on your NIN slip or card.</p>
+      </div>
+
+      <!-- BVN -->
+      <div>
+        <label class="field-label" for="bvn">Bank Verification Number (BVN)</label>
+        <div class="relative">
+          <span class="icon-wrap"><i data-lucide="building-2" class="w-4 h-4"></i></span>
+          <input type="text" id="bvn" name="bvn" placeholder="Enter your 11-digit BVN" class="input-field has-icon" maxlength="11" pattern="\d{11}" inputmode="numeric" required>
+        </div>
+        <p class="field-hint">Dial *565*0# on your registered phone to retrieve your BVN.</p>
+      </div>
+
+      <!-- Business Name (optional) -->
+      <div>
+        <label class="field-label" for="business_name">Business Name <span class="text-ink-300 font-normal">(optional)</span></label>
+        <div class="relative">
+          <span class="icon-wrap"><i data-lucide="briefcase" class="w-4 h-4"></i></span>
+          <input type="text" id="business_name" name="business_name" placeholder="e.g. Acme Trading Ltd." class="input-field has-icon" maxlength="100">
+        </div>
+        <p class="field-hint">Add a business name if you're verifying as a merchant.</p>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" id="submit-btn" class="btn-primary">
+        <i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>
+        <span id="btn-text">Complete Verification</span>
+      </button>
+    </form>
+  </div>
+
+  <p class="text-center text-xs text-ink-300 mt-6 flex items-center justify-center gap-1.5">
+    <i data-lucide="lock" class="w-3 h-3"></i>
+    Protected by 256-bit encryption. DealShield never shares your KYC data.
+  </p>
+</main>
+
+<script>
+  lucide.createIcons();
+
+  const API_BASE = window.location.origin;
+  let token = localStorage.getItem('access_token');
+
+  // Redirect to login if no token
+  if (!token) {
+    showError('Authentication required. Redirecting to login...');
+    setTimeout(() => { location.href = '/login.html'; }, 1800);
+  }
+
+  // Elements
+  const form = document.getElementById('kyc-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const btnIcon = document.getElementById('btn-icon');
+  const errorBox = document.getElementById('error-box');
+  const errorText = document.getElementById('error-text');
+  const successBox = document.getElementById('success-box');
+  const successText = document.getElementById('success-text');
+  const stepNIN = document.getElementById('step-nin');
+  const stepBVN = document.getElementById('step-bvn');
+  const stepBiz = document.getElementById('step-business');
+
+  // Numeric-only input for NIN and BVN
+  ['nin', 'bvn'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      el.value = el.value.replace(/\D/g, '').slice(0, 11);
+    });
+  });
+
+  function authHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    };
+  }
+
+  function showError(msg) {
+    successBox.classList.add('hidden');
+    errorText.textContent = msg;
+    errorBox.classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  function showSuccess(msg) {
+    errorBox.classList.add('hidden');
+    successText.textContent = msg;
+    successBox.classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  function hideAlerts() {
+    errorBox.classList.add('hidden');
+    successBox.classList.add('hidden');
+  }
+
+  function setLoading(loading) {
+    if (loading) {
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verifying...';
+      btnIcon.outerHTML = '<span class="spinner" id="btn-icon"></span>';
+    } else {
+      submitBtn.disabled = false;
+      btnText.textContent = 'Complete Verification';
+      const existing = document.getElementById('btn-icon');
+      if (existing) existing.outerHTML = '<i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>';
+      lucide.createIcons();
+    }
+  }
+
+  function markStepDone(stepEl) {
+    stepEl.classList.remove('active');
+    stepEl.classList.add('done');
+    const dot = stepEl.querySelector('.step-dot');
+    dot.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  }
+
+  function activateStep(stepEl) {
+    stepEl.classList.add('active');
+  }
+
+  async function apiCall(endpoint, body = {}) {
+    const res = await fetch(API_BASE + endpoint, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(body)
+    });
+    let data;
+    try { data = await res.json(); } catch { data = {}; }
+    if (!res.ok) {
+      const msg = data.detail || data.message || data.error || ('Verification failed (' + res.status + ')');
+      throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+    }
+    return data;
+  }
+
+  async function handleVerify(e) {
+    e.preventDefault();
+    hideAlerts();
+    setLoading(true);
+
+    const nin = document.getElementById('nin').value.trim();
+    const bvn = document.getElementById('bvn').value.trim();
+    const businessName = document.getElementById('business_name').value.trim();
+
+    // Client-side validation
+    if (!/^\d{11}$/.test(nin)) {
+      showError('NIN must be exactly 11 digits.');
+      setLoading(false);
+      return;
+    }
+    if (!/^\d{11}$/.test(bvn)) {
+      showError('BVN must be exactly 11 digits.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Step 1: NIN verification
+      activateStep(stepNIN);
+      await apiCall('/auth/verify-nin', {});
+      markStepDone(stepNIN);
+      activateStep(stepBVN);
+      showSuccess('NIN verified successfully. Verifying BVN...');
+
+      // Step 2: BVN verification
+      await apiCall('/auth/verify-bvn', { bvn: bvn });
+      markStepDone(stepBVN);
+      activateStep(stepBiz);
+      showSuccess('BVN verified successfully.' + (businessName ? ' Verifying business...' : ' Finalizing...'));
+
+      // Step 3: Business verification (optional)
+      if (businessName) {
+        await apiCall('/auth/verify-business', { business_name: businessName });
+      }
+      markStepDone(stepBiz);
+
+      showSuccess('Verification complete! Redirecting to your dashboard...');
+      setLoading(false);
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verified';
+      setTimeout(() => { location.href = '/dashboard.html'; }, 1500);
+
+    } catch (err) {
+      setLoading(false);
+      showError(err.message || 'Verification failed. Please try again.');
+    }
+  }
+</script>
+</body>
+</html>
