@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Log In</title>
 <meta name="description" content="Log in to your DealShield account to manage escrow transactions and protected deals.">
-<meta name="theme-color" content="#0B0F1A">
+<meta name="theme-color" content="#f8faf9">
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
 <!-- === FONTS === -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- === LIBRARIES === -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -20,32 +20,36 @@
 
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
         colors: {
-          ink: {
-            900: '#0B0F1A',
-            800: '#0F1420',
-            700: '#161C2C',
-            600: '#1E2536',
-            500: '#2A3346',
-            400: '#3D4860',
-            300: '#6B7693',
-            200: '#9BA5BC',
-            100: '#C9D1E0',
+          forest: {
+            900: '#061a0e',
+            800: '#0a2415',
+            700: '#0d2818',
+            600: '#123a23',
+            500: '#1a4d2e',
+            400: '#2d6a4f',
+            300: '#52b788',
+            200: '#74c69d',
+            100: '#95d5b2',
+            50: '#b7e4c7',
           },
-          brand: {
-            DEFAULT: '#C8A45C',
-            light: '#E0C180',
-            dark: '#9A7B3E',
+          leaf: {
+            DEFAULT: '#40916c',
+            light: '#52b788',
+            bright: '#74c69d',
           },
-          surface: '#FFFFFF',
+          cream: '#f8faf9',
+          mist: '#e8f5ee',
           positive: '#22C55E',
           warning: '#F59E0B',
           danger: '#EF4444',
         },
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        },
         maxWidth: { '7xl': '1280px' },
         spacing: { '18': '4.5rem' },
       }
@@ -56,14 +60,17 @@
 <style>
   /* ── DESIGN SYSTEM (shared) ── */
   :root {
-    --color-bg: #0B0F1A;
-    --color-surface: #0F1420;
-    --color-border: rgba(255,255,255,0.06);
-    --color-border-strong: rgba(255,255,255,0.12);
-    --color-accent: #C8A45C;
-    --color-text-primary: #F8FAFC;
-    --color-text-secondary: #9BA5BC;
-    --color-text-muted: #6B7693;
+    --color-bg: #f8faf9;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #f0f7f2;
+    --color-border: rgba(13,40,24,0.08);
+    --color-border-strong: rgba(13,40,24,0.16);
+    --color-accent: #2d6a4f;
+    --color-accent-light: #52b788;
+    --color-accent-bright: #74c69d;
+    --color-text-primary: #0a1f12;
+    --color-text-secondary: #3a5a44;
+    --color-text-muted: #6b8f78;
     --space-1: 8px;
     --space-2: 16px;
     --space-3: 24px;
@@ -75,9 +82,9 @@
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 14px;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-    --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+    --shadow-sm: 0 1px 2px rgba(13,40,24,0.06);
+    --shadow-md: 0 4px 12px rgba(13,40,24,0.08);
+    --shadow-lg: 0 12px 40px rgba(13,40,24,0.10);
   }
 
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -91,7 +98,7 @@
     letter-spacing: -0.01em;
   }
 
-  h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+  h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.03em; }
 
   .eyebrow {
     font-size: 12px;
@@ -103,7 +110,9 @@
 
   /* ── Surfaces ── */
   .card {
-    background: var(--color-surface);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     transition: border-color 0.2s ease, transform 0.2s ease;
@@ -114,24 +123,27 @@
   }
 
   .input-field {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(13,40,24,0.16);
     border-radius: var(--radius-md);
     padding: 14px 16px;
     color: var(--color-text-primary);
     font-size: 15px;
     font-weight: 500;
     outline: none;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     width: 100%;
   }
-  .input-field:focus { border-color: var(--color-accent); }
+  .input-field:focus {
+    border-color: #2d6a4f;
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+  }
   .input-field::placeholder { color: var(--color-text-muted); }
 
   /* ── Buttons ── */
   .btn-primary {
-    background: var(--color-accent);
-    color: #0B0F1A;
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+    color: #ffffff;
     font-weight: 700;
     font-size: 14px;
     padding: 12px 24px;
@@ -146,9 +158,8 @@
     white-space: nowrap;
   }
   .btn-primary:hover {
-    background: var(--color-accent);
-    filter: brightness(1.1);
-    box-shadow: 0 4px 20px rgba(200,164,92,0.3);
+    filter: brightness(1.05);
+    box-shadow: 0 4px 20px rgba(45,106,79,0.3);
     transform: translateY(-1px);
   }
   .btn-primary:active { transform: translateY(0); }
@@ -173,7 +184,7 @@
   }
   .btn-secondary:hover {
     border-color: var(--color-accent);
-    background: rgba(200,164,92,0.05);
+    background: rgba(45,106,79,0.05);
   }
   .btn-secondary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
@@ -198,7 +209,7 @@
 
   /* ── Nav ── */
   .nav-blur {
-    background: rgba(11,15,26,0.72);
+    background: rgba(255,255,255,0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--color-border);
@@ -211,14 +222,25 @@
   ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
 
   /* ── JS compatibility ── */
-  .gold-btn { background: var(--color-accent); color: #0B0F1A; font-weight: 700; transition: all 0.2s ease; }
-  .glass-card { background: var(--color-surface); border: 1px solid var(--color-border); backdrop-filter: blur(20px); }
-  .font-syne { font-family: 'Inter', sans-serif; }
-  .gold-gradient-text { color: var(--color-accent); }
+  .gold-btn { background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%); color: #ffffff; font-weight: 700; transition: all 0.2s ease; }
+  .glass-card { background: rgba(255,255,255,0.85); border: 1px solid var(--color-border); backdrop-filter: blur(12px); }
+  .font-syne { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 50%, #1a4d2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-green {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 50%, #1a4d2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .gold-400 { color: var(--color-accent); }
   .gold-500 { color: var(--color-accent); }
   .gold-600 { color: var(--color-accent); }
-  .text-dark { color: #0B0F1A; }
+  .text-dark { color: #0a1f12; }
 
   /* ── Animations ── */
   @media (prefers-reduced-motion: no-preference) {
@@ -236,7 +258,7 @@
     gap: 8px;
     padding: 10px 14px;
     border-radius: var(--radius-md);
-    background: rgba(239,68,68,0.08);
+    background: rgba(239,68,68,0.06);
     border: 1px solid rgba(239,68,68,0.25);
     color: #EF4444;
     font-size: 13px;
@@ -252,8 +274,8 @@
   .spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(11,15,26,0.3);
-    border-top-color: #0B0F1A;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #ffffff;
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
     display: none;
@@ -277,7 +299,7 @@
 
   /* ── Background grid ── */
   .bg-grid {
-    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-image: linear-gradient(rgba(13,40,24,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(13,40,24,0.04) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 </style>
@@ -285,8 +307,8 @@
 <body class="relative min-h-screen">
 <!-- 3D Art background -->
 <div class="fixed inset-0 pointer-events-none" style="z-index:0;">
-  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
-  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.06]">
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(248,250,249,0.85) 0%, rgba(248,250,249,0.7) 40%, rgba(248,250,249,0.92) 100%);"></div>
 </div>
 
 
@@ -295,13 +317,13 @@
   <nav class="max-w-7xl mx-auto container-px h-16 flex items-center justify-between">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <div class="w-8 h-8 rounded-lg border border-forest-400/40 flex items-center justify-center">
         <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
         </svg>
       </div>
-      <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+      <span class="font-bold text-[15px] tracking-tight text-forest-700 font-display">DealShield</span>
     </a>
 
     <!-- Right side -->
@@ -319,7 +341,7 @@
 <!-- ═══════════════ LOGIN ═══════════════ -->
 <section class="relative min-h-screen z-10 flex items-center justify-center pt-24 pb-16 overflow-hidden">
   <!-- Subtle grid background -->
-  <div class="absolute inset-0 opacity-[0.015] pointer-events-none bg-grid"></div>
+  <div class="absolute inset-0 opacity-[0.4] pointer-events-none bg-grid"></div>
 
   <div class="max-w-md w-full container-px relative z-10">
     <div class="fade-in">
@@ -327,11 +349,11 @@
       <div class="card p-8 lg:p-10 shadow-lg">
         <!-- Header -->
         <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-brand/30 mb-4">
-            <i data-lucide="shield" class="w-6 h-6 text-brand"></i>
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-forest-400/30 mb-4">
+            <i data-lucide="shield" class="w-6 h-6 text-forest-500"></i>
           </div>
-          <h1 class="text-[26px] font-extrabold text-white tracking-tight mb-2">Welcome back</h1>
-          <p class="text-[14px] text-ink-300">Log in to manage your escrow deals and transactions.</p>
+          <h1 class="text-[26px] font-extrabold text-forest-700 tracking-tight mb-2 font-display">Welcome back</h1>
+          <p class="text-[14px] text-forest-600">Log in to manage your escrow deals and transactions.</p>
         </div>
 
         <!-- Error banner -->
@@ -344,11 +366,11 @@
         <form id="login-form" class="space-y-4" novalidate>
           <!-- Email / Phone -->
           <div>
-            <label for="email_or_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">
+            <label for="email_or_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
               Email or Phone
             </label>
             <div class="relative">
-              <i data-lucide="user" class="w-4 h-4 text-ink-300 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <i data-lucide="user" class="w-4 h-4 text-forest-600 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
               <input
                 type="text"
                 id="email_or_phone"
@@ -363,11 +385,11 @@
 
           <!-- Password -->
           <div>
-            <label for="password" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">
+            <label for="password" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
               Password
             </label>
             <div class="relative">
-              <i data-lucide="lock" class="w-4 h-4 text-ink-300 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <i data-lucide="lock" class="w-4 h-4 text-forest-600 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
               <input
                 type="password"
                 id="password"
@@ -393,13 +415,13 @@
 
         <!-- Links -->
         <div class="mt-6 pt-6 border-t border-[var(--color-border)] text-center space-y-3">
-          <p class="text-[14px] text-ink-300">
+          <p class="text-[14px] text-forest-600">
             Don't have an account?
-            <a href="/register.html" class="text-brand hover:text-brand-light font-semibold transition-colors">Sign up</a>
+            <a href="/register.html" class="text-forest-500 hover:text-forest-400 font-semibold transition-colors">Sign up</a>
           </p>
-          <p class="text-[14px] text-ink-300">
+          <p class="text-[14px] text-forest-600">
             Want to start a transaction right away?
-            <a href="/create-deal.html" class="text-brand hover:text-brand-light font-semibold transition-colors">Create a protected deal</a>
+            <a href="/create-deal.html" class="text-forest-500 hover:text-forest-400 font-semibold transition-colors">Create a protected deal</a>
           </p>
         </div>
       </div>
@@ -407,11 +429,11 @@
       <!-- ── 2FA Section (hidden by default) ── -->
       <div id="twofa-section" class="card p-8 lg:p-10 shadow-lg" style="display:none;">
         <div class="text-center mb-6">
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-brand/30 mb-4">
-            <i data-lucide="smartphone" class="w-6 h-6 text-brand"></i>
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-forest-400/30 mb-4">
+            <i data-lucide="smartphone" class="w-6 h-6 text-forest-500"></i>
           </div>
-          <h1 class="text-[22px] font-extrabold text-white tracking-tight mb-2">Two-Factor Authentication</h1>
-          <p class="text-[14px] text-ink-300">Enter the 6-digit code from your authenticator app.</p>
+          <h1 class="text-[22px] font-extrabold text-forest-700 tracking-tight mb-2 font-display">Two-Factor Authentication</h1>
+          <p class="text-[14px] text-forest-600">Enter the 6-digit code from your authenticator app.</p>
         </div>
 
         <div id="error-banner-2fa" class="error-banner mb-4" role="alert">
@@ -421,7 +443,7 @@
 
         <form id="twofa-form" class="space-y-4" novalidate>
           <div>
-            <label for="twofa-code" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">
+            <label for="twofa-code" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
               Authentication Code
             </label>
             <input
@@ -439,13 +461,13 @@
           </div>
 
           <button type="submit" id="twofa-submit-btn" class="btn-primary w-full">
-            <span id="twofa-spinner" class="spinner" style="border-top-color:#0B0F1A;"></span>
+            <span id="twofa-spinner" class="spinner" style="border-top-color:#ffffff;"></span>
             <span id="twofa-label">Verify &amp; Continue</span>
           </button>
         </form>
 
         <div class="mt-6 pt-6 border-t border-[var(--color-border)] text-center">
-          <button onclick="showLoginForm()" class="text-[14px] text-ink-300 hover:text-white transition-colors">
+          <button onclick="showLoginForm()" class="text-[14px] text-forest-600 hover:text-forest-700 transition-colors">
             <i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1"></i>
             Back to login
           </button>
@@ -453,7 +475,7 @@
       </div>
 
       <!-- Footer note -->
-      <p class="text-center text-[12px] text-ink-300 mt-6">
+      <p class="text-center text-[12px] text-forest-600 mt-6">
         <i data-lucide="shield-check" class="w-3 h-3 inline-block mr-1"></i>
         Protected by DealShield escrow infrastructure.
       </p>

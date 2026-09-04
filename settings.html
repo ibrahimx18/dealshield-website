@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,31 +9,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
         colors: {
-          ink: {
-            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
-            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          forest: {
+            900: '#061a0e', 800: '#0a2415', 700: '#0d2818', 600: '#123a23',
+            500: '#1a4d2e', 400: '#2d6a4f', 300: '#52b788', 200: '#74c69d',
+            100: '#95d5b2', 50: '#b7e4c7'
           },
-          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
-          surface: '#0F1420',
+          leaf: { DEFAULT: '#40916c', light: '#52b788', bright: '#74c69d' },
+          cream: '#f8faf9',
+          mist: '#e8f5ee',
           positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
         },
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Space Grotesk', 'Inter', 'sans-serif'],
+        },
         spacing: { '18': '4.5rem' },
         borderRadius: { sm: '6px', md: '10px', lg: '14px' },
         boxShadow: {
-          sm: '0 1px 2px rgba(0,0,0,0.3)',
-          md: '0 4px 12px rgba(0,0,0,0.25)',
-          lg: '0 12px 40px rgba(0,0,0,0.3)',
+          sm: '0 1px 2px rgba(13,40,24,0.06)',
+          md: '0 4px 12px rgba(13,40,24,0.08)',
+          lg: '0 12px 40px rgba(13,40,24,0.12)',
         },
       }
     }
@@ -41,18 +46,20 @@
 </script>
 <style>
 :root {
-  --color-bg: #0B0F1A;
-  --color-surface: #0F1420;
-  --color-border: rgba(255,255,255,0.06);
-  --color-border-strong: rgba(255,255,255,0.12);
-  --color-accent: #C8A45C;
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #9BA5BC;
-  --color-text-muted: #6B7693;
+  --color-bg: #f8faf9;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f0f7f2;
+  --color-border: rgba(13,40,24,0.08);
+  --color-border-strong: rgba(13,40,24,0.16);
+  --color-accent: #2d6a4f;
+  --color-accent-light: #52b788;
+  --color-text-primary: #0a1f12;
+  --color-text-secondary: #3a5a44;
+  --color-text-muted: #6b8f78;
   --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 2px rgba(13,40,24,0.06);
+  --shadow-md: 0 4px 12px rgba(13,40,24,0.08);
+  --shadow-lg: 0 12px 40px rgba(13,40,24,0.12);
 }
 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
@@ -62,29 +69,30 @@ body {
   font-feature-settings: 'cv02','cv03','cv04','cv11';
   letter-spacing: -0.01em;
 }
-h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter', sans-serif; }
 .card {
-  background: var(--color-surface);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
 .btn-primary {
-  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%); color: #ffffff; font-weight: 700; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
   transition: background .2s, transform .15s, box-shadow .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
-.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; filter: none; }
+.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 4px 20px rgba(45,106,79,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; box-shadow: none; }
 .btn-secondary {
   background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
   cursor: pointer; transition: border-color .2s, background .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(45,106,79,0.05); }
 .btn-secondary:disabled { opacity: .5; cursor: not-allowed; }
 .btn-ghost {
   background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px;
@@ -99,13 +107,13 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   font-size: 14px; font-weight: 500; cursor: pointer;
   transition: background .15s, color .15s; border: 1px solid transparent;
 }
-.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
-.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(45,106,79,0.04); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(45,106,79,0.08); border-color: rgba(45,106,79,0.15); }
 
 /* Status pills */
 .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
 .status-on { background: rgba(34,197,94,0.12); color: #22C55E; }
-.status-off { background: rgba(107,118,147,0.15); color: #9BA5BC; }
+.status-off { background: rgba(107,118,147,0.15); color: #6b8f78; }
 .status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
 .status-pending { background: rgba(245,158,11,0.12); color: #F59E0B; }
 .status-failed { background: rgba(239,68,68,0.12); color: #EF4444; }
@@ -113,30 +121,30 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 /* Form */
 .form-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); letter-spacing: .02em; text-transform: uppercase; }
 .form-input {
-  width: 100%; background: var(--color-bg); border: 1px solid var(--color-border-strong); color: var(--color-text-primary);
+  width: 100%; background: rgba(255,255,255,0.9); border: 1px solid rgba(13,40,24,0.16); color: var(--color-text-primary);
   border-radius: var(--radius-md); padding: 11px 14px; font-size: 14px; font-family: inherit;
   transition: border-color .2s, box-shadow .2s;
 }
-.form-input:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(200,164,92,0.12); }
+.form-input:focus { outline: none; border-color: #2d6a4f; box-shadow: 0 0 0 3px rgba(82,183,136,0.15); }
 .form-input::placeholder { color: var(--color-text-muted); }
 
 /* Code display */
 .code-box {
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace; font-size: 12px;
-  background: #07090F; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md);
+  background: #f0f7f2; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md);
   padding: 14px; color: var(--color-text-primary); word-break: break-all; line-height: 1.5;
 }
 
 /* Backup codes grid */
 .backup-code {
   font-family: 'SF Mono', monospace; font-size: 14px; font-weight: 600; text-align: center;
-  background: #07090F; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  background: #f0f7f2; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
   padding: 8px; color: var(--color-accent);
 }
 
 /* Modal */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100;
+  position: fixed; inset: 0; background: rgba(6,26,14,0.3); backdrop-filter: blur(4px); z-index: 100;
   display: none; align-items: center; justify-content: center; padding: 16px;
 }
 .modal-overlay.show { display: flex; }
@@ -147,9 +155,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
 /* Alert */
 .alert { padding: 12px 14px; border-radius: var(--radius-md); font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
-.alert-success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #86EFAC; }
-.alert-error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #FCA5A5; }
-.alert-warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #FCD34D; }
+.alert-success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #15803d; }
+.alert-error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #dc2626; }
+.alert-warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #b45309; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
@@ -170,22 +178,22 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- 3D Art background -->
 <div class="fixed inset-0 pointer-events-none" style="z-index:0;">
   <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
-  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(248,250,249,0.85) 0%, rgba(248,250,249,0.65) 40%, rgba(248,250,249,0.92) 100%);"></div>
 </div>
 
 
 <!-- ═══════════════ SIDEBAR ═══════════════ -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
-<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+<div id="sidebar-overlay" class="fixed inset-0 bg-forest-900/30 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/80 backdrop-blur-md border-r border-[var(--color-border)] flex flex-col z-50">
   <!-- Logo -->
   <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
-    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+    <div class="w-8 h-8 rounded-lg border border-forest-400/40 flex items-center justify-center">
       <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
       </svg>
     </div>
-    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+    <span class="font-bold text-[15px] tracking-tight text-forest-700">DealShield</span>
   </div>
 
   <!-- Nav -->
@@ -195,14 +203,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     </a>
     <a class="sidebar-link" onclick="setActiveNav(this)">
       <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
-      <span class="ml-auto text-[11px] bg-ink-700 text-ink-200 px-1.5 py-0.5 rounded-full">6</span>
+      <span class="ml-auto text-[11px] bg-forest-50 text-forest-600 px-1.5 py-0.5 rounded-full">6</span>
     </a>
     <a class="sidebar-link" onclick="setActiveNav(this)">
       <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
     </a>
     <a class="sidebar-link" onclick="location.href='/kyc.html'">
       <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
-      <span class="ml-auto text-[11px] bg-brand/15 text-brand px-1.5 py-0.5 rounded-full">3</span>
+      <span class="ml-auto text-[11px] bg-forest-400/15 text-forest-500 px-1.5 py-0.5 rounded-full">3</span>
     </a>
     <a class="sidebar-link active" onclick="setActiveNav(this)">
       <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
@@ -220,12 +228,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- ═══════════════ MAIN ═══════════════ -->
 <div class="lg:ml-64 min-h-screen flex flex-col relative z-10">
   <!-- Top Bar -->
-  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+  <header class="h-16 border-b border-[var(--color-border)] bg-white/75 backdrop-blur-md flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
     <div class="flex items-center gap-3">
-      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+      <button class="lg:hidden text-forest-600" onclick="toggleSidebar()">
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
-      <h1 class="text-lg font-bold text-white">Settings</h1>
+      <h1 class="text-lg font-bold text-forest-700">Settings</h1>
     </div>
     <div class="flex items-center gap-3">
       <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
@@ -238,15 +246,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       </button>
       <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        <div class="w-8 h-8 rounded-full bg-forest-50 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-forest-600"></i>
         </div>
         <div class="hidden sm:block leading-tight">
-          <div id="user-name" class="text-sm font-semibold text-white">—</div>
-          <div class="text-[11px] text-ink-300">Verified Account</div>
+          <div id="user-name" class="text-sm font-semibold text-forest-700">—</div>
+          <div class="text-[11px] text-forest-500">Verified Account</div>
         </div>
       </div>
-      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+      <button class="text-forest-500 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
         <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
       </button>
     </div>
@@ -258,19 +266,19 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <!-- ── Two-Factor Authentication ── -->
     <section class="card overflow-hidden">
       <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
-        <i data-lucide="shield-check" class="w-[18px] h-[18px] text-brand"></i>
-        <h2 class="text-sm font-bold text-white">Two-Factor Authentication</h2>
+        <i data-lucide="shield-check" class="w-[18px] h-[18px] text-forest-500"></i>
+        <h2 class="text-sm font-bold text-forest-700">Two-Factor Authentication</h2>
       </div>
       <div class="p-5 space-y-4">
         <!-- 2FA Status -->
         <div class="flex items-center justify-between flex-wrap gap-3">
           <div class="flex items-center gap-3">
-            <div id="twofa-icon-wrap" class="w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center">
-              <i data-lucide="shield-off" class="w-5 h-5 text-ink-200" id="twofa-icon"></i>
+            <div id="twofa-icon-wrap" class="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center">
+              <i data-lucide="shield-off" class="w-5 h-5 text-forest-600" id="twofa-icon"></i>
             </div>
             <div>
-              <div class="text-[13px] font-semibold text-white">Authenticator App</div>
-              <div class="text-[12px] text-ink-300" id="twofa-status-text">Checking status…</div>
+              <div class="text-[13px] font-semibold text-forest-700">Authenticator App</div>
+              <div class="text-[12px] text-forest-500" id="twofa-status-text">Checking status…</div>
             </div>
           </div>
           <span id="twofa-pill" class="status-pill status-pending">
@@ -301,8 +309,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <!-- ── Change Password ── -->
     <section class="card overflow-hidden">
       <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
-        <i data-lucide="key-round" class="w-[18px] h-[18px] text-brand"></i>
-        <h2 class="text-sm font-bold text-white">Change Password</h2>
+        <i data-lucide="key-round" class="w-[18px] h-[18px] text-forest-500"></i>
+        <h2 class="text-sm font-bold text-forest-700">Change Password</h2>
       </div>
       <form id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
         <div id="pw-alert"></div>
@@ -311,7 +319,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <label class="form-label block mb-1.5" for="pw-current">Current Password</label>
             <div class="relative">
               <input type="password" id="pw-current" class="form-input pr-10" placeholder="••••••••" required autocomplete="off">
-              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-current', this)">
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-forest-500 hover:text-forest-700" onclick="togglePwVisibility('pw-current', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
             </div>
@@ -320,7 +328,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <label class="form-label block mb-1.5" for="pw-new">New Password</label>
             <div class="relative">
               <input type="password" id="pw-new" class="form-input pr-10" placeholder="••••••••" required minlength="8" autocomplete="new-password">
-              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-new', this)">
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-forest-500 hover:text-forest-700" onclick="togglePwVisibility('pw-new', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
             </div>
@@ -329,14 +337,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <label class="form-label block mb-1.5" for="pw-confirm">Confirm New Password</label>
             <div class="relative">
               <input type="password" id="pw-confirm" class="form-input pr-10" placeholder="••••••••" required minlength="8" autocomplete="new-password">
-              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-confirm', this)">
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-forest-500 hover:text-forest-700" onclick="togglePwVisibility('pw-confirm', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
             </div>
           </div>
         </div>
         <div class="flex items-center justify-between flex-wrap gap-3">
-          <p class="text-[12px] text-ink-300">Use at least 8 characters with a mix of letters, numbers, and symbols.</p>
+          <p class="text-[12px] text-forest-500">Use at least 8 characters with a mix of letters, numbers, and symbols.</p>
           <button type="submit" id="pw-submit" class="btn-primary">
             <i data-lucide="save" class="w-4 h-4"></i> Update Password
           </button>
@@ -347,11 +355,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <!-- ── Active Sessions ── -->
     <section class="card overflow-hidden">
       <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
-        <i data-lucide="monitor-smartphone" class="w-[18px] h-[18px] text-brand"></i>
-        <h2 class="text-sm font-bold text-white">Active Sessions</h2>
+        <i data-lucide="monitor-smartphone" class="w-[18px] h-[18px] text-forest-500"></i>
+        <h2 class="text-sm font-bold text-forest-700">Active Sessions</h2>
       </div>
       <div id="sessions-container" class="p-5">
-        <div class="flex items-center gap-3 text-ink-300 text-[13px]">
+        <div class="flex items-center gap-3 text-forest-500 text-[13px]">
           <i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Loading sessions…
         </div>
       </div>
@@ -360,11 +368,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <!-- ── Account Info ── -->
     <section class="card overflow-hidden">
       <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
-        <i data-lucide="user-circle" class="w-[18px] h-[18px] text-brand"></i>
-        <h2 class="text-sm font-bold text-white">Account Information</h2>
+        <i data-lucide="user-circle" class="w-[18px] h-[18px] text-forest-500"></i>
+        <h2 class="text-sm font-bold text-forest-700">Account Information</h2>
       </div>
       <div id="account-container" class="p-5">
-        <div class="flex items-center gap-3 text-ink-300 text-[13px]">
+        <div class="flex items-center gap-3 text-forest-500 text-[13px]">
           <i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Loading account info…
         </div>
       </div>
@@ -376,12 +384,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- ═══════════════ ENABLE 2FA MODAL ═══════════════ -->
 <div id="enable-modal" class="modal-overlay">
   <div class="modal-card">
-    <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between sticky top-0 bg-[var(--color-surface)] z-10">
+    <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between sticky top-0 bg-white z-10">
       <div class="flex items-center gap-2.5">
-        <i data-lucide="shield-plus" class="w-[18px] h-[18px] text-brand"></i>
-        <h3 class="text-sm font-bold text-white">Enable Two-Factor Authentication</h3>
+        <i data-lucide="shield-plus" class="w-[18px] h-[18px] text-forest-500"></i>
+        <h3 class="text-sm font-bold text-forest-700">Enable Two-Factor Authentication</h3>
       </div>
-      <button class="text-ink-300 hover:text-white" onclick="closeEnableModal()">
+      <button class="text-forest-500 hover:text-forest-700" onclick="closeEnableModal()">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
@@ -389,11 +397,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <!-- Step 1: Secret + URI + Backup codes -->
       <div id="enable-step-1" class="space-y-5">
         <div>
-          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">1</span>
+          <div class="text-[13px] font-semibold text-forest-700 mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-forest-400 text-forest-700 text-[11px] font-bold flex items-center justify-center">1</span>
             Set up your authenticator
           </div>
-          <p class="text-[12px] text-ink-300 mb-3">Open Google Authenticator, Authy, or a similar TOTP app and scan the URI below — or enter the secret manually.</p>
+          <p class="text-[12px] text-forest-500 mb-3">Open Google Authenticator, Authy, or a similar TOTP app and scan the URI below — or enter the secret manually.</p>
 
           <label class="form-label block mb-1.5">Secret Key</label>
           <div class="code-box mb-3" id="twofa-secret" style="user-select:all;">—</div>
@@ -406,8 +414,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         </div>
 
         <div class="border-t border-[var(--color-border)] pt-5">
-          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">2</span>
+          <div class="text-[13px] font-semibold text-forest-700 mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-forest-400 text-forest-700 text-[11px] font-bold flex items-center justify-center">2</span>
             Save your backup codes
           </div>
           <div class="alert alert-warning mb-3">
@@ -424,8 +432,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         </div>
 
         <div class="border-t border-[var(--color-border)] pt-5">
-          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">3</span>
+          <div class="text-[13px] font-semibold text-forest-700 mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-forest-400 text-forest-700 text-[11px] font-bold flex items-center justify-center">3</span>
             Verify with a 6-digit code
           </div>
           <div id="verify-alert"></div>
@@ -450,14 +458,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <i data-lucide="shield-off" class="w-[18px] h-[18px] text-danger"></i>
-        <h3 class="text-sm font-bold text-white">Disable 2FA</h3>
+        <h3 class="text-sm font-bold text-forest-700">Disable 2FA</h3>
       </div>
-      <button class="text-ink-300 hover:text-white" onclick="closeDisableModal()">
+      <button class="text-forest-500 hover:text-forest-700" onclick="closeDisableModal()">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
     <div class="p-5 space-y-4">
-      <p class="text-[13px] text-ink-200">Enter a 6-digit code from your authenticator app (or a backup code) to confirm.</p>
+      <p class="text-[13px] text-forest-600">Enter a 6-digit code from your authenticator app (or a backup code) to confirm.</p>
       <div id="disable-alert"></div>
       <div>
         <label class="form-label block mb-1.5" for="disable-code">Verification Code</label>
@@ -465,7 +473,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       </div>
       <div class="flex justify-end gap-3">
         <button class="btn-secondary" onclick="closeDisableModal()">Cancel</button>
-        <button class="btn-primary" id="disable-btn" style="background:#EF4444;color:#fff;" onclick="disable2FA()">
+        <button class="btn-primary" id="disable-btn" style="background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;" onclick="disable2FA()">
           <i data-lucide="shield-off" class="w-4 h-4"></i> Disable 2FA
         </button>
       </div>
@@ -567,7 +575,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       statusText.textContent = 'Two-factor authentication is active. Your account is protected.';
       iconWrap.className = 'w-10 h-10 rounded-lg bg-positive/10 flex items-center justify-center';
       icon.setAttribute('data-lucide', 'shield-check');
-      icon.classList.remove('text-ink-200'); icon.classList.add('text-positive');
+      icon.classList.remove('text-forest-600'); icon.classList.add('text-positive');
       btnEnable.style.display = 'none';
       btnDisable.style.display = 'inline-flex';
       backupNotice.classList.add('hidden');
@@ -575,9 +583,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       pill.className = 'status-pill status-off';
       pill.innerHTML = '<i data-lucide="shield-off" class="w-3 h-3"></i> Disabled';
       statusText.textContent = 'Your account is not protected by two-factor authentication.';
-      iconWrap.className = 'w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center';
+      iconWrap.className = 'w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center';
       icon.setAttribute('data-lucide', 'shield-off');
-      icon.classList.remove('text-positive'); icon.classList.add('text-ink-200');
+      icon.classList.remove('text-positive'); icon.classList.add('text-forest-600');
       btnEnable.style.display = 'inline-flex';
       btnDisable.style.display = 'none';
     }
@@ -621,7 +629,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     const codes = pending2FA.backup_codes || [];
     grid.innerHTML = codes.length
       ? codes.map(c => `<div class="backup-code">${escapeHtml(c)}</div>`).join('')
-      : '<div class="text-ink-300 text-[12px] col-span-full">No backup codes returned.</div>';
+      : '<div class="text-forest-500 text-[12px] col-span-full">No backup codes returned.</div>';
     document.getElementById('verify-code').value = '';
     document.getElementById('verify-alert').innerHTML = '';
     m.classList.add('show');
@@ -769,28 +777,28 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     const container = document.getElementById('sessions-container');
     const res = await apiCall('GET', '/auth/sessions');
     if (!res.ok || !res.data) {
-      container.innerHTML = '<div class="text-[13px] text-ink-300">No session data available.</div>';
+      container.innerHTML = '<div class="text-[13px] text-forest-500">No session data available.</div>';
       return;
     }
     const sessions = Array.isArray(res.data) ? res.data : (res.data.sessions || []);
     if (!sessions.length) {
-      container.innerHTML = '<div class="text-[13px] text-ink-300">No active sessions found.</div>';
+      container.innerHTML = '<div class="text-[13px] text-forest-500">No active sessions found.</div>';
       return;
     }
     container.innerHTML = '<div class="space-y-3">' + sessions.map(s => {
       const ua = parseUA(s.user_agent || s.userAgent);
       const isCurrent = s.current || s.is_current;
-      return `<div class="flex items-center gap-4 p-4 rounded-lg border ${isCurrent ? 'border-brand/30 bg-brand/5' : 'border-[var(--color-border)] bg-[var(--color-bg)]'}">
-        <div class="w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="monitor" class="w-5 h-5 text-ink-100"></i>
+      return `<div class="flex items-center gap-4 p-4 rounded-lg border ${isCurrent ? 'border-forest-400/30 bg-forest-400/5' : 'border-[var(--color-border)] bg-forest-50'}">
+        <div class="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="monitor" class="w-5 h-5 text-forest-600"></i>
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[13px] font-semibold text-white">${escapeHtml(ua.browser)} · ${escapeHtml(ua.os)}</span>
+            <span class="text-[13px] font-semibold text-forest-700">${escapeHtml(ua.browser)} · ${escapeHtml(ua.os)}</span>
             ${isCurrent ? '<span class="status-pill status-on"><i data-lucide=\"check\" class=\"w-3 h-3\"></i> This device</span>' : ''}
           </div>
-          <div class="text-[12px] text-ink-300 mt-0.5 truncate" title="${escapeHtml(ua.raw)}">${escapeHtml(ua.raw) || 'Unknown device'}</div>
-          <div class="text-[12px] text-ink-400 mt-1 flex gap-4 flex-wrap">
+          <div class="text-[12px] text-forest-500 mt-0.5 truncate" title="${escapeHtml(ua.raw)}">${escapeHtml(ua.raw) || 'Unknown device'}</div>
+          <div class="text-[12px] text-forest-500 mt-1 flex gap-4 flex-wrap">
             <span><i data-lucide="map-pin" class="w-3 h-3 inline -mt-0.5"></i> ${s.ip || s.ip_address || '—'}</span>
             <span><i data-lucide="clock" class="w-3 h-3 inline -mt-0.5"></i> Created ${formatDate(s.created_at || s.created)}</span>
             <span><i data-lucide="hourglass" class="w-3 h-3 inline -mt-0.5"></i> Expires ${formatDate(s.expires_at || s.expires)}</span>
@@ -814,7 +822,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     const container = document.getElementById('account-container');
     const res = await apiCall('GET', '/auth/me');
     if (!res.ok || !res.data) {
-      container.innerHTML = '<div class="text-[13px] text-ink-300">Could not load account information.</div>';
+      container.innerHTML = '<div class="text-[13px] text-forest-500">Could not load account information.</div>';
       return;
     }
     const u = res.data;
@@ -836,12 +844,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
     container.innerHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">' + rows.map(r => `
       <div class="flex items-start gap-3">
-        <div class="w-9 h-9 rounded-lg bg-ink-700 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="${r.icon}" class="w-[18px] h-[18px] text-ink-100"></i>
+        <div class="w-9 h-9 rounded-lg bg-forest-50 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="${r.icon}" class="w-[18px] h-[18px] text-forest-600"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">${r.label}</div>
-          <div class="text-[14px] text-white mt-0.5">${r.value}</div>
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">${r.label}</div>
+          <div class="text-[14px] text-forest-700 mt-0.5">${r.value}</div>
         </div>
       </div>`).join('') + '</div>';
     lucide.createIcons();

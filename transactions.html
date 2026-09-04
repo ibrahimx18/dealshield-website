@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,31 +9,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
         colors: {
-          ink: {
-            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
-            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          forest: {
+            900: '#061a0e', 800: '#0a2415', 700: '#0d2818', 600: '#123a23',
+            500: '#1a4d2e', 400: '#2d6a4f', 300: '#52b788', 200: '#74c69d',
+            100: '#95d5b2', 50: '#b7e4c7'
           },
-          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
-          surface: '#0F1420',
+          leaf: { DEFAULT: '#40916c', light: '#52b788', bright: '#74c69d' },
+          cream: '#f8faf9',
+          mist: '#e8f5ee',
           positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
         },
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Space Grotesk', 'Inter', 'sans-serif'],
+        },
         spacing: { '18': '4.5rem' },
         borderRadius: { sm: '6px', md: '10px', lg: '14px' },
         boxShadow: {
-          sm: '0 1px 2px rgba(0,0,0,0.3)',
-          md: '0 4px 12px rgba(0,0,0,0.25)',
-          lg: '0 12px 40px rgba(0,0,0,0.3)',
+          sm: '0 1px 2px rgba(13,40,24,0.06)',
+          md: '0 4px 12px rgba(13,40,24,0.08)',
+          lg: '0 12px 40px rgba(13,40,24,0.12)',
         },
       }
     }
@@ -41,18 +46,20 @@
 </script>
 <style>
 :root {
-  --color-bg: #0B0F1A;
-  --color-surface: #0F1420;
-  --color-border: rgba(255,255,255,0.06);
-  --color-border-strong: rgba(255,255,255,0.12);
-  --color-accent: #C8A45C;
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #9BA5BC;
-  --color-text-muted: #6B7693;
+  --color-bg: #f8faf9;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f0f7f2;
+  --color-border: rgba(13,40,24,0.08);
+  --color-border-strong: rgba(13,40,24,0.16);
+  --color-accent: #2d6a4f;
+  --color-accent-light: #52b788;
+  --color-text-primary: #0a1f12;
+  --color-text-secondary: #3a5a44;
+  --color-text-muted: #6b8f78;
   --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 2px rgba(13,40,24,0.06);
+  --shadow-md: 0 4px 12px rgba(13,40,24,0.08);
+  --shadow-lg: 0 12px 40px rgba(13,40,24,0.12);
 }
 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
@@ -62,29 +69,30 @@ body {
   font-feature-settings: 'cv02','cv03','cv04','cv11';
   letter-spacing: -0.01em;
 }
-h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter', sans-serif; }
 .card {
-  background: var(--color-surface);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
 .btn-primary {
-  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%); color: #ffffff; font-weight: 700; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
   transition: background .2s, transform .15s, box-shadow .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; filter: none; box-shadow: none; }
+.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 4px 20px rgba(45,106,79,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; box-shadow: none; }
 .btn-secondary {
   background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
   cursor: pointer; transition: border-color .2s, background .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(45,106,79,0.05); }
 .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-danger {
   background: rgba(239,68,68,0.1); color: #EF4444; font-weight: 600; font-size: 14px;
@@ -106,15 +114,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   font-size: 14px; font-weight: 500; cursor: pointer;
   transition: background .15s, color .15s; border: 1px solid transparent;
 }
-.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
-.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(45,106,79,0.04); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(45,106,79,0.08); border-color: rgba(45,106,79,0.15); }
 
 /* Status pills */
 .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
 .status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
 .status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
-.status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
-.status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+.status-pending { background: rgba(107,118,147,0.15); color: #6b8f78; }
+.status-released { background: rgba(45,106,79,0.12); color: #2d6a4f; }
 .status-disputed { background: rgba(239,68,68,0.12); color: #EF4444; }
 
 /* Filter tabs */
@@ -123,14 +131,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   color: var(--color-text-secondary); cursor: pointer; border: 1px solid transparent;
   transition: all .15s; display: inline-flex; align-items: center; gap: 6px;
 }
-.filter-tab:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
-.filter-tab.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+.filter-tab:hover { color: var(--color-text-primary); background: rgba(45,106,79,0.04); }
+.filter-tab.active { color: var(--color-accent); background: rgba(45,106,79,0.08); border-color: rgba(45,106,79,0.15); }
 
 /* Facilitator badge */
 .facil-badge {
   display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
   border-radius: 99px; font-size: 10px; font-weight: 600;
-  background: rgba(200,164,92,0.1); color: #C8A45C; border: 1px solid rgba(200,164,92,0.2);
+  background: rgba(45,106,79,0.1); color: #2d6a4f; border: 1px solid rgba(45,106,79,0.2);
 }
 
 /* Timeline */
@@ -146,8 +154,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   background: rgba(34,197,94,0.15); border-color: #22C55E; color: #22C55E;
 }
 .timeline-step.current .timeline-dot {
-  background: var(--color-accent); border-color: var(--color-accent); color: #0B0F1A;
-  box-shadow: 0 0 0 4px rgba(200,164,92,0.2);
+  background: var(--color-accent); border-color: var(--color-accent); color: #f8faf9;
+  box-shadow: 0 0 0 4px rgba(45,106,79,0.2);
 }
 .timeline-step.future .timeline-dot {
   background: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);
@@ -182,7 +190,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 /* Toast */
 .toast {
   position: fixed; bottom: 24px; right: 24px; z-index: 100;
-  background: var(--color-surface); border: 1px solid var(--color-border-strong);
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md); padding: 14px 20px; max-width: 380px;
   box-shadow: var(--shadow-lg); display: none; align-items: flex-start; gap: 10px;
 }
@@ -192,15 +200,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
 /* Spinner */
 .spinner {
-  width: 18px; height: 18px; border: 2px solid rgba(200,164,92,0.2);
-  border-top-color: #C8A45C; border-radius: 50%; animation: spin 0.6s linear infinite;
+  width: 18px; height: 18px; border: 2px solid rgba(45,106,79,0.2);
+  border-top-color: #2d6a4f; border-radius: 50%; animation: spin 0.6s linear infinite;
   display: inline-block;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Skeleton */
 .skeleton {
-  background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-ink-700) 50%, var(--color-surface) 100%);
+  background: linear-gradient(90deg, #f0f7f2 0%, #e8f5ee 50%, #f0f7f2 100%);
   background-size: 200% 100%; animation: shimmer 1.5s infinite;
   border-radius: var(--radius-md);
 }
@@ -211,22 +219,22 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- 3D Art background -->
 <div class="fixed inset-0 pointer-events-none" style="z-index:0;">
   <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
-  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(248,250,249,0.85) 0%, rgba(248,250,249,0.65) 40%, rgba(248,250,249,0.92) 100%);"></div>
 </div>
 
 
 <!-- ═══════════════ SIDEBAR ═══════════════ -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
-<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+<div id="sidebar-overlay" class="fixed inset-0 bg-forest-900/30 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/80 backdrop-blur-md border-r border-[var(--color-border)] flex flex-col z-50">
   <!-- Logo -->
   <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
-    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+    <div class="w-8 h-8 rounded-lg border border-forest-400/40 flex items-center justify-center">
       <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
       </svg>
     </div>
-    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+    <span class="font-bold text-[15px] tracking-tight text-forest-700">DealShield</span>
   </div>
 
   <!-- Nav -->
@@ -259,12 +267,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- ═══════════════ MAIN ═══════════════ -->
 <div class="lg:ml-64 min-h-screen flex flex-col relative z-10">
   <!-- Top Bar -->
-  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+  <header class="h-16 border-b border-[var(--color-border)] bg-white/75 backdrop-blur-md flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
     <div class="flex items-center gap-3">
-      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+      <button class="lg:hidden text-forest-600" onclick="toggleSidebar()">
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
-      <h1 id="page-title" class="text-lg font-bold text-white">Transactions</h1>
+      <h1 id="page-title" class="text-lg font-bold text-forest-700">Transactions</h1>
     </div>
     <div class="flex items-center gap-3">
       <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
@@ -273,15 +281,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       </button>
       <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        <div class="w-8 h-8 rounded-full bg-forest-50 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-forest-600"></i>
         </div>
         <div class="hidden sm:block leading-tight">
-          <div id="user-name" class="text-sm font-semibold text-white">—</div>
-          <div class="text-[11px] text-ink-300">Verified Account</div>
+          <div id="user-name" class="text-sm font-semibold text-forest-700">—</div>
+          <div class="text-[11px] text-forest-500">Verified Account</div>
         </div>
       </div>
-      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+      <button class="text-forest-500 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
         <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
       </button>
     </div>
@@ -299,7 +307,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <i data-lucide="check-circle-2" class="w-5 h-5 text-positive" id="toast-icon"></i>
   </div>
   <div class="flex-1">
-    <div id="toast-msg" class="text-sm font-medium text-white"></div>
+    <div id="toast-msg" class="text-sm font-medium text-forest-700"></div>
   </div>
 </div>
 
@@ -473,9 +481,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           </button>
         </div>
         <div class="relative w-full sm:w-72">
-          <i data-lucide="search" class="w-4 h-4 text-ink-300 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <i data-lucide="search" class="w-4 h-4 text-forest-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
           <input id="search-input" type="text" placeholder="Search by Deal ID or category..." 
-            class="w-full bg-[var(--color-surface)] border border-[var(--color-border-strong)] rounded-[var(--radius-md)] pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-ink-300 focus:outline-none focus:border-brand transition-colors"
+            class="w-full bg-white/90 border border-[var(--color-border-strong)] rounded-[var(--radius-md)] pl-9 pr-4 py-2.5 text-sm text-forest-700 placeholder:text-forest-500 focus:outline-none focus:border-forest-400 transition-colors"
             oninput="setSearch(this.value)" />
         </div>
       </section>
@@ -536,11 +544,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     if (filtered.length === 0) {
       grid.innerHTML = `
         <div class="col-span-full card p-12 text-center">
-          <div class="w-14 h-14 rounded-full bg-ink-700 flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="inbox" class="w-6 h-6 text-ink-300"></i>
+          <div class="w-14 h-14 rounded-full bg-forest-50 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="inbox" class="w-6 h-6 text-forest-500"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-1">No transactions found</h3>
-          <p class="text-sm text-ink-300">${allTransactions.length === 0 ? 'No deals have been created yet.' : 'Try adjusting your filters or search.'}</p>
+          <h3 class="text-base font-bold text-forest-700 mb-1">No transactions found</h3>
+          <p class="text-sm text-forest-500">${allTransactions.length === 0 ? 'No deals have been created yet.' : 'Try adjusting your filters or search.'}</p>
           ${allTransactions.length === 0 ? `<button class="btn-primary mt-4" onclick="location.href='/create-deal.html'"><i data-lucide="plus" class="w-4 h-4"></i> Create your first deal</button>` : ''}
         </div>`;
       lucide.createIcons();
@@ -560,8 +568,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <!-- Top row -->
           <div class="flex items-start justify-between mb-3">
             <div>
-              <div class="font-mono font-bold text-brand text-sm">${dealId}</div>
-              <div class="text-xs text-ink-300 mt-0.5">${cat}</div>
+              <div class="font-mono font-bold text-forest-500 text-sm">${dealId}</div>
+              <div class="text-xs text-forest-500 mt-0.5">${cat}</div>
             </div>
             <span class="status-pill ${s.cls}">
               <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
@@ -569,13 +577,13 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           </div>
 
           <!-- Amount -->
-          <div class="text-2xl font-extrabold text-white tracking-tight mb-4">${formatNaira(t.amount)}</div>
+          <div class="text-2xl font-extrabold text-forest-700 tracking-tight mb-4">${formatNaira(t.amount)}</div>
 
           <!-- Badges -->
           <div class="flex items-center gap-2 flex-wrap">
             ${isFacilitated ? `<span class="facil-badge"><i data-lucide="user-check" class="w-3 h-3"></i>Facilitated</span>` : ''}
             ${hasGateway ? `<span class="facil-badge" style="background:rgba(107,118,147,0.1);color:#9BA5BC;border-color:rgba(107,118,147,0.2)"><i data-lucide="credit-card" class="w-3 h-3"></i>Gateway ${formatNaira(gatewayFee)}</span>` : ''}
-            ${!isFacilitated && !hasGateway ? `<span class="text-[11px] text-ink-300">Direct deal</span>` : ''}
+            ${!isFacilitated && !hasGateway ? `<span class="text-[11px] text-forest-500">Direct deal</span>` : ''}
           </div>
         </div>`;
     }).join('');
@@ -599,8 +607,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <div class="w-14 h-14 rounded-full bg-danger/10 flex items-center justify-center mx-auto mb-4">
             <i data-lucide="alert-circle" class="w-6 h-6 text-danger"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-1">Unable to load transactions</h3>
-          <p class="text-sm text-ink-300 mb-4">Please try again later.</p>
+          <h3 class="text-base font-bold text-forest-700 mb-1">Unable to load transactions</h3>
+          <p class="text-sm text-forest-500 mb-4">Please try again later.</p>
           <button class="btn-secondary" onclick="loadTransactionList()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
         </div>`;
       lucide.createIcons();
@@ -633,8 +641,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         <div class="w-14 h-14 rounded-full bg-danger/10 flex items-center justify-center mx-auto mb-4">
           <i data-lucide="alert-circle" class="w-6 h-6 text-danger"></i>
         </div>
-        <h3 class="text-base font-bold text-white mb-1">Unable to load transaction</h3>
-        <p class="text-sm text-ink-300 mb-4">${escapeHtml(msg || 'Please try again later.')}</p>
+        <h3 class="text-base font-bold text-forest-700 mb-1">Unable to load transaction</h3>
+        <p class="text-sm text-forest-500 mb-4">${escapeHtml(msg || 'Please try again later.')}</p>
         <div class="flex items-center justify-center gap-3">
           <button class="btn-secondary" onclick="location.href='/transactions.html'"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to list</button>
           <button class="btn-primary" onclick="loadDetail()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
@@ -699,42 +707,42 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
     let rows = `
       <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
-        <span class="text-sm text-ink-200">Deal Amount</span>
-        <span class="text-sm font-bold text-white">${formatNaira(amount)}</span>
+        <span class="text-sm text-forest-600">Deal Amount</span>
+        <span class="text-sm font-bold text-forest-700">${formatNaira(amount)}</span>
       </div>`;
 
     if (isFacilitated) {
       rows += `
       <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
-        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="user-check" class="w-3.5 h-3.5 text-brand"></i>Facilitator Fee</span>
-        <span class="text-sm font-bold text-white">${formatNaira(facilitatorFee)}</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="user-check" class="w-3.5 h-3.5 text-forest-500"></i>Facilitator Fee</span>
+        <span class="text-sm font-bold text-forest-700">${formatNaira(facilitatorFee)}</span>
       </div>`;
     }
 
     if (hasGateway) {
       rows += `
       <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
-        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="credit-card" class="w-3.5 h-3.5 text-ink-300"></i>Gateway Fee (1.5% capped ₦50k)</span>
-        <span class="text-sm font-bold text-white">${formatNaira(gatewayFee)}</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="credit-card" class="w-3.5 h-3.5 text-forest-500"></i>Gateway Fee (1.5% capped ₦50k)</span>
+        <span class="text-sm font-bold text-forest-700">${formatNaira(gatewayFee)}</span>
       </div>
       <div class="flex items-center justify-between py-2.5 pl-4 border-b border-[var(--color-border)]">
-        <span class="text-xs text-ink-300">— Buyer's share (50%)</span>
-        <span class="text-xs font-semibold text-ink-100">${formatNaira(buyerGatewayShare)}</span>
+        <span class="text-xs text-forest-500">— Buyer's share (50%)</span>
+        <span class="text-xs font-semibold text-forest-600">${formatNaira(buyerGatewayShare)}</span>
       </div>
       <div class="flex items-center justify-between py-2.5 pl-4 border-b border-[var(--color-border)]">
-        <span class="text-xs text-ink-300">— Seller's share (50%)</span>
-        <span class="text-xs font-semibold text-ink-100">${formatNaira(sellerGatewayShare)}</span>
+        <span class="text-xs text-forest-500">— Seller's share (50%)</span>
+        <span class="text-xs font-semibold text-forest-600">${formatNaira(sellerGatewayShare)}</span>
       </div>`;
     }
 
     if (isFacilitated) {
       rows += `
       <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
-        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5 text-brand"></i>DealShield Commission (10%)</span>
-        <span class="text-sm font-bold text-brand">${formatNaira(dealshieldCommission)}</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5 text-forest-500"></i>DealShield Commission (10%)</span>
+        <span class="text-sm font-bold text-forest-500">${formatNaira(dealshieldCommission)}</span>
       </div>
       <div class="flex items-center justify-between py-2.5">
-        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5 text-positive"></i>Facilitator Payout (90%)</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5 text-positive"></i>Facilitator Payout (90%)</span>
         <span class="text-sm font-bold text-positive">${formatNaira(facilitatorPayout)}</span>
       </div>`;
     }
@@ -751,25 +759,25 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     return `
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Buyer -->
-        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-ink-900/50 border border-[var(--color-border)]">
-          <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center flex-shrink-0">
-            <i data-lucide="shopping-bag" class="w-5 h-5 text-brand"></i>
+        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-forest-50/50 border border-[var(--color-border)]">
+          <div class="w-10 h-10 rounded-full bg-forest-400/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-forest-500"></i>
           </div>
           <div class="min-w-0">
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-0.5">Buyer</div>
-            <div class="text-sm font-bold text-white truncate">${buyer}</div>
-            ${buyerEmail ? `<div class="text-xs text-ink-300 truncate">${buyerEmail}</div>` : ''}
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-0.5">Buyer</div>
+            <div class="text-sm font-bold text-forest-700 truncate">${buyer}</div>
+            ${buyerEmail ? `<div class="text-xs text-forest-500 truncate">${buyerEmail}</div>` : ''}
           </div>
         </div>
         <!-- Seller -->
-        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-ink-900/50 border border-[var(--color-border)]">
+        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-forest-50/50 border border-[var(--color-border)]">
           <div class="w-10 h-10 rounded-full bg-positive/10 flex items-center justify-center flex-shrink-0">
             <i data-lucide="tag" class="w-5 h-5 text-positive"></i>
           </div>
           <div class="min-w-0">
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-0.5">Seller</div>
-            <div class="text-sm font-bold text-white truncate">${seller}</div>
-            ${sellerEmail ? `<div class="text-xs text-ink-300 truncate">${sellerEmail}</div>` : ''}
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-0.5">Seller</div>
+            <div class="text-sm font-bold text-forest-700 truncate">${seller}</div>
+            ${sellerEmail ? `<div class="text-xs text-forest-500 truncate">${sellerEmail}</div>` : ''}
           </div>
         </div>
       </div>`;
@@ -778,14 +786,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   function renderFacilitatorInfo(t) {
     if (!t.is_facilitated && !t.facilitator_name) return '';
     return `
-      <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-brand/5 border border-brand/10">
-        <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center flex-shrink-0">
-          <i data-lucide="user-check" class="w-5 h-5 text-brand"></i>
+      <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-forest-400/5 border border-forest-400/10">
+        <div class="w-10 h-10 rounded-full bg-forest-400/10 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="user-check" class="w-5 h-5 text-forest-500"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-brand mb-0.5">Facilitator</div>
-          <div class="text-sm font-bold text-white truncate">${escapeHtml(t.facilitator_name) || '—'}</div>
-          ${t.facilitator_fee ? `<div class="text-xs text-ink-300">Fee: ${formatNaira(t.facilitator_fee)}</div>` : ''}
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-0.5">Facilitator</div>
+          <div class="text-sm font-bold text-forest-700 truncate">${escapeHtml(t.facilitator_name) || '—'}</div>
+          ${t.facilitator_fee ? `<div class="text-xs text-forest-500">Fee: ${formatNaira(t.facilitator_fee)}</div>` : ''}
         </div>
       </div>`;
   }
@@ -796,25 +804,25 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     return `
       <div class="card p-5">
         <div class="flex items-center gap-2.5 mb-4">
-          <i data-lucide="landmark" class="w-[18px] h-[18px] text-brand"></i>
-          <h3 class="text-sm font-bold text-white">Virtual Account Details</h3>
+          <i data-lucide="landmark" class="w-[18px] h-[18px] text-forest-500"></i>
+          <h3 class="text-sm font-bold text-forest-700">Virtual Account Details</h3>
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Account Number</div>
-            <div class="text-sm font-mono font-bold text-white">${va.account_number || '—'}</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Account Number</div>
+            <div class="text-sm font-mono font-bold text-forest-700">${va.account_number || '—'}</div>
           </div>
           <div>
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Bank Name</div>
-            <div class="text-sm font-bold text-white">${escapeHtml(va.bank_name) || '—'}</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Bank Name</div>
+            <div class="text-sm font-bold text-forest-700">${escapeHtml(va.bank_name) || '—'}</div>
           </div>
           <div>
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Expected Amount</div>
-            <div class="text-sm font-bold text-brand">${formatNaira(va.expected_amount || va.amount)}</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Expected Amount</div>
+            <div class="text-sm font-bold text-forest-500">${formatNaira(va.expected_amount || va.amount)}</div>
           </div>
           <div>
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Expires</div>
-            <div class="text-sm font-bold text-white">${va.expiry ? new Date(va.expiry).toLocaleDateString('en-NG', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Expires</div>
+            <div class="text-sm font-bold text-forest-700">${va.expiry ? new Date(va.expiry).toLocaleDateString('en-NG', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</div>
           </div>
         </div>
         ${va.account_number ? `
@@ -883,7 +891,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <i data-lucide="search" class="w-5 h-5 text-danger"></i>
             <div>
               <div class="text-sm font-bold text-danger">Under Investigation</div>
-              <div class="text-xs text-ink-300">DealShield is reviewing this dispute. You'll be notified when resolved.</div>
+              <div class="text-xs text-forest-500">DealShield is reviewing this dispute. You'll be notified when resolved.</div>
             </div>
           </div>`;
         break;
@@ -894,47 +902,47 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
             <div>
               <div class="text-sm font-bold text-positive">Deal Completed</div>
-              <div class="text-xs text-ink-300">Funds have been released successfully.</div>
+              <div class="text-xs text-forest-500">Funds have been released successfully.</div>
             </div>
           </div>`;
         break;
       case 'refunded':
         buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-brand/10 border border-brand/20">
-            <i data-lucide="rotate-ccw" class="w-5 h-5 text-brand"></i>
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-400/10 border border-forest-400/20">
+            <i data-lucide="rotate-ccw" class="w-5 h-5 text-forest-500"></i>
             <div>
-              <div class="text-sm font-bold text-brand">Refunded</div>
-              <div class="text-xs text-ink-300">Funds have been refunded to the buyer.</div>
+              <div class="text-sm font-bold text-forest-500">Refunded</div>
+              <div class="text-xs text-forest-500">Funds have been refunded to the buyer.</div>
             </div>
           </div>`;
         break;
       case 'split_resolution':
         buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-brand/10 border border-brand/20">
-            <i data-lucide="split" class="w-5 h-5 text-brand"></i>
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-400/10 border border-forest-400/20">
+            <i data-lucide="split" class="w-5 h-5 text-forest-500"></i>
             <div>
-              <div class="text-sm font-bold text-brand">Split Resolution</div>
-              <div class="text-xs text-ink-300">Funds were split between buyer and seller.</div>
+              <div class="text-sm font-bold text-forest-500">Split Resolution</div>
+              <div class="text-xs text-forest-500">Funds were split between buyer and seller.</div>
             </div>
           </div>`;
         break;
       case 'cancelled':
         buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-ink-700 border border-[var(--color-border-strong)]">
-            <i data-lucide="x-circle" class="w-5 h-5 text-ink-300"></i>
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-50 border border-[var(--color-border-strong)]">
+            <i data-lucide="x-circle" class="w-5 h-5 text-forest-500"></i>
             <div>
-              <div class="text-sm font-bold text-ink-100">Deal Cancelled</div>
-              <div class="text-xs text-ink-300">This deal has been cancelled.</div>
+              <div class="text-sm font-bold text-forest-600">Deal Cancelled</div>
+              <div class="text-xs text-forest-500">This deal has been cancelled.</div>
             </div>
           </div>`;
         break;
       case 'expired':
         buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-ink-700 border border-[var(--color-border-strong)]">
-            <i data-lucide="clock" class="w-5 h-5 text-ink-300"></i>
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-50 border border-[var(--color-border-strong)]">
+            <i data-lucide="clock" class="w-5 h-5 text-forest-500"></i>
             <div>
-              <div class="text-sm font-bold text-ink-100">Deal Expired</div>
-              <div class="text-xs text-ink-300">This deal has expired without completion.</div>
+              <div class="text-sm font-bold text-forest-600">Deal Expired</div>
+              <div class="text-xs text-forest-500">This deal has expired without completion.</div>
             </div>
           </div>`;
         break;
@@ -944,7 +952,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
             <div>
               <div class="text-sm font-bold text-positive">Buyer Approved</div>
-              <div class="text-xs text-ink-300">Funds are being released to the seller.</div>
+              <div class="text-xs text-forest-500">Funds are being released to the seller.</div>
             </div>
           </div>`;
         break;
@@ -967,7 +975,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     const main = document.getElementById('main-content');
     main.innerHTML = `
       <!-- Back link -->
-      <div class="flex items-center gap-2 text-sm text-ink-300 hover:text-white transition-colors cursor-pointer" onclick="location.href='/transactions.html'">
+      <div class="flex items-center gap-2 text-sm text-forest-500 hover:text-forest-700 transition-colors cursor-pointer" onclick="location.href='/transactions.html'">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to transactions
       </div>
 
@@ -976,29 +984,29 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <div class="flex items-center gap-3 mb-2">
-              <h2 class="text-xl font-extrabold text-white tracking-tight">${dealId}</h2>
+              <h2 class="text-xl font-extrabold text-forest-700 tracking-tight">${dealId}</h2>
               <span class="status-pill ${s.cls}">
                 <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
               </span>
               ${isFacilitated ? `<span class="facil-badge"><i data-lucide="user-check" class="w-3 h-3"></i>Facilitated</span>` : ''}
             </div>
-            <div class="text-sm text-ink-300">${cat}</div>
+            <div class="text-sm text-forest-500">${cat}</div>
           </div>
           <div class="text-right">
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Deal Amount</div>
-            <div class="text-3xl font-extrabold text-white tracking-tight">${formatNaira(t.amount)}</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Deal Amount</div>
+            <div class="text-3xl font-extrabold text-forest-700 tracking-tight">${formatNaira(t.amount)}</div>
           </div>
         </div>
 
         <!-- Created date -->
-        ${t.created_at ? `<div class="mt-3 text-xs text-ink-300 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Created ${new Date(t.created_at).toLocaleDateString('en-NG', { day: '2-digit', month: 'long', year: 'numeric' })}</div>` : ''}
+        ${t.created_at ? `<div class="mt-3 text-xs text-forest-500 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Created ${new Date(t.created_at).toLocaleDateString('en-NG', { day: '2-digit', month: 'long', year: 'numeric' })}</div>` : ''}
       </section>
 
       <!-- Timeline -->
       <section class="card p-6">
         <div class="flex items-center gap-2.5 mb-6">
-          <i data-lucide="git-branch" class="w-[18px] h-[18px] text-brand"></i>
-          <h3 class="text-sm font-bold text-white">Transaction Lifecycle</h3>
+          <i data-lucide="git-branch" class="w-[18px] h-[18px] text-forest-500"></i>
+          <h3 class="text-sm font-bold text-forest-700">Transaction Lifecycle</h3>
         </div>
         <div class="flex items-start overflow-x-auto pb-2">
           ${renderTimeline(t.status)}
@@ -1006,12 +1014,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         ${['disputed', 'under_investigation'].includes(t.status) ? `
         <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-danger/5 border border-danger/15 flex items-center gap-2">
           <i data-lucide="alert-triangle" class="w-4 h-4 text-danger flex-shrink-0"></i>
-          <span class="text-xs text-ink-200">This deal has been diverted from the normal lifecycle due to a dispute. DealShield is investigating.</span>
+          <span class="text-xs text-forest-600">This deal has been diverted from the normal lifecycle due to a dispute. DealShield is investigating.</span>
         </div>` : ''}
         ${['cancelled', 'expired'].includes(t.status) ? `
-        <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-ink-700/50 border border-[var(--color-border-strong)] flex items-center gap-2">
-          <i data-lucide="info" class="w-4 h-4 text-ink-300 flex-shrink-0"></i>
-          <span class="text-xs text-ink-300">This deal was ${t.status} before completion.</span>
+        <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-forest-50/50 border border-[var(--color-border-strong)] flex items-center gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-forest-500 flex-shrink-0"></i>
+          <span class="text-xs text-forest-500">This deal was ${t.status} before completion.</span>
         </div>` : ''}
       </section>
 
@@ -1019,8 +1027,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="card p-5">
           <div class="flex items-center gap-2.5 mb-4">
-            <i data-lucide="receipt" class="w-[18px] h-[18px] text-brand"></i>
-            <h3 class="text-sm font-bold text-white">Fee Breakdown</h3>
+            <i data-lucide="receipt" class="w-[18px] h-[18px] text-forest-500"></i>
+            <h3 class="text-sm font-bold text-forest-700">Fee Breakdown</h3>
           </div>
           <div class="space-y-0">
             ${renderFeeBreakdown(t)}
@@ -1029,11 +1037,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         ${t.virtual_account ? renderVirtualAccount(t) : `
         <div class="card p-5 flex items-center justify-center text-center">
           <div>
-            <div class="w-12 h-12 rounded-full bg-ink-700 flex items-center justify-center mx-auto mb-3">
-              <i data-lucide="landmark" class="w-5 h-5 text-ink-300"></i>
+            <div class="w-12 h-12 rounded-full bg-forest-50 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="landmark" class="w-5 h-5 text-forest-500"></i>
             </div>
-            <div class="text-sm font-semibold text-ink-100 mb-1">No Virtual Account</div>
-            <div class="text-xs text-ink-300">${['seller_accepted', 'payment_pending'].includes(t.status) ? 'Generate a virtual account to fund this deal.' : 'A virtual account has not been generated for this deal.'}</div>
+            <div class="text-sm font-semibold text-forest-600 mb-1">No Virtual Account</div>
+            <div class="text-xs text-forest-500">${['seller_accepted', 'payment_pending'].includes(t.status) ? 'Generate a virtual account to fund this deal.' : 'A virtual account has not been generated for this deal.'}</div>
           </div>
         </div>`}
       </section>
@@ -1041,8 +1049,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <!-- Buyer & Seller Info -->
       <section class="card p-5">
         <div class="flex items-center gap-2.5 mb-4">
-          <i data-lucide="users" class="w-[18px] h-[18px] text-brand"></i>
-          <h3 class="text-sm font-bold text-white">Parties</h3>
+          <i data-lucide="users" class="w-[18px] h-[18px] text-forest-500"></i>
+          <h3 class="text-sm font-bold text-forest-700">Parties</h3>
         </div>
         ${renderBuyerSellerInfo(t)}
         ${isFacilitated ? `<div class="mt-4">${renderFacilitatorInfo(t)}</div>` : ''}
@@ -1051,8 +1059,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <!-- Action Buttons -->
       <section class="card p-5">
         <div class="flex items-center gap-2.5 mb-4">
-          <i data-lucide="zap" class="w-[18px] h-[18px] text-brand"></i>
-          <h3 class="text-sm font-bold text-white">Actions</h3>
+          <i data-lucide="zap" class="w-[18px] h-[18px] text-forest-500"></i>
+          <h3 class="text-sm font-bold text-forest-700">Actions</h3>
         </div>
         <div class="flex items-center gap-3 flex-wrap" id="action-buttons">
           ${renderActionButtons(t)}

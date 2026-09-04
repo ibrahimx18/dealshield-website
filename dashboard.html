@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,33 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
         colors: {
-          ink: {
-            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
-            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          forest: {
+            900: '#061a0e', 800: '#0a2415', 700: '#0d2818', 600: '#123a23',
+            500: '#1a4d2e', 400: '#2d6a4f', 300: '#52b788', 200: '#74c69d',
+            100: '#95d5b2', 50: '#b7e4c7'
           },
-          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
-          surface: '#0F1420',
+          leaf: { DEFAULT: '#40916c', light: '#52b788', bright: '#74c69d' },
+          cream: '#f8faf9',
+          mist: '#e8f5ee',
           positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
         },
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], heading: ['Space Grotesk', 'Inter', 'sans-serif'] },
         spacing: { '18': '4.5rem' },
         borderRadius: { sm: '6px', md: '10px', lg: '14px' },
         boxShadow: {
-          sm: '0 1px 2px rgba(0,0,0,0.3)',
-          md: '0 4px 12px rgba(0,0,0,0.25)',
-          lg: '0 12px 40px rgba(0,0,0,0.3)',
+          sm: '0 1px 2px rgba(13,40,24,0.06)',
+          md: '0 4px 12px rgba(13,40,24,0.08)',
+          lg: '0 12px 40px rgba(13,40,24,0.10)',
         },
       }
     }
@@ -41,18 +42,20 @@
 </script>
 <style>
 :root {
-  --color-bg: #0B0F1A;
-  --color-surface: #0F1420;
-  --color-border: rgba(255,255,255,0.06);
-  --color-border-strong: rgba(255,255,255,0.12);
-  --color-accent: #C8A45C;
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #9BA5BC;
-  --color-text-muted: #6B7693;
+  --color-bg: #f8faf9;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f0f7f2;
+  --color-border: rgba(13,40,24,0.08);
+  --color-border-strong: rgba(13,40,24,0.16);
+  --color-accent: #2d6a4f;
+  --color-accent-light: #52b788;
+  --color-text-primary: #0a1f12;
+  --color-text-secondary: #3a5a44;
+  --color-text-muted: #6b8f78;
   --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 2px rgba(13,40,24,0.06);
+  --shadow-md: 0 4px 12px rgba(13,40,24,0.08);
+  --shadow-lg: 0 12px 40px rgba(13,40,24,0.10);
 }
 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
@@ -62,33 +65,36 @@ body {
   font-feature-settings: 'cv02','cv03','cv04','cv11';
   letter-spacing: -0.01em;
 }
-h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.03em; }
 .card {
-  background: var(--color-surface);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   transition: border-color 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
-.card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+.card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .btn-primary {
-  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%); color: #ffffff; font-weight: 700; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
   transition: background .2s, transform .15s, box-shadow .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 4px 20px rgba(45,106,79,0.3); transform: translateY(-1px); }
 .btn-secondary {
   background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
   padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
   cursor: pointer; transition: border-color .2s, background .2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
 }
-.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(45,106,79,0.05); }
 .btn-ghost {
   background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px;
   padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: color .2s;
 }
-.btn-ghost:hover { color: var(--color-text-primary); }
+.btn-ghost:hover { color: var(--color-accent); }
 
 /* Sidebar */
 .sidebar-link {
@@ -97,15 +103,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   font-size: 14px; font-weight: 500; cursor: pointer;
   transition: background .15s, color .15s; border: 1px solid transparent;
 }
-.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
-.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(13,40,24,0.04); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(45,106,79,0.08); border-color: rgba(45,106,79,0.15); }
 
 /* Status pills */
 .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
 .status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
 .status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
-.status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
-.status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+.status-pending { background: rgba(107,143,120,0.15); color: #6b8f78; }
+.status-released { background: rgba(45,106,79,0.12); color: #2d6a4f; }
 .status-disputed { background: rgba(239,68,68,0.12); color: #EF4444; }
 
 /* Table */
@@ -118,13 +124,13 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   padding: 14px 16px; font-size: 13px; color: var(--color-text-primary); border-bottom: 1px solid var(--color-border);
 }
 .deals-table tbody tr { transition: background .15s; }
-.deals-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.deals-table tbody tr:hover { background: rgba(13,40,24,0.03); }
 .deals-table tbody tr:last-child td { border-bottom: none; }
 
 /* Activity feed */
 .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
 .activity-item:last-child { border-bottom: none; }
-.activity-dot { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border-strong); }
+.activity-dot { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border-strong); background: rgba(255,255,255,0.6); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
@@ -144,23 +150,23 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <body class="min-h-screen">
 <!-- 3D Art background -->
 <div class="fixed inset-0 pointer-events-none" style="z-index:0;">
-  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
-  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.06]">
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(248,250,249,0.8) 0%, rgba(248,250,249,0.6) 40%, rgba(248,250,249,0.9) 100%);"></div>
 </div>
 
 
 <!-- ═══════════════ SIDEBAR ═══════════════ -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
-<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+<div id="sidebar-overlay" class="fixed inset-0 bg-forest-900/30 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white border-r border-[var(--color-border)] flex flex-col z-50">
   <!-- Logo -->
   <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
-    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+    <div class="w-8 h-8 rounded-lg border border-forest-400/40 flex items-center justify-center">
       <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
       </svg>
     </div>
-    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+    <span class="font-bold text-[15px] tracking-tight text-forest-700">DealShield</span>
   </div>
 
   <!-- Nav -->
@@ -193,12 +199,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 <!-- ═══════════════ MAIN ═══════════════ -->
 <div class="lg:ml-64 min-h-screen flex flex-col relative z-10">
   <!-- Top Bar -->
-  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+  <header class="h-16 border-b border-[var(--color-border)] bg-white/75 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
     <div class="flex items-center gap-3">
-      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+      <button class="lg:hidden text-forest-600" onclick="toggleSidebar()">
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
-      <h1 class="text-lg font-bold text-white">Dashboard</h1>
+      <h1 class="text-lg font-bold text-forest-700">Dashboard</h1>
     </div>
     <div class="flex items-center gap-3">
       <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/facilitator.html'">
@@ -211,15 +217,15 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       </button>
       <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        <div class="w-8 h-8 rounded-full bg-forest-50 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-forest-600"></i>
         </div>
         <div class="hidden sm:block leading-tight">
-          <div id="user-name" class="text-sm font-semibold text-white">—</div>
-          <div class="text-[11px] text-ink-300">Verified Account</div>
+          <div id="user-name" class="text-sm font-semibold text-forest-700">—</div>
+          <div class="text-[11px] text-forest-500">Verified Account</div>
         </div>
       </div>
-      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+      <button class="text-forest-500 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
         <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
       </button>
     </div>
@@ -232,64 +238,64 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <!-- Total Escrow Volume -->
       <div class="card p-5 card-hover">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Total Escrow Volume</span>
-          <div class="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center">
-            <i data-lucide="wallet" class="w-[18px] h-[18px] text-brand"></i>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Total Escrow Volume</span>
+          <div class="w-9 h-9 rounded-lg bg-forest-400/10 flex items-center justify-center">
+            <i data-lucide="wallet" class="w-[18px] h-[18px] text-forest-500"></i>
           </div>
         </div>
-        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-volume">₦0</div>
+        <div class="text-2xl font-extrabold text-forest-700 tracking-tight" id="card-volume">₦0</div>
         <div class="mt-2 flex items-center gap-1.5">
           <span class="text-[11px] text-positive font-semibold flex items-center gap-0.5">
             <i data-lucide="trending-up" class="w-3 h-3"></i> +12.4%
           </span>
-          <span class="text-[11px] text-ink-300">vs last month</span>
+          <span class="text-[11px] text-forest-500">vs last month</span>
         </div>
       </div>
 
       <!-- Active Deals -->
       <div class="card p-5 card-hover">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Active Deals</span>
-          <div class="w-9 h-9 rounded-lg bg-ink-700 flex items-center justify-center">
-            <i data-lucide="briefcase" class="w-[18px] h-[18px] text-ink-100"></i>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Active Deals</span>
+          <div class="w-9 h-9 rounded-lg bg-forest-50 flex items-center justify-center">
+            <i data-lucide="briefcase" class="w-[18px] h-[18px] text-forest-600"></i>
           </div>
         </div>
-        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-active">0</div>
+        <div class="text-2xl font-extrabold text-forest-700 tracking-tight" id="card-active">0</div>
         <div class="mt-2 flex items-center gap-1.5">
           <span class="text-[11px] text-warning font-semibold">2 in inspection</span>
-          <span class="text-[11px] text-ink-300">· 4 in escrow</span>
+          <span class="text-[11px] text-forest-500">· 4 in escrow</span>
         </div>
       </div>
 
       <!-- Completed Deals -->
       <div class="card p-5 card-hover">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Completed Deals</span>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Completed Deals</span>
           <div class="w-9 h-9 rounded-lg bg-positive/10 flex items-center justify-center">
             <i data-lucide="check-circle-2" class="w-[18px] h-[18px] text-positive"></i>
           </div>
         </div>
-        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-completed">0</div>
+        <div class="text-2xl font-extrabold text-forest-700 tracking-tight" id="card-completed">0</div>
         <div class="mt-2 flex items-center gap-1.5">
           <span class="text-[11px] text-positive font-semibold flex items-center gap-0.5">
             <i data-lucide="trending-up" class="w-3 h-3"></i> +3
           </span>
-          <span class="text-[11px] text-ink-300">this quarter</span>
+          <span class="text-[11px] text-forest-500">this quarter</span>
         </div>
       </div>
 
       <!-- Pending Verification -->
       <div class="card p-5 card-hover">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">Pending Verification</span>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Pending Verification</span>
           <div class="w-9 h-9 rounded-lg bg-warning/10 flex items-center justify-center">
             <i data-lucide="shield-check" class="w-[18px] h-[18px] text-warning"></i>
           </div>
         </div>
-        <div class="text-2xl font-extrabold text-white tracking-tight" id="card-pending">0</div>
+        <div class="text-2xl font-extrabold text-forest-700 tracking-tight" id="card-pending">0</div>
         <div class="mt-2 flex items-center gap-1.5">
           <span class="text-[11px] text-warning font-semibold">Action required</span>
-          <span class="text-[11px] text-ink-300">on 2 deals</span>
+          <span class="text-[11px] text-forest-500">on 2 deals</span>
         </div>
       </div>
     </section>
@@ -300,8 +306,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <div class="card xl:col-span-2 overflow-hidden">
         <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <i data-lucide="list" class="w-[18px] h-[18px] text-brand"></i>
-            <h2 class="text-sm font-bold text-white">Active Deals</h2>
+            <i data-lucide="list" class="w-[18px] h-[18px] text-forest-500"></i>
+            <h2 class="text-sm font-bold text-forest-700">Active Deals</h2>
           </div>
           <button class="btn-ghost text-[12px] flex items-center gap-1" onclick="location.href='/create-deal.html'">
             View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -329,8 +335,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <!-- Activity Feed -->
       <div class="card overflow-hidden">
         <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
-          <i data-lucide="activity" class="w-[18px] h-[18px] text-brand"></i>
-          <h2 class="text-sm font-bold text-white">Recent Activity</h2>
+          <i data-lucide="activity" class="w-[18px] h-[18px] text-forest-500"></i>
+          <h2 class="text-sm font-bold text-forest-700">Recent Activity</h2>
         </div>
         <div class="px-5 py-3" id="activity-feed">
           <!-- populated by JS -->
@@ -418,19 +424,19 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       // Deals table
       const tbody = document.getElementById('deals-tbody');
       if (transactions.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-ink-300 py-8">No deals yet. <a href="/create-deal.html" class="text-brand font-semibold">Create your first deal</a></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-forest-500 py-8">No deals yet. <a href="/create-deal.html" class="text-forest-500 font-semibold">Create your first deal</a></td></tr>`;
       } else {
         tbody.innerHTML = transactions.slice(0, 8).map(t => {
           const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
           const cat = escapeHtml(t.category || t.listing_title || '—');
           return `
             <tr class="cursor-pointer" onclick="location.href='/transactions.html?id=${t.id}'">
-              <td class="font-mono font-semibold text-brand">DS-${String(t.id).padStart(6, '0')}</td>
-              <td class="text-ink-100">${cat}</td>
+              <td class="font-mono font-semibold text-forest-500">DS-${String(t.id).padStart(6, '0')}</td>
+              <td class="text-forest-700">${cat}</td>
               <td class="font-semibold">${formatNaira(t.amount)}</td>
               <td><span class="status-pill ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}</span></td>
-              <td class="text-ink-200">${t.is_facilitated ? 'Facilitated' : 'Direct'}</td>
-              <td class="text-ink-100">${escapeHtml(t.seller_name || t.buyer_name || '—')}</td>
+              <td class="text-forest-600">${t.is_facilitated ? 'Facilitated' : 'Direct'}</td>
+              <td class="text-forest-700">${escapeHtml(t.seller_name || t.buyer_name || '—')}</td>
             </tr>`;
         }).join('');
       }
@@ -438,12 +444,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       // Activity feed (generate from recent transactions)
       const feed = document.getElementById('activity-feed');
       if (transactions.length === 0) {
-        feed.innerHTML = `<div class="text-center text-ink-300 py-6 text-sm">No recent activity</div>`;
+        feed.innerHTML = `<div class="text-center text-forest-500 py-6 text-sm">No recent activity</div>`;
       } else {
         feed.innerHTML = transactions.slice(0, 7).map(t => {
           const s = STATUS_MAP[t.status] || { icon: 'circle', cls: 'pending' };
-          const colorMap = { locked: '#F59E0B', verified: '#22C55E', disputed: '#EF4444', released: '#C8A45C', pending: '#9BA5BC' };
-          const color = colorMap[s.cls.replace('status-','')] || '#9BA5BC';
+          const colorMap = { locked: '#F59E0B', verified: '#22C55E', disputed: '#EF4444', released: '#2d6a4f', pending: '#6b8f78' };
+          const color = colorMap[s.cls.replace('status-','')] || '#6b8f78';
           const titleMap = {
             created: 'Deal created', funded: 'Funds locked in escrow', released: 'Funds released to seller',
             disputed: 'Dispute raised', closed: 'Deal closed', cancelled: 'Deal cancelled',
@@ -456,8 +462,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
                 <i data-lucide="${s.icon}" class="w-[14px] h-[14px]" style="color:${color}"></i>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="text-[13px] font-semibold text-white truncate">${escapeHtml(title)}</div>
-                <div class="text-[12px] text-ink-300 truncate">DS-${String(t.id).padStart(6, '0')} · ${formatNaira(t.amount)}</div>
+                <div class="text-[13px] font-semibold text-forest-700 truncate">${escapeHtml(title)}</div>
+                <div class="text-[12px] text-forest-500 truncate">DS-${String(t.id).padStart(6, '0')} · ${formatNaira(t.amount)}</div>
               </div>
             </div>`;
         }).join('');
@@ -467,7 +473,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     } catch (err) {
       console.error('Dashboard load error:', err);
       // Show empty state
-      document.getElementById('deals-tbody').innerHTML = `<tr><td colspan="6" class="text-center text-ink-300 py-8">Unable to load deals. Please try again later.</td></tr>`;
+      document.getElementById('deals-tbody').innerHTML = `<tr><td colspan="6" class="text-center text-forest-500 py-8">Unable to load deals. Please try again later.</td></tr>`;
     }
   }
 
