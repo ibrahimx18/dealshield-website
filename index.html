@@ -405,6 +405,11 @@
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="relative pt-32 pb-16 section-pad overflow-hidden">
+  <!-- 3D Art background with overlay -->
+  <div class="absolute inset-0 pointer-events-none">
+    <img src="assets/art/dealshield-hero.jpg" alt="DealShield 3D escrow art — buyer's money and seller's goods protected" class="w-full h-full object-cover opacity-40">
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.7) 0%, rgba(11,15,26,0.4) 40%, rgba(11,15,26,0.85) 100%);"></div>
+  </div>
   <!-- Subtle grid background -->
   <div class="absolute inset-0 opacity-[0.015] pointer-events-none" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 64px 64px;"></div>
 
@@ -436,88 +441,12 @@
         </div>
       </div>
 
-      <!-- Right: Transaction Visualisation -->
+      <!-- Right: 3D Escrow Artwork -->
       <div class="fade-in" style="animation-delay: 0.15s;">
-        <div class="tx-card max-w-md mx-auto lg:ml-auto lg:mr-0">
-          <!-- Header -->
-          <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded border border-brand/30 flex items-center justify-center">
-                <i data-lucide="shield" class="w-4 h-4 text-brand"></i>
-              </div>
-              <span class="text-sm font-bold text-white">Escrow Transaction</span>
-            </div>
-            <span class="text-[11px] text-ink-300 font-medium">DS-2026-0048</span>
-          </div>
-
-          <!-- Flow -->
-          <div class="px-5 py-3">
-            <div class="tx-row !px-0 !border-b-0 !py-2.5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-                  <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
-                </div>
-                <div>
-                  <div class="tx-value text-[13px]">Buyer</div>
-                  <div class="text-[11px] text-ink-300">Initiated transfer</div>
-                </div>
-              </div>
-              <span class="status-pill status-verified">
-                <i data-lucide="check" class="w-3 h-3"></i> Verified
-              </span>
-            </div>
-            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
-            <div class="tx-row !px-0 !border-b-0 !py-2.5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-                  <i data-lucide="lock" class="w-4 h-4 text-warning"></i>
-                </div>
-                <div>
-                  <div class="tx-value text-[13px]">Funds Protected</div>
-                  <div class="text-[11px] text-ink-300">₦10,000,000 in escrow</div>
-                </div>
-              </div>
-              <span class="status-pill status-locked">
-                <i data-lucide="lock" class="w-3 h-3"></i> Locked
-              </span>
-            </div>
-            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
-            <div class="tx-row !px-0 !border-b-0 !py-2.5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-                  <i data-lucide="search-check" class="w-4 h-4 text-ink-200"></i>
-                </div>
-                <div>
-                  <div class="tx-value text-[13px]">Verification</div>
-                  <div class="text-[11px] text-ink-300">48h inspection window</div>
-                </div>
-              </div>
-              <span class="status-pill status-pending">
-                <i data-lucide="clock" class="w-3 h-3"></i> In Progress
-              </span>
-            </div>
-            <div class="flow-arrow"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></div>
-            <div class="tx-row !px-0 !border-b-0 !py-2.5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
-                  <i data-lucide="user-check" class="w-4 h-4 text-ink-200"></i>
-                </div>
-                <div>
-                  <div class="tx-value text-[13px]">Seller</div>
-                  <div class="text-[11px] text-ink-300">Awaiting release</div>
-                </div>
-              </div>
-              <span class="status-pill status-released">
-                <i data-lucide="unlock" class="w-3 h-3"></i> Pending
-              </span>
-            </div>
-          </div>
-
-          <!-- Footer bar -->
-          <div class="px-5 py-3 border-t border-[var(--color-border)] flex items-center justify-between">
-            <span class="text-[11px] text-ink-300">Transaction Amount</span>
-            <span class="text-sm font-bold text-white">₦10,000,000</span>
-          </div>
+        <div class="relative max-w-md mx-auto lg:ml-auto lg:mr-0">
+          <img src="assets/art/dealshield-hero.jpg" alt="The Deal is Safe — 3D escrow visualization with shield, buyer's funds, and seller's goods" class="w-full rounded-2xl shadow-2xl" style="border: 1px solid rgba(200,164,92,0.15); box-shadow: 0 0 80px rgba(40,160,60,0.08), 0 0 40px rgba(230,140,30,0.06);">
+          <!-- Glow overlay -->
+          <div class="absolute inset-0 rounded-2xl pointer-events-none" style="box-shadow: inset 0 0 60px rgba(40,140,55,0.05);"></div>
         </div>
       </div>
 
