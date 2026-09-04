@@ -102,6 +102,12 @@ body { background-color: var(--color-bg); color: var(--color-text-primary); font
 </style>
 </head>
 <body class="relative min-h-screen flex items-center justify-center">
+<!-- 3D Art background -->
+<div class="fixed inset-0 pointer-events-none" style="z-index:0;">
+  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+</div>
+
 <header class="fixed top-0 inset-x-0 z-50 bg-ink-800/70 backdrop-blur-sm border-b border-[var(--color-border)] p-4 flex items-center">
   <a href="/" class="flex items-center gap-2">
     <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
@@ -113,7 +119,7 @@ body { background-color: var(--color-bg); color: var(--color-text-primary); font
     <span class="font-bold text-[15px] text-white">DealShield</span>
   </a>
 </header>
-<main class="w-full max-w-md px-4">
+<main class="w-full relative z-10 max-w-md px-4">
   <div class="card p-6 mt-24 mx-auto shadow-md">
     <h2 class="text-2xl font-bold text-white mb-1 text-center">Create your DealShield account</h2>
     <p class="text-[var(--color-text-secondary)] text-sm text-center mb-5">Secure escrow for every transaction on dealshield.ng</p>

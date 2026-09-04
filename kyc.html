@@ -113,6 +113,12 @@ body { background-color: var(--color-bg); color: var(--color-text-primary); font
 </style>
 </head>
 <body class="relative min-h-screen flex items-center justify-center">
+<!-- 3D Art background -->
+<div class="fixed inset-0 pointer-events-none" style="z-index:0;">
+  <img src="assets/art/dealshield-hero.jpg" alt="" class="w-full h-full object-cover opacity-[0.12]">
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(11,15,26,0.8) 0%, rgba(11,15,26,0.6) 40%, rgba(11,15,26,0.9) 100%);"></div>
+</div>
+
 
 <!-- Header -->
 <header class="fixed top-0 inset-x-0 z-50 bg-ink-800/70 backdrop-blur-sm border-b border-[var(--color-border)] p-4 flex items-center">
@@ -128,7 +134,7 @@ body { background-color: var(--color-bg); color: var(--color-text-primary); font
 </header>
 
 <!-- Main -->
-<main class="w-full max-w-lg px-4">
+<main class="w-full relative z-10 max-w-lg px-4">
   <div class="mt-28 mb-8 text-center">
     <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl border border-brand/30 bg-brand/10 mb-4">
       <i data-lucide="shield-check" class="w-7 h-7 text-brand"></i>
