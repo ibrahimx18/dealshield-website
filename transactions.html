@@ -298,6 +298,16 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 </div>
 
 <script>
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // ─────────────────────────────────────────────────────────────
   //  API helpers
   // ─────────────────────────────────────────────────────────────
@@ -533,7 +543,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
     grid.innerHTML = filtered.map(t => {
       const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
-      const cat = t.category || t.listing_title || 'General';
+      const cat = escapeHtml(t.category || t.listing_title || 'General');
       const dealId = `DS-${String(t.id).padStart(6, '0')}`;
       const gatewayFee = t.gateway_fee || calcGatewayFee(t.amount || 0);
       const isFacilitated = t.is_facilitated || t.facilitator_name;
@@ -618,7 +628,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <i data-lucide="alert-circle" class="w-6 h-6 text-danger"></i>
         </div>
         <h3 class="text-base font-bold text-white mb-1">Unable to load transaction</h3>
-        <p class="text-sm text-ink-300 mb-4">${msg || 'Please try again later.'}</p>
+        <p class="text-sm text-ink-300 mb-4">${escapeHtml(msg || 'Please try again later.')}</p>
         <div class="flex items-center justify-center gap-3">
           <button class="btn-secondary" onclick="location.href='/transactions.html'"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to list</button>
           <button class="btn-primary" onclick="loadDetail()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
@@ -727,10 +737,10 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   }
 
   function renderBuyerSellerInfo(t) {
-    const buyer = t.buyer_name || t.buyer_email || '—';
-    const seller = t.seller_name || t.seller_email || '—';
-    const buyerEmail = t.buyer_email || '';
-    const sellerEmail = t.seller_email || '';
+    const buyer = escapeHtml(t.buyer_name || t.buyer_email || '—');
+    const seller = escapeHtml(t.seller_name || t.seller_email || '—');
+    const buyerEmail = escapeHtml(t.buyer_email || '');
+    const sellerEmail = escapeHtml(t.seller_email || '');
 
     return `
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -768,7 +778,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         </div>
         <div class="min-w-0">
           <div class="text-[11px] font-semibold uppercase tracking-wider text-brand mb-0.5">Facilitator</div>
-          <div class="text-sm font-bold text-white truncate">${t.facilitator_name || '—'}</div>
+          <div class="text-sm font-bold text-white truncate">${escapeHtml(t.facilitator_name) || '—'}</div>
           ${t.facilitator_fee ? `<div class="text-xs text-ink-300">Fee: ${formatNaira(t.facilitator_fee)}</div>` : ''}
         </div>
       </div>`;
@@ -790,7 +800,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Bank Name</div>
-            <div class="text-sm font-bold text-white">${va.bank_name || '—'}</div>
+            <div class="text-sm font-bold text-white">${escapeHtml(va.bank_name) || '—'}</div>
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Expected Amount</div>
@@ -943,7 +953,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     currentTransaction = t;
     const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
     const dealId = `DS-${String(t.id).padStart(6, '0')}`;
-    const cat = t.category || t.listing_title || 'General';
+    const cat = escapeHtml(t.category || t.listing_title || 'General');
     const isFacilitated = t.is_facilitated || t.facilitator_name;
 
     document.getElementById('page-title').textContent = `Deal ${dealId}`;

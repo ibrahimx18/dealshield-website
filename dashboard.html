@@ -335,6 +335,16 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 </div>
 
 <script>
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // ── API helpers ──
   const API = {
     async get(path) {
@@ -406,7 +416,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       } else {
         tbody.innerHTML = transactions.slice(0, 8).map(t => {
           const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
-          const cat = t.category || t.listing_title || '—';
+          const cat = escapeHtml(t.category || t.listing_title || '—');
           return `
             <tr class="cursor-pointer" onclick="location.href='/transactions.html?id=${t.id}'">
               <td class="font-mono font-semibold text-brand">DS-${String(t.id).padStart(6, '0')}</td>
@@ -414,7 +424,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
               <td class="font-semibold">${formatNaira(t.amount)}</td>
               <td><span class="status-pill ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}</span></td>
               <td class="text-ink-200">${t.is_facilitated ? 'Facilitated' : 'Direct'}</td>
-              <td class="text-ink-100">${t.seller_name || t.buyer_name || '—'}</td>
+              <td class="text-ink-100">${escapeHtml(t.seller_name || t.buyer_name || '—')}</td>
             </tr>`;
         }).join('');
       }
@@ -433,14 +443,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
             disputed: 'Dispute raised', closed: 'Deal closed', cancelled: 'Deal cancelled',
             seller_accepted: 'Seller accepted deal', buyer_review: 'Buyer review started'
           };
-          const title = titleMap[t.status] || `Status: ${t.status}`;
+          const title = titleMap[t.status] || `Status: ${escapeHtml(t.status)}`;
           return `
             <div class="activity-item">
               <div class="activity-dot">
                 <i data-lucide="${s.icon}" class="w-[14px] h-[14px]" style="color:${color}"></i>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="text-[13px] font-semibold text-white truncate">${title}</div>
+                <div class="text-[13px] font-semibold text-white truncate">${escapeHtml(title)}</div>
                 <div class="text-[12px] text-ink-300 truncate">DS-${String(t.id).padStart(6, '0')} · ${formatNaira(t.amount)}</div>
               </div>
             </div>`;

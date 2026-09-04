@@ -304,7 +304,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <div>
             <label class="form-label block mb-1.5" for="pw-current">Current Password</label>
             <div class="relative">
-              <input type="password" id="pw-current" class="form-input pr-10" placeholder="••••••••" required>
+              <input type="password" id="pw-current" class="form-input pr-10" placeholder="••••••••" required autocomplete="off">
               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-current', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
@@ -313,7 +313,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <div>
             <label class="form-label block mb-1.5" for="pw-new">New Password</label>
             <div class="relative">
-              <input type="password" id="pw-new" class="form-input pr-10" placeholder="••••••••" required minlength="8">
+              <input type="password" id="pw-new" class="form-input pr-10" placeholder="••••••••" required minlength="8" autocomplete="new-password">
               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-new', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
@@ -322,7 +322,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
           <div>
             <label class="form-label block mb-1.5" for="pw-confirm">Confirm New Password</label>
             <div class="relative">
-              <input type="password" id="pw-confirm" class="form-input pr-10" placeholder="••••••••" required minlength="8">
+              <input type="password" id="pw-confirm" class="form-input pr-10" placeholder="••••••••" required minlength="8" autocomplete="new-password">
               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-confirm', this)">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
@@ -468,6 +468,16 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 </div>
 
 <script>
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // ═══════════════════════════════════════════
   //  API helpers
   // ═══════════════════════════════════════════
@@ -490,7 +500,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 
   function showAlert(container, type, message) {
     const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'x-circle' : 'alert-triangle';
-    container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${message}</div></div>`;
+    container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${escapeHtml(message)}</div></div>`;
     lucide.createIcons();
   }
 
@@ -604,7 +614,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     const grid = document.getElementById('backup-codes-grid');
     const codes = pending2FA.backup_codes || [];
     grid.innerHTML = codes.length
-      ? codes.map(c => `<div class="backup-code">${c}</div>`).join('')
+      ? codes.map(c => `<div class="backup-code">${escapeHtml(c)}</div>`).join('')
       : '<div class="text-ink-300 text-[12px] col-span-full">No backup codes returned.</div>';
     document.getElementById('verify-code').value = '';
     document.getElementById('verify-alert').innerHTML = '';
@@ -770,10 +780,10 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[13px] font-semibold text-white">${ua.browser} · ${ua.os}</span>
+            <span class="text-[13px] font-semibold text-white">${escapeHtml(ua.browser)} · ${escapeHtml(ua.os)}</span>
             ${isCurrent ? '<span class="status-pill status-on"><i data-lucide=\"check\" class=\"w-3 h-3\"></i> This device</span>' : ''}
           </div>
-          <div class="text-[12px] text-ink-300 mt-0.5 truncate" title="${ua.raw}">${ua.raw || 'Unknown device'}</div>
+          <div class="text-[12px] text-ink-300 mt-0.5 truncate" title="${escapeHtml(ua.raw)}">${escapeHtml(ua.raw) || 'Unknown device'}</div>
           <div class="text-[12px] text-ink-400 mt-1 flex gap-4 flex-wrap">
             <span><i data-lucide="map-pin" class="w-3 h-3 inline -mt-0.5"></i> ${s.ip || s.ip_address || '—'}</span>
             <span><i data-lucide="clock" class="w-3 h-3 inline -mt-0.5"></i> Created ${formatDate(s.created_at || s.created)}</span>
@@ -802,10 +812,10 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       return;
     }
     const u = res.data;
-    const name = u.name || u.full_name || '—';
-    const email = u.email || '—';
-    const phone = u.phone || u.phone_number || '—';
-    const tier = u.badge_tier || u.tier || 'Standard';
+    const name = escapeHtml(u.name || u.full_name || '—');
+    const email = escapeHtml(u.email || '—');
+    const phone = escapeHtml(u.phone || u.phone_number || '—');
+    const tier = escapeHtml(u.badge_tier || u.tier || 'Standard');
     document.getElementById('user-name').textContent = name;
 
     const rows = [
