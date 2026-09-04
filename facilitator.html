@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facilitate a Deal — DealShield</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: { 900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536', 500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0' },
+          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
+          surface: '#0F1420', positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+      }
+    }
+  }
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A; --color-surface: #0F1420; --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12); --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC; --color-text-secondary: #9BA5BC; --color-text-muted: #6B7693;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+}
+* { -webkit-font-smoothing: antialiased; }
+body { background-color: var(--color-bg); color: var(--color-text-primary); font-family: 'Inter', system-ui, sans-serif; letter-spacing: -0.01em; }
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+.card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); transition: border-color 0.2s; }
+.card-hover:hover { border-color: var(--color-border-strong); }
+.input-field { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; color: var(--color-text-primary); font-size: 15px; font-weight: 500; outline: none; transition: border-color 0.2s; width: 100%; }
+.input-field:focus { border-color: var(--color-accent); }
+.input-field::placeholder { color: var(--color-text-muted); }
+.btn-primary { background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: var(--radius-md); border: none; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px; padding: 12px 24px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-ghost { background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px; padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: color 0.2s; }
+.btn-ghost:hover { color: var(--color-text-primary); }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+.error-banner { display: none; align-items: flex-start; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #EF4444; font-size: 13px; font-weight: 500; }
+.error-banner.visible { display: flex; }
+.spinner { width: 16px; height: 16px; border: 2px solid rgba(11,15,26,0.3); border-top-color: #0B0F1A; border-radius: 50%; animation: spin 0.6s linear infinite; display: none; }
+.spinner.visible { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 24px; }
+.modal-overlay.visible { display: flex; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+@media (max-width: 1023px) {
+  #sidebar { transform: translateX(-100%); transition: transform 0.25s; position: fixed; z-index: 60; }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+}
+#sidebar-overlay { display: none; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- SIDEBAR -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+  <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+  </div>
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a class="sidebar-link" onclick="location.href='/dashboard.html'"><i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard</a>
+    <a class="sidebar-link active" onclick="location.href='/facilitator.html'"><i data-lucide="handshake" class="w-[18px] h-[18px]"></i> Facilitate Deal</a>
+    <a class="sidebar-link" onclick="location.href='/transactions.html'"><i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Transactions</a>
+    <a class="sidebar-link" onclick="location.href='/create-deal.html'"><i data-lucide="plus-circle" class="w-[18px] h-[18px]"></i> Create Deal</a>
+    <a class="sidebar-link" onclick="location.href='/settings.html'"><i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings</a>
+  </nav>
+  <div class="px-3 py-4 border-t border-[var(--color-border)]">
+    <div class="sidebar-link" onclick="handleLogout()"><i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Log Out</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="lg:ml-64 min-h-screen flex flex-col">
+  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()"><i data-lucide="menu" class="w-5 h-5"></i></button>
+      <h1 class="text-lg font-bold text-white">Facilitate a Deal</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+        <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+      </div>
+      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()"><i data-lucide="log-out" class="w-[18px] h-[18px]"></i></button>
+    </div>
+  </header>
+
+  <main class="flex-1 p-5 lg:p-6">
+    <div class="max-w-3xl mx-auto">
+      <!-- Intro -->
+      <div class="mb-6">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center">
+            <i data-lucide="handshake" class="w-5 h-5 text-brand"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Create a Facilitated Deal</h2>
+            <p class="text-sm text-ink-300">Act as a middleman between a buyer and seller. Set your fee — DealShield takes 10%, you keep 90%.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div id="error-banner" class="error-banner mb-4" role="alert">
+        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+        <span id="error-message"></span>
+      </div>
+
+      <!-- Form -->
+      <div class="card p-6 lg:p-8">
+        <form id="facilitator-form" class="space-y-5">
+          <!-- Deal Title -->
+          <div>
+            <label for="title" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Deal Title</label>
+            <input type="text" id="title" name="title" placeholder="e.g. Toyota Camry 2018 sale between Bashir & Chukwu" class="input-field" required>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label for="category" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Category</label>
+            <select id="category" name="category" class="input-field" required>
+              <option value="cars">Cars / Autos</option>
+              <option value="crypto">Crypto (USDT/BTC)</option>
+              <option value="real_estate">Real Estate / Land</option>
+              <option value="gold">Gold Bullion</option>
+              <option value="fx">FX / Dollars</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Amounts -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="deal_amount" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Deal Amount (₦)</label>
+              <input type="number" id="deal_amount" name="deal_amount" placeholder="5000000" min="1000" step="100" class="input-field" required oninput="updateBreakdown()">
+            </div>
+            <div>
+              <label for="facilitator_fee" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Your Fee (₦)</label>
+              <input type="number" id="facilitator_fee" name="facilitator_fee" placeholder="50000" min="0" step="100" class="input-field" required oninput="updateBreakdown()">
+            </div>
+          </div>
+
+          <!-- Parties -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="buyer_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Buyer Phone</label>
+              <input type="tel" id="buyer_phone" name="buyer_phone" placeholder="0801 234 5678" class="input-field" required>
+            </div>
+            <div>
+              <label for="seller_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Seller Phone</label>
+              <input type="tel" id="seller_phone" name="seller_phone" placeholder="0809 876 5432" class="input-field" required>
+            </div>
+          </div>
+
+          <!-- Live breakdown -->
+          <div class="bg-ink-900 border border-[var(--color-border)] rounded-[var(--radius-md)] p-5 space-y-3">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Fee Breakdown Preview</div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-200">Buyer pays</span>
+              <span class="font-semibold text-white" id="buyer-pays">₦0</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-200">Seller receives</span>
+              <span class="font-semibold text-white" id="seller-receives">₦0</span>
+            </div>
+            <div class="border-t border-[var(--color-border)] pt-3 flex justify-between text-sm">
+              <span class="text-ink-200">Your payout (90%)</span>
+              <span class="font-semibold text-brand" id="facilitator-payout">₦0</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-200">DealShield fee (10%)</span>
+              <span class="font-semibold text-ink-100" id="dealshield-fee">₦0</span>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" id="submit-btn" class="btn-primary w-full">
+            <span id="btn-spinner" class="spinner"></span>
+            <span id="btn-label">Create Facilitated Deal</span>
+            <i data-lucide="arrow-right" class="w-4 h-4" id="btn-arrow"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="success-modal" class="modal-overlay">
+  <div class="card p-8 max-w-md w-full">
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-positive/10 border border-positive/30 mb-4">
+        <i data-lucide="check-circle-2" class="w-7 h-7 text-positive"></i>
+      </div>
+      <h2 class="text-xl font-bold text-white mb-1">Deal Created Successfully</h2>
+      <p class="text-sm text-ink-300">Your facilitated deal has been created and both parties will be notified.</p>
+    </div>
+    <div class="bg-ink-900 rounded-[var(--radius-md)] p-5 space-y-2 mb-6">
+      <div class="flex justify-between text-sm"><span class="text-ink-300">Deal ID</span><span class="font-mono font-semibold text-brand" id="success-deal-id">—</span></div>
+      <div class="flex justify-between text-sm"><span class="text-ink-300">Buyer pays</span><span class="font-semibold text-white" id="success-buyer-pays">—</span></div>
+      <div class="flex justify-between text-sm"><span class="text-ink-300">Seller receives</span><span class="font-semibold text-white" id="success-seller-receives">—</span></div>
+      <div class="flex justify-between text-sm"><span class="text-ink-300">Your payout</span><span class="font-semibold text-brand" id="success-payout">—</span></div>
+    </div>
+    <button class="btn-primary w-full" onclick="location.href='/dashboard.html'">
+      <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+      View on Dashboard
+    </button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function formatNaira(n) { return '₦' + Number(n || 0).toLocaleString('en-NG'); }
+
+  function updateBreakdown() {
+    const amount = parseFloat(document.getElementById('deal_amount').value) || 0;
+    const fee = parseFloat(document.getElementById('facilitator_fee').value) || 0;
+    document.getElementById('buyer-pays').textContent = formatNaira(amount + fee);
+    document.getElementById('seller-receives').textContent = formatNaira(amount);
+    document.getElementById('facilitator-payout').textContent = formatNaira(fee * 0.9);
+    document.getElementById('dealshield-fee').textContent = formatNaira(fee * 0.1);
+  }
+
+  function toggleSidebar(force) {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    const open = force !== undefined ? force : !sb.classList.contains('open');
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
+  }
+
+  function handleLogout() { localStorage.clear(); location.href = '/login.html'; }
+
+  function checkAuth() {
+    const token = localStorage.getItem('access_token');
+    if (!token) { location.href = '/login.html'; return false; }
+    return true;
+  }
+
+  function showError(msg) {
+    document.getElementById('error-message').textContent = msg;
+    document.getElementById('error-banner').classList.add('visible');
+    lucide.createIcons();
+  }
+  function clearError() { document.getElementById('error-banner').classList.remove('visible'); }
+
+  document.getElementById('facilitator-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    clearError();
+
+    const title = document.getElementById('title').value.trim();
+    const category = document.getElementById('category').value;
+    const dealAmount = parseFloat(document.getElementById('deal_amount').value);
+    const facilitatorFee = parseFloat(document.getElementById('facilitator_fee').value);
+    const buyerPhone = document.getElementById('buyer_phone').value.trim();
+    const sellerPhone = document.getElementById('seller_phone').value.trim();
+
+    if (!title || !category || !dealAmount || !buyerPhone || !sellerPhone) {
+      showError('Please fill in all fields.');
+      return;
+    }
+    if (dealAmount < 1000) { showError('Deal amount must be at least ₦1,000.'); return; }
+    if (facilitatorFee < 0) { showError('Facilitator fee cannot be negative.'); return; }
+
+    const btn = document.getElementById('submit-btn');
+    const spinner = document.getElementById('btn-spinner');
+    const label = document.getElementById('btn-label');
+    const arrow = document.getElementById('btn-arrow');
+    spinner.classList.add('visible');
+    label.textContent = 'Creating…';
+    arrow.style.display = 'none';
+    btn.disabled = true;
+
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch('/escrow/facilitate/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ title, category, deal_amount: dealAmount, facilitator_fee: facilitatorFee, buyer_phone: buyerPhone, seller_phone: sellerPhone })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        showError(data.detail || data.message || 'Failed to create deal. Please try again.');
+        spinner.classList.remove('visible');
+        label.textContent = 'Create Facilitated Deal';
+        arrow.style.display = 'inline-block';
+        btn.disabled = false;
+        return;
+      }
+
+      // Show success modal
+      document.getElementById('success-deal-id').textContent = 'DS-' + String(data.id || data.tx_id || 0).padStart(6, '0');
+      document.getElementById('success-buyer-pays').textContent = formatNaira(dealAmount + facilitatorFee);
+      document.getElementById('success-seller-receives').textContent = formatNaira(dealAmount);
+      document.getElementById('success-payout').textContent = formatNaira(facilitatorFee * 0.9);
+      document.getElementById('success-modal').classList.add('visible');
+      lucide.createIcons();
+    } catch (err) {
+      showError('Network error. Please check your connection.');
+      spinner.classList.remove('visible');
+      label.textContent = 'Create Facilitated Deal';
+      arrow.style.display = 'inline-block';
+      btn.disabled = false;
+    }
+  });
+
+  // Init
+  if (checkAuth()) { updateBreakdown(); lucide.createIcons(); }
+</script>
+</body>
+</html>

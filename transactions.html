@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions — DealShield</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Libraries -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
+            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          },
+          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
+          surface: '#0F1420',
+          positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+        borderRadius: { sm: '6px', md: '10px', lg: '14px' },
+        boxShadow: {
+          sm: '0 1px 2px rgba(0,0,0,0.3)',
+          md: '0 4px 12px rgba(0,0,0,0.25)',
+          lg: '0 12px 40px rgba(0,0,0,0.3)',
+        },
+      }
+    }
+  };
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A;
+  --color-surface: #0F1420;
+  --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12);
+  --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #9BA5BC;
+  --color-text-muted: #6B7693;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02','cv03','cv04','cv11';
+  letter-spacing: -0.01em;
+}
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+.btn-primary {
+  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; filter: none; box-shadow: none; }
+.btn-secondary {
+  background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
+  cursor: pointer; transition: border-color .2s, background .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-danger {
+  background: rgba(239,68,68,0.1); color: #EF4444; font-weight: 600; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid rgba(239,68,68,0.3);
+  cursor: pointer; transition: background .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+.btn-ghost {
+  background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px;
+  padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: color .2s;
+}
+.btn-ghost:hover { color: var(--color-text-primary); }
+
+/* Sidebar */
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-radius: var(--radius-md); color: var(--color-text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: background .15s, color .15s; border: 1px solid transparent;
+}
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+
+/* Status pills */
+.status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+.status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
+.status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
+.status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
+.status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+.status-disputed { background: rgba(239,68,68,0.12); color: #EF4444; }
+
+/* Filter tabs */
+.filter-tab {
+  padding: 8px 16px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600;
+  color: var(--color-text-secondary); cursor: pointer; border: 1px solid transparent;
+  transition: all .15s; display: inline-flex; align-items: center; gap: 6px;
+}
+.filter-tab:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
+.filter-tab.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+
+/* Facilitator badge */
+.facil-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+  border-radius: 99px; font-size: 10px; font-weight: 600;
+  background: rgba(200,164,92,0.1); color: #C8A45C; border: 1px solid rgba(200,164,92,0.2);
+}
+
+/* Timeline */
+.timeline-step {
+  display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; min-width: 0;
+}
+.timeline-dot {
+  width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--color-border-strong); background: var(--color-surface);
+  font-size: 11px; font-weight: 700; z-index: 2; transition: all .2s;
+}
+.timeline-step.completed .timeline-dot {
+  background: rgba(34,197,94,0.15); border-color: #22C55E; color: #22C55E;
+}
+.timeline-step.current .timeline-dot {
+  background: var(--color-accent); border-color: var(--color-accent); color: #0B0F1A;
+  box-shadow: 0 0 0 4px rgba(200,164,92,0.2);
+}
+.timeline-step.future .timeline-dot {
+  background: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);
+}
+.timeline-label {
+  margin-top: 8px; font-size: 10px; font-weight: 600; text-align: center;
+  color: var(--color-text-muted); line-height: 1.3; max-width: 80px;
+}
+.timeline-step.completed .timeline-label { color: #22C55E; }
+.timeline-step.current .timeline-label { color: var(--color-accent); }
+.timeline-line {
+  position: absolute; top: 14px; left: 50%; width: 100%; height: 2px;
+  background: var(--color-border-strong); z-index: 1;
+}
+.timeline-step:last-child .timeline-line { display: none; }
+.timeline-step.completed .timeline-line { background: #22C55E; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* Mobile sidebar */
+@media (max-width: 1023px) {
+  #sidebar { transform: translateX(-100%); transition: transform 0.25s ease; position: fixed; z-index: 60; }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+}
+#sidebar-overlay { display: none; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 100;
+  background: var(--color-surface); border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md); padding: 14px 20px; max-width: 380px;
+  box-shadow: var(--shadow-lg); display: none; align-items: flex-start; gap: 10px;
+}
+.toast.show { display: flex; }
+.toast.success { border-color: rgba(34,197,94,0.3); }
+.toast.error { border-color: rgba(239,68,68,0.3); }
+
+/* Spinner */
+.spinner {
+  width: 18px; height: 18px; border: 2px solid rgba(200,164,92,0.2);
+  border-top-color: #C8A45C; border-radius: 50%; animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-ink-700) 50%, var(--color-surface) 100%);
+  background-size: 200% 100%; animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+  <!-- Logo -->
+  <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a class="sidebar-link" onclick="location.href='/dashboard.html'">
+      <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
+    </a>
+    <a class="sidebar-link active" onclick="location.href='/transactions.html'">
+      <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
+    </a>
+    <a class="sidebar-link" onclick="location.href='/transactions.html'">
+      <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
+    </a>
+    <a class="sidebar-link" onclick="location.href='/kyc.html'">
+      <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
+    </a>
+    <a class="sidebar-link" onclick="location.href='/settings.html'">
+      <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="px-3 py-4 border-t border-[var(--color-border)]">
+    <div class="sidebar-link" onclick="handleLogout()">
+      <i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Log Out
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div class="lg:ml-64 min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+      <h1 id="page-title" class="text-lg font-bold text-white">Transactions</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span class="hidden md:inline">Create Deal</span>
+      </button>
+      <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        </div>
+        <div class="hidden sm:block leading-tight">
+          <div id="user-name" class="text-sm font-semibold text-white">—</div>
+          <div class="text-[11px] text-ink-300">Verified Account</div>
+        </div>
+      </div>
+      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+        <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 p-5 lg:p-6 space-y-6" id="main-content">
+    <!-- Populated by JS — either list view or detail view -->
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast">
+  <div id="toast-icon-wrap" class="w-6 h-6 flex-shrink-0 flex items-center justify-center">
+    <i data-lucide="check-circle-2" class="w-5 h-5 text-positive" id="toast-icon"></i>
+  </div>
+  <div class="flex-1">
+    <div id="toast-msg" class="text-sm font-medium text-white"></div>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  API helpers
+  // ─────────────────────────────────────────────────────────────
+  const API = {
+    async get(path) {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(path, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      return res;
+    },
+    async post(path, body) {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(path, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      return res;
+    }
+  };
+
+  function formatNaira(n) {
+    return '₦' + Number(n || 0).toLocaleString('en-NG');
+  }
+
+  function formatPct(n) {
+    return Number(n || 0).toFixed(1) + '%';
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  Escrow statuses (16 lifecycle steps)
+  // ─────────────────────────────────────────────────────────────
+  const STATUS_ORDER = [
+    'created', 'seller_accepted', 'payment_pending', 'funded',
+    'seller_fulfilling', 'buyer_review', 'buyer_approved', 'released',
+    'closed', 'disputed', 'under_investigation', 'refunded',
+    'split_resolution', 'cancelled', 'expired'
+  ];
+
+  const STATUS_MAP = {
+    created:             { cls: 'status-pending',   icon: 'plus-circle',      label: 'Created',             step: 0 },
+    seller_accepted:     { cls: 'status-pending',   icon: 'check',            label: 'Seller Accepted',     step: 1 },
+    payment_pending:     { cls: 'status-locked',    icon: 'clock',            label: 'Awaiting Payment',    step: 2 },
+    funded:              { cls: 'status-locked',    icon: 'lock',             label: 'Funded',              step: 3 },
+    seller_fulfilling:   { cls: 'status-locked',    icon: 'package',          label: 'Fulfilling',          step: 4 },
+    buyer_review:        { cls: 'status-locked',    icon: 'eye',              label: 'Buyer Review',        step: 5 },
+    buyer_approved:      { cls: 'status-verified',  icon: 'check-circle-2',   label: 'Approved',            step: 6 },
+    released:            { cls: 'status-released',  icon: 'shield-check',     label: 'Released',            step: 7 },
+    closed:              { cls: 'status-verified',  icon: 'check-circle-2',   label: 'Closed',               step: 8 },
+    disputed:            { cls: 'status-disputed',  icon: 'alert-triangle',   label: 'Disputed',             step: 9 },
+    under_investigation: { cls: 'status-disputed',  icon: 'search',           label: 'Under Investigation',  step: 10 },
+    refunded:            { cls: 'status-released',  icon: 'rotate-ccw',       label: 'Refunded',            step: 11 },
+    split_resolution:    { cls: 'status-released',  icon: 'split',            label: 'Split Resolution',    step: 12 },
+    cancelled:           { cls: 'status-pending',   icon: 'x-circle',         label: 'Cancelled',           step: 13 },
+    expired:             { cls: 'status-pending',   icon: 'clock',            label: 'Expired',             step: 14 },
+  };
+
+  // Terminal statuses — these are the "end of happy path" or "end of resolution"
+  const TERMINAL_STATUSES = ['closed', 'released', 'refunded', 'split_resolution', 'cancelled', 'expired'];
+
+  // ─────────────────────────────────────────────────────────────
+  //  Gateway fee calculation (1.5% capped at ₦50,000, split 50/50)
+  // ─────────────────────────────────────────────────────────────
+  function calcGatewayFee(amount) {
+    const fee = Math.min(amount * 0.015, 50000);
+    return Math.round(fee);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  Auth / Nav helpers
+  // ─────────────────────────────────────────────────────────────
+  function checkAuth() {
+    const token = localStorage.getItem('access_token');
+    if (!token) { location.href = '/login.html'; return false; }
+    return true;
+  }
+
+  function handleLogout() {
+    localStorage.clear();
+    location.href = '/login.html';
+  }
+
+  function toggleSidebar(force) {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    const open = force !== undefined ? force : !sb.classList.contains('open');
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  Toast
+  // ─────────────────────────────────────────────────────────────
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    const icon = document.getElementById('toast-icon');
+    toast.className = `toast ${type || 'success'}`;
+    document.getElementById('toast-msg').textContent = msg;
+    icon.setAttribute('data-lucide', type === 'error' ? 'alert-circle' : 'check-circle-2');
+    icon.className = `w-5 h-5 ${type === 'error' ? 'text-danger' : 'text-positive'}`;
+    lucide.createIcons();
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  LIST VIEW
+  // ─────────────────────────────────────────────────────────────
+  let allTransactions = [];
+  let currentFilter = 'all';
+  let searchTerm = '';
+
+  async function loadUser() {
+    try {
+      const res = await API.get('/auth/me');
+      if (res.ok) {
+        const user = await res.json();
+        document.getElementById('user-name').textContent = user.name || 'User';
+      }
+    } catch (e) { /* fall back to stored data */ }
+  }
+
+  function renderListSkeleton() {
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <!-- Filters skeleton -->
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div class="skeleton h-10 w-64"></div>
+        <div class="skeleton h-10 w-48"></div>
+      </div>
+      <!-- Cards skeleton -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        ${Array(6).fill(0).map(() => `<div class="card p-5"><div class="skeleton h-4 w-24 mb-4"></div><div class="skeleton h-6 w-32 mb-3"></div><div class="skeleton h-3 w-full mb-2"></div><div class="skeleton h-3 w-3/4"></div></div>`).join('')}
+      </div>`;
+  }
+
+  function renderListContent() {
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <!-- Filter & Search -->
+      <section class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">
+            <i data-lucide="layers" class="w-3.5 h-3.5"></i> All
+          </button>
+          <button class="filter-tab" data-filter="active" onclick="setFilter('active')">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Active
+          </button>
+          <button class="filter-tab" data-filter="disputed" onclick="setFilter('disputed')">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Disputed
+          </button>
+          <button class="filter-tab" data-filter="completed" onclick="setFilter('completed')">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Completed
+          </button>
+        </div>
+        <div class="relative w-full sm:w-72">
+          <i data-lucide="search" class="w-4 h-4 text-ink-300 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input id="search-input" type="text" placeholder="Search by Deal ID or category..." 
+            class="w-full bg-[var(--color-surface)] border border-[var(--color-border-strong)] rounded-[var(--radius-md)] pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-ink-300 focus:outline-none focus:border-brand transition-colors"
+            oninput="setSearch(this.value)" />
+        </div>
+      </section>
+
+      <!-- Transaction Cards Grid -->
+      <section id="tx-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <!-- populated by JS -->
+      </section>
+    `;
+    lucide.createIcons();
+    renderTransactionCards();
+  }
+
+  function setFilter(f) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.filter === f);
+    });
+    renderTransactionCards();
+  }
+
+  function setSearch(term) {
+    searchTerm = term.toLowerCase().trim();
+    renderTransactionCards();
+  }
+
+  function filterTransactions() {
+    let filtered = allTransactions;
+
+    // Filter tabs
+    if (currentFilter === 'active') {
+      filtered = filtered.filter(t => !['closed', 'cancelled', 'expired', 'released', 'refunded', 'split_resolution'].includes(t.status));
+    } else if (currentFilter === 'disputed') {
+      filtered = filtered.filter(t => ['disputed', 'under_investigation'].includes(t.status));
+    } else if (currentFilter === 'completed') {
+      filtered = filtered.filter(t => ['closed', 'released'].includes(t.status));
+    }
+
+    // Search
+    if (searchTerm) {
+      filtered = filtered.filter(t => {
+        const id = String(t.id).toLowerCase();
+        const cat = (t.category || '').toLowerCase();
+        const title = (t.listing_title || '').toLowerCase();
+        return id.includes(searchTerm) || cat.includes(searchTerm) || title.includes(searchTerm);
+      });
+    }
+
+    return filtered;
+  }
+
+  function renderTransactionCards() {
+    const grid = document.getElementById('tx-grid');
+    if (!grid) return;
+
+    const filtered = filterTransactions();
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="col-span-full card p-12 text-center">
+          <div class="w-14 h-14 rounded-full bg-ink-700 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="inbox" class="w-6 h-6 text-ink-300"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1">No transactions found</h3>
+          <p class="text-sm text-ink-300">${allTransactions.length === 0 ? 'No deals have been created yet.' : 'Try adjusting your filters or search.'}</p>
+          ${allTransactions.length === 0 ? `<button class="btn-primary mt-4" onclick="location.href='/create-deal.html'"><i data-lucide="plus" class="w-4 h-4"></i> Create your first deal</button>` : ''}
+        </div>`;
+      lucide.createIcons();
+      return;
+    }
+
+    grid.innerHTML = filtered.map(t => {
+      const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
+      const cat = t.category || t.listing_title || 'General';
+      const dealId = `DS-${String(t.id).padStart(6, '0')}`;
+      const gatewayFee = t.gateway_fee || calcGatewayFee(t.amount || 0);
+      const isFacilitated = t.is_facilitated || t.facilitator_name;
+      const hasGateway = t.gateway_fee !== null && t.gateway_fee !== undefined;
+
+      return `
+        <div class="card p-5 card-hover cursor-pointer" onclick="location.href='/transactions.html?id=${t.id}'">
+          <!-- Top row -->
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <div class="font-mono font-bold text-brand text-sm">${dealId}</div>
+              <div class="text-xs text-ink-300 mt-0.5">${cat}</div>
+            </div>
+            <span class="status-pill ${s.cls}">
+              <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
+            </span>
+          </div>
+
+          <!-- Amount -->
+          <div class="text-2xl font-extrabold text-white tracking-tight mb-4">${formatNaira(t.amount)}</div>
+
+          <!-- Badges -->
+          <div class="flex items-center gap-2 flex-wrap">
+            ${isFacilitated ? `<span class="facil-badge"><i data-lucide="user-check" class="w-3 h-3"></i>Facilitated</span>` : ''}
+            ${hasGateway ? `<span class="facil-badge" style="background:rgba(107,118,147,0.1);color:#9BA5BC;border-color:rgba(107,118,147,0.2)"><i data-lucide="credit-card" class="w-3 h-3"></i>Gateway ${formatNaira(gatewayFee)}</span>` : ''}
+            ${!isFacilitated && !hasGateway ? `<span class="text-[11px] text-ink-300">Direct deal</span>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    lucide.createIcons();
+  }
+
+  async function loadTransactionList() {
+    renderListSkeleton();
+    try {
+      const res = await API.get('/escrow/transactions');
+      if (!res.ok) throw new Error('Failed to load');
+      const data = await res.json();
+      allTransactions = data.transactions || [];
+      renderListContent();
+    } catch (err) {
+      console.error('List load error:', err);
+      const main = document.getElementById('main-content');
+      main.innerHTML = `
+        <div class="card p-12 text-center">
+          <div class="w-14 h-14 rounded-full bg-danger/10 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="alert-circle" class="w-6 h-6 text-danger"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1">Unable to load transactions</h3>
+          <p class="text-sm text-ink-300 mb-4">Please try again later.</p>
+          <button class="btn-secondary" onclick="loadTransactionList()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
+        </div>`;
+      lucide.createIcons();
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  DETAIL VIEW
+  // ─────────────────────────────────────────────────────────────
+  let currentTransaction = null;
+
+  function renderDetailSkeleton() {
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <div class="space-y-4">
+        <div class="skeleton h-8 w-48"></div>
+        <div class="card p-6"><div class="skeleton h-6 w-full mb-4"></div><div class="skeleton h-6 w-3/4"></div></div>
+        <div class="card p-6"><div class="skeleton h-32 w-full"></div></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="card p-6"><div class="skeleton h-40 w-full"></div></div>
+          <div class="card p-6"><div class="skeleton h-40 w-full"></div></div>
+        </div>
+      </div>`;
+  }
+
+  function renderDetailError(msg) {
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <div class="card p-12 text-center">
+        <div class="w-14 h-14 rounded-full bg-danger/10 flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="alert-circle" class="w-6 h-6 text-danger"></i>
+        </div>
+        <h3 class="text-base font-bold text-white mb-1">Unable to load transaction</h3>
+        <p class="text-sm text-ink-300 mb-4">${msg || 'Please try again later.'}</p>
+        <div class="flex items-center justify-center gap-3">
+          <button class="btn-secondary" onclick="location.href='/transactions.html'"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to list</button>
+          <button class="btn-primary" onclick="loadDetail()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
+        </div>
+      </div>`;
+    lucide.createIcons();
+  }
+
+  function renderTimeline(status) {
+    const currentStep = STATUS_MAP[status] ? STATUS_MAP[status].step : 0;
+    // For terminal/dispute statuses, we don't show a linear progression
+    const isDisputePath = ['disputed', 'under_investigation', 'refunded', 'split_resolution'].includes(status);
+    const isCancelledPath = ['cancelled', 'expired'].includes(status);
+    const isCompletePath = ['released', 'closed'].includes(status);
+
+    // Happy path ordering (exclude terminal/diversion statuses from the main timeline)
+    const happyPath = [
+      'created', 'seller_accepted', 'payment_pending', 'funded',
+      'seller_fulfilling', 'buyer_review', 'buyer_approved', 'released', 'closed'
+    ];
+
+    const currentIndex = happyPath.indexOf(status);
+
+    return happyPath.map((s, i) => {
+      const meta = STATUS_MAP[s];
+      let cls = 'future';
+      let lineCls = '';
+      if (isCancelledPath) {
+        // Show first few steps as completed up to where it was cancelled, then greyed out
+        if (i < currentIndex || currentIndex === -1) { cls = 'completed'; lineCls = 'completed'; }
+        else if (i === currentIndex) { cls = 'current'; }
+        else { cls = 'future'; }
+      } else if (isDisputePath) {
+        // Show up to the point where the dispute happened
+        if (i < 5) { cls = 'completed'; lineCls = 'completed'; } // assume dispute happens during review
+        else { cls = 'future'; }
+      } else if (i < currentIndex) { cls = 'completed'; lineCls = 'completed'; }
+      else if (i === currentIndex) { cls = 'current'; }
+      else { cls = 'future'; }
+
+      return `
+        <div class="timeline-step ${cls}">
+          <div class="timeline-line ${lineCls}"></div>
+          <div class="timeline-dot">
+            ${cls === 'completed' ? `<i data-lucide="check" class="w-3 h-3"></i>` : (i + 1)}
+          </div>
+          <div class="timeline-label">${meta.label}</div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderFeeBreakdown(t) {
+    const amount = t.amount || 0;
+    const isFacilitated = t.is_facilitated || t.facilitator_name;
+    const facilitatorFee = t.facilitator_fee || 0;
+    const gatewayFee = t.gateway_fee || (t.gateway_fee === 0 ? 0 : calcGatewayFee(amount));
+    const buyerGatewayShare = t.buyer_gateway_fee || Math.round(gatewayFee / 2);
+    const sellerGatewayShare = t.seller_gateway_fee || Math.round(gatewayFee / 2);
+    const dealshieldCommission = t.dealshield_commission || 0;
+    const facilitatorPayout = t.facilitator_payout || 0;
+    const hasGateway = t.gateway_fee !== null && t.gateway_fee !== undefined;
+
+    let rows = `
+      <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
+        <span class="text-sm text-ink-200">Deal Amount</span>
+        <span class="text-sm font-bold text-white">${formatNaira(amount)}</span>
+      </div>`;
+
+    if (isFacilitated) {
+      rows += `
+      <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
+        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="user-check" class="w-3.5 h-3.5 text-brand"></i>Facilitator Fee</span>
+        <span class="text-sm font-bold text-white">${formatNaira(facilitatorFee)}</span>
+      </div>`;
+    }
+
+    if (hasGateway) {
+      rows += `
+      <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
+        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="credit-card" class="w-3.5 h-3.5 text-ink-300"></i>Gateway Fee (1.5% capped ₦50k)</span>
+        <span class="text-sm font-bold text-white">${formatNaira(gatewayFee)}</span>
+      </div>
+      <div class="flex items-center justify-between py-2.5 pl-4 border-b border-[var(--color-border)]">
+        <span class="text-xs text-ink-300">— Buyer's share (50%)</span>
+        <span class="text-xs font-semibold text-ink-100">${formatNaira(buyerGatewayShare)}</span>
+      </div>
+      <div class="flex items-center justify-between py-2.5 pl-4 border-b border-[var(--color-border)]">
+        <span class="text-xs text-ink-300">— Seller's share (50%)</span>
+        <span class="text-xs font-semibold text-ink-100">${formatNaira(sellerGatewayShare)}</span>
+      </div>`;
+    }
+
+    if (isFacilitated) {
+      rows += `
+      <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
+        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5 text-brand"></i>DealShield Commission (10%)</span>
+        <span class="text-sm font-bold text-brand">${formatNaira(dealshieldCommission)}</span>
+      </div>
+      <div class="flex items-center justify-between py-2.5">
+        <span class="text-sm text-ink-200 flex items-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5 text-positive"></i>Facilitator Payout (90%)</span>
+        <span class="text-sm font-bold text-positive">${formatNaira(facilitatorPayout)}</span>
+      </div>`;
+    }
+
+    return rows;
+  }
+
+  function renderBuyerSellerInfo(t) {
+    const buyer = t.buyer_name || t.buyer_email || '—';
+    const seller = t.seller_name || t.seller_email || '—';
+    const buyerEmail = t.buyer_email || '';
+    const sellerEmail = t.seller_email || '';
+
+    return `
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Buyer -->
+        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-ink-900/50 border border-[var(--color-border)]">
+          <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-brand"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-0.5">Buyer</div>
+            <div class="text-sm font-bold text-white truncate">${buyer}</div>
+            ${buyerEmail ? `<div class="text-xs text-ink-300 truncate">${buyerEmail}</div>` : ''}
+          </div>
+        </div>
+        <!-- Seller -->
+        <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-ink-900/50 border border-[var(--color-border)]">
+          <div class="w-10 h-10 rounded-full bg-positive/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="tag" class="w-5 h-5 text-positive"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-0.5">Seller</div>
+            <div class="text-sm font-bold text-white truncate">${seller}</div>
+            ${sellerEmail ? `<div class="text-xs text-ink-300 truncate">${sellerEmail}</div>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderFacilitatorInfo(t) {
+    if (!t.is_facilitated && !t.facilitator_name) return '';
+    return `
+      <div class="flex items-start gap-3 p-4 rounded-[var(--radius-md)] bg-brand/5 border border-brand/10">
+        <div class="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="user-check" class="w-5 h-5 text-brand"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-brand mb-0.5">Facilitator</div>
+          <div class="text-sm font-bold text-white truncate">${t.facilitator_name || '—'}</div>
+          ${t.facilitator_fee ? `<div class="text-xs text-ink-300">Fee: ${formatNaira(t.facilitator_fee)}</div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  function renderVirtualAccount(t) {
+    if (!t.virtual_account) return '';
+    const va = t.virtual_account;
+    return `
+      <div class="card p-5">
+        <div class="flex items-center gap-2.5 mb-4">
+          <i data-lucide="landmark" class="w-[18px] h-[18px] text-brand"></i>
+          <h3 class="text-sm font-bold text-white">Virtual Account Details</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Account Number</div>
+            <div class="text-sm font-mono font-bold text-white">${va.account_number || '—'}</div>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Bank Name</div>
+            <div class="text-sm font-bold text-white">${va.bank_name || '—'}</div>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Expected Amount</div>
+            <div class="text-sm font-bold text-brand">${formatNaira(va.expected_amount || va.amount)}</div>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Expires</div>
+            <div class="text-sm font-bold text-white">${va.expiry ? new Date(va.expiry).toLocaleDateString('en-NG', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</div>
+          </div>
+        </div>
+        ${va.account_number ? `
+        <button class="btn-secondary w-full mt-4" onclick="copyAccount('${va.account_number}')">
+          <i data-lucide="copy" class="w-4 h-4"></i> Copy Account Number
+        </button>` : ''}
+      </div>`;
+  }
+
+  function copyAccount(num) {
+    navigator.clipboard.writeText(num).then(() => showToast('Account number copied', 'success'));
+  }
+
+  function renderActionButtons(t) {
+    const status = t.status;
+    const id = t.id;
+    let buttons = '';
+
+    switch (status) {
+      case 'created':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'accept', 'Accept Deal')">
+            <i data-lucide="check" class="w-4 h-4"></i> Accept Deal
+          </button>`;
+        break;
+      case 'seller_accepted':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'fund', 'Fund Deal')">
+            <i data-lucide="wallet" class="w-4 h-4"></i> Fund Deal
+          </button>
+          <button class="btn-secondary" onclick="performAction('${id}', 'generate-account', 'Generate Virtual Account')">
+            <i data-lucide="landmark" class="w-4 h-4"></i> Generate Virtual Account
+          </button>`;
+        break;
+      case 'payment_pending':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'generate-account', 'Generate Virtual Account')">
+            <i data-lucide="landmark" class="w-4 h-4"></i> Generate Virtual Account
+          </button>`;
+        break;
+      case 'funded':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'mark-fulfilled', 'Mark Fulfilled')">
+            <i data-lucide="package-check" class="w-4 h-4"></i> Mark Fulfilled
+          </button>`;
+        break;
+      case 'seller_fulfilling':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'start-review', 'Start Review')">
+            <i data-lucide="eye" class="w-4 h-4"></i> Start Review
+          </button>`;
+        break;
+      case 'buyer_review':
+        buttons = `
+          <button class="btn-primary" onclick="performAction('${id}', 'approve', 'Approve & Release')">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Approve & Release
+          </button>
+          <button class="btn-danger" onclick="performAction('${id}', 'dispute', 'Raise Dispute')">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Raise Dispute
+          </button>`;
+        break;
+      case 'disputed':
+      case 'under_investigation':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-danger/10 border border-danger/20">
+            <i data-lucide="search" class="w-5 h-5 text-danger"></i>
+            <div>
+              <div class="text-sm font-bold text-danger">Under Investigation</div>
+              <div class="text-xs text-ink-300">DealShield is reviewing this dispute. You'll be notified when resolved.</div>
+            </div>
+          </div>`;
+        break;
+      case 'released':
+      case 'closed':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-positive/10 border border-positive/20">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
+            <div>
+              <div class="text-sm font-bold text-positive">Deal Completed</div>
+              <div class="text-xs text-ink-300">Funds have been released successfully.</div>
+            </div>
+          </div>`;
+        break;
+      case 'refunded':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-brand/10 border border-brand/20">
+            <i data-lucide="rotate-ccw" class="w-5 h-5 text-brand"></i>
+            <div>
+              <div class="text-sm font-bold text-brand">Refunded</div>
+              <div class="text-xs text-ink-300">Funds have been refunded to the buyer.</div>
+            </div>
+          </div>`;
+        break;
+      case 'split_resolution':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-brand/10 border border-brand/20">
+            <i data-lucide="split" class="w-5 h-5 text-brand"></i>
+            <div>
+              <div class="text-sm font-bold text-brand">Split Resolution</div>
+              <div class="text-xs text-ink-300">Funds were split between buyer and seller.</div>
+            </div>
+          </div>`;
+        break;
+      case 'cancelled':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-ink-700 border border-[var(--color-border-strong)]">
+            <i data-lucide="x-circle" class="w-5 h-5 text-ink-300"></i>
+            <div>
+              <div class="text-sm font-bold text-ink-100">Deal Cancelled</div>
+              <div class="text-xs text-ink-300">This deal has been cancelled.</div>
+            </div>
+          </div>`;
+        break;
+      case 'expired':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-ink-700 border border-[var(--color-border-strong)]">
+            <i data-lucide="clock" class="w-5 h-5 text-ink-300"></i>
+            <div>
+              <div class="text-sm font-bold text-ink-100">Deal Expired</div>
+              <div class="text-xs text-ink-300">This deal has expired without completion.</div>
+            </div>
+          </div>`;
+        break;
+      case 'buyer_approved':
+        buttons = `
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-positive/10 border border-positive/20">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
+            <div>
+              <div class="text-sm font-bold text-positive">Buyer Approved</div>
+              <div class="text-xs text-ink-300">Funds are being released to the seller.</div>
+            </div>
+          </div>`;
+        break;
+      default:
+        buttons = '';
+    }
+
+    return buttons;
+  }
+
+  function renderDetail(t) {
+    currentTransaction = t;
+    const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
+    const dealId = `DS-${String(t.id).padStart(6, '0')}`;
+    const cat = t.category || t.listing_title || 'General';
+    const isFacilitated = t.is_facilitated || t.facilitator_name;
+
+    document.getElementById('page-title').textContent = `Deal ${dealId}`;
+
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <!-- Back link -->
+      <div class="flex items-center gap-2 text-sm text-ink-300 hover:text-white transition-colors cursor-pointer" onclick="location.href='/transactions.html'">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to transactions
+      </div>
+
+      <!-- Header -->
+      <section class="card p-6">
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <h2 class="text-xl font-extrabold text-white tracking-tight">${dealId}</h2>
+              <span class="status-pill ${s.cls}">
+                <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
+              </span>
+              ${isFacilitated ? `<span class="facil-badge"><i data-lucide="user-check" class="w-3 h-3"></i>Facilitated</span>` : ''}
+            </div>
+            <div class="text-sm text-ink-300">${cat}</div>
+          </div>
+          <div class="text-right">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300 mb-1">Deal Amount</div>
+            <div class="text-3xl font-extrabold text-white tracking-tight">${formatNaira(t.amount)}</div>
+          </div>
+        </div>
+
+        <!-- Created date -->
+        ${t.created_at ? `<div class="mt-3 text-xs text-ink-300 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Created ${new Date(t.created_at).toLocaleDateString('en-NG', { day: '2-digit', month: 'long', year: 'numeric' })}</div>` : ''}
+      </section>
+
+      <!-- Timeline -->
+      <section class="card p-6">
+        <div class="flex items-center gap-2.5 mb-6">
+          <i data-lucide="git-branch" class="w-[18px] h-[18px] text-brand"></i>
+          <h3 class="text-sm font-bold text-white">Transaction Lifecycle</h3>
+        </div>
+        <div class="flex items-start overflow-x-auto pb-2">
+          ${renderTimeline(t.status)}
+        </div>
+        ${['disputed', 'under_investigation'].includes(t.status) ? `
+        <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-danger/5 border border-danger/15 flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-danger flex-shrink-0"></i>
+          <span class="text-xs text-ink-200">This deal has been diverted from the normal lifecycle due to a dispute. DealShield is investigating.</span>
+        </div>` : ''}
+        ${['cancelled', 'expired'].includes(t.status) ? `
+        <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-ink-700/50 border border-[var(--color-border-strong)] flex items-center gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-ink-300 flex-shrink-0"></i>
+          <span class="text-xs text-ink-300">This deal was ${t.status} before completion.</span>
+        </div>` : ''}
+      </section>
+
+      <!-- Fee Breakdown + Virtual Account -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="card p-5">
+          <div class="flex items-center gap-2.5 mb-4">
+            <i data-lucide="receipt" class="w-[18px] h-[18px] text-brand"></i>
+            <h3 class="text-sm font-bold text-white">Fee Breakdown</h3>
+          </div>
+          <div class="space-y-0">
+            ${renderFeeBreakdown(t)}
+          </div>
+        </div>
+        ${t.virtual_account ? renderVirtualAccount(t) : `
+        <div class="card p-5 flex items-center justify-center text-center">
+          <div>
+            <div class="w-12 h-12 rounded-full bg-ink-700 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="landmark" class="w-5 h-5 text-ink-300"></i>
+            </div>
+            <div class="text-sm font-semibold text-ink-100 mb-1">No Virtual Account</div>
+            <div class="text-xs text-ink-300">${['seller_accepted', 'payment_pending'].includes(t.status) ? 'Generate a virtual account to fund this deal.' : 'A virtual account has not been generated for this deal.'}</div>
+          </div>
+        </div>`}
+      </section>
+
+      <!-- Buyer & Seller Info -->
+      <section class="card p-5">
+        <div class="flex items-center gap-2.5 mb-4">
+          <i data-lucide="users" class="w-[18px] h-[18px] text-brand"></i>
+          <h3 class="text-sm font-bold text-white">Parties</h3>
+        </div>
+        ${renderBuyerSellerInfo(t)}
+        ${isFacilitated ? `<div class="mt-4">${renderFacilitatorInfo(t)}</div>` : ''}
+      </section>
+
+      <!-- Action Buttons -->
+      <section class="card p-5">
+        <div class="flex items-center gap-2.5 mb-4">
+          <i data-lucide="zap" class="w-[18px] h-[18px] text-brand"></i>
+          <h3 class="text-sm font-bold text-white">Actions</h3>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap" id="action-buttons">
+          ${renderActionButtons(t)}
+        </div>
+      </section>
+    `;
+
+    lucide.createIcons();
+  }
+
+  async function performAction(id, action, label) {
+    const btns = document.querySelectorAll('#action-buttons button');
+    btns.forEach(b => b.disabled = true);
+
+    // Find the clicked button to show spinner
+    const activeBtns = Array.from(btns).filter(b => b.textContent.includes(label));
+    if (activeBtns[0]) {
+      activeBtns[0].innerHTML = `<span class="spinner"></span> ${label}...`;
+    }
+
+    try {
+      const res = await API.post(`/escrow/${id}/${action}`);
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        showToast(`${label} successful`, 'success');
+        // Reload the transaction detail after a short delay
+        setTimeout(() => loadDetail(), 1000);
+      } else {
+        showToast(data.detail || data.message || `${label} failed`, 'error');
+        btns.forEach(b => b.disabled = false);
+        // Re-render to restore button content
+        if (currentTransaction) renderDetail(currentTransaction);
+      }
+    } catch (err) {
+      showToast(`${label} failed: ${err.message}`, 'error');
+      if (currentTransaction) renderDetail(currentTransaction);
+    }
+  }
+
+  async function loadDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) {
+      location.href = '/transactions.html';
+      return;
+    }
+
+    renderDetailSkeleton();
+    try {
+      const res = await API.get(`/escrow/${id}`);
+      if (!res.ok) {
+        if (res.status === 404) {
+          renderDetailError('Transaction not found.');
+        } else {
+          const data = await res.json().catch(() => ({}));
+          renderDetailError(data.detail || data.message);
+        }
+        return;
+      }
+      const data = await res.json();
+      // API might return the transaction directly or wrapped
+      const tx = data.transaction || data;
+      renderDetail(tx);
+
+      // Also try to fetch virtual account details if status suggests one might exist
+      if (['seller_accepted', 'payment_pending', 'funded'].includes(tx.status)) {
+        fetchAccountDetails(tx);
+      }
+    } catch (err) {
+      console.error('Detail load error:', err);
+      renderDetailError(err.message);
+    }
+  }
+
+  async function fetchAccountDetails(tx) {
+    try {
+      const res = await API.get(`/escrow/${tx.id}/account`);
+      if (res.ok) {
+        const acctData = await res.json();
+        const account = acctData.account || acctData;
+        if (account && account.account_number) {
+          // Merge virtual account into transaction and re-render
+          tx.virtual_account = account;
+          renderDetail(tx);
+        }
+      }
+    } catch (e) {
+      // No account yet — silently ignore
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  Init
+  // ─────────────────────────────────────────────────────────────
+  (async function init() {
+    if (!checkAuth()) return;
+    lucide.createIcons();
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    // Load user name in parallel
+    loadUser();
+
+    if (id) {
+      await loadDetail();
+    } else {
+      await loadTransactionList();
+    }
+  })();
+</script>
+</body>
+</html>

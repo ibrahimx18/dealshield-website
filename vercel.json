@@ -8,11 +8,19 @@
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/api/deal", "destination": "/api/deal" },
+    { "source": "/auth/(.*)", "destination": "https://api.dealshield.ng/auth/$1" },
+    { "source": "/escrow/(.*)", "destination": "https://api.dealshield.ng/escrow/$1" },
+    { "source": "/admin/(.*)", "destination": "https://api.dealshield.ng/admin/$1" },
+    { "source": "/listings/(.*)", "destination": "https://api.dealshield.ng/listings/$1" },
+    { "source": "/wallet/(.*)", "destination": "https://api.dealshield.ng/wallet/$1" },
     { "source": "/login", "destination": "/login.html" },
     { "source": "/register", "destination": "/register.html" },
     { "source": "/kyc", "destination": "/kyc.html" },
     { "source": "/create-deal", "destination": "/create-deal.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" }
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/facilitator", "destination": "/facilitator.html" },
+    { "source": "/settings", "destination": "/settings.html" },
+    { "source": "/transactions", "destination": "/transactions.html" }
   ],
   "headers": [
     {

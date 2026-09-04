@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — DealShield</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Libraries -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            900: '#0B0F1A', 800: '#0F1420', 700: '#161C2C', 600: '#1E2536',
+            500: '#2A3346', 400: '#3D4860', 300: '#6B7693', 200: '#9BA5BC', 100: '#C9D1E0',
+          },
+          brand: { DEFAULT: '#C8A45C', light: '#E0C180', dark: '#9A7B3E' },
+          surface: '#0F1420',
+          positive: '#22C55E', warning: '#F59E0B', danger: '#EF4444',
+        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        spacing: { '18': '4.5rem' },
+        borderRadius: { sm: '6px', md: '10px', lg: '14px' },
+        boxShadow: {
+          sm: '0 1px 2px rgba(0,0,0,0.3)',
+          md: '0 4px 12px rgba(0,0,0,0.25)',
+          lg: '0 12px 40px rgba(0,0,0,0.3)',
+        },
+      }
+    }
+  };
+</script>
+<style>
+:root {
+  --color-bg: #0B0F1A;
+  --color-surface: #0F1420;
+  --color-border: rgba(255,255,255,0.06);
+  --color-border-strong: rgba(255,255,255,0.12);
+  --color-accent: #C8A45C;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #9BA5BC;
+  --color-text-muted: #6B7693;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02','cv03','cv04','cv11';
+  letter-spacing: -0.01em;
+}
+h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+.btn-primary {
+  background: var(--color-accent); color: #0B0F1A; font-weight: 700; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(200,164,92,0.3); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; filter: none; }
+.btn-secondary {
+  background: transparent; color: var(--color-text-primary); font-weight: 600; font-size: 14px;
+  padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--color-border-strong);
+  cursor: pointer; transition: border-color .2s, background .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.btn-secondary:hover { border-color: var(--color-accent); background: rgba(200,164,92,0.05); }
+.btn-secondary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent; color: var(--color-text-secondary); font-weight: 500; font-size: 14px;
+  padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: color .2s;
+}
+.btn-ghost:hover { color: var(--color-text-primary); }
+
+/* Sidebar */
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-radius: var(--radius-md); color: var(--color-text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: background .15s, color .15s; border: 1px solid transparent;
+}
+.sidebar-link:hover { color: var(--color-text-primary); background: rgba(255,255,255,0.03); }
+.sidebar-link.active { color: var(--color-accent); background: rgba(200,164,92,0.08); border-color: rgba(200,164,92,0.15); }
+
+/* Status pills */
+.status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+.status-on { background: rgba(34,197,94,0.12); color: #22C55E; }
+.status-off { background: rgba(107,118,147,0.15); color: #9BA5BC; }
+.status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
+.status-pending { background: rgba(245,158,11,0.12); color: #F59E0B; }
+.status-failed { background: rgba(239,68,68,0.12); color: #EF4444; }
+
+/* Form */
+.form-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); letter-spacing: .02em; text-transform: uppercase; }
+.form-input {
+  width: 100%; background: var(--color-bg); border: 1px solid var(--color-border-strong); color: var(--color-text-primary);
+  border-radius: var(--radius-md); padding: 11px 14px; font-size: 14px; font-family: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-input:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(200,164,92,0.12); }
+.form-input::placeholder { color: var(--color-text-muted); }
+
+/* Code display */
+.code-box {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace; font-size: 12px;
+  background: #07090F; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md);
+  padding: 14px; color: var(--color-text-primary); word-break: break-all; line-height: 1.5;
+}
+
+/* Backup codes grid */
+.backup-code {
+  font-family: 'SF Mono', monospace; font-size: 14px; font-weight: 600; text-align: center;
+  background: #07090F; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  padding: 8px; color: var(--color-accent);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100;
+  display: none; align-items: center; justify-content: center; padding: 16px;
+}
+.modal-overlay.show { display: flex; }
+.modal-card {
+  background: var(--color-surface); border: 1px solid var(--color-border-strong); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
+}
+
+/* Alert */
+.alert { padding: 12px 14px; border-radius: var(--radius-md); font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
+.alert-success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #86EFAC; }
+.alert-error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #FCA5A5; }
+.alert-warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #FCD34D; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* Mobile sidebar */
+@media (max-width: 1023px) {
+  #sidebar { transform: translateX(-100%); transition: transform 0.25s ease; position: fixed; z-index: 60; }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+}
+#sidebar-overlay { display: none; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50" onclick="toggleSidebar()"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col z-50">
+  <!-- Logo -->
+  <div class="h-16 flex items-center gap-2.5 px-5 border-b border-[var(--color-border)]">
+    <div class="w-8 h-8 rounded-lg border border-brand/40 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
+        <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+      </svg>
+    </div>
+    <span class="font-bold text-[15px] tracking-tight text-white">DealShield</span>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a class="sidebar-link" onclick="location.href='/dashboard.html'">
+      <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
+      <span class="ml-auto text-[11px] bg-ink-700 text-ink-200 px-1.5 py-0.5 rounded-full">6</span>
+    </a>
+    <a class="sidebar-link" onclick="setActiveNav(this)">
+      <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
+    </a>
+    <a class="sidebar-link" onclick="location.href='/kyc.html'">
+      <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
+      <span class="ml-auto text-[11px] bg-brand/15 text-brand px-1.5 py-0.5 rounded-full">3</span>
+    </a>
+    <a class="sidebar-link active" onclick="setActiveNav(this)">
+      <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="px-3 py-4 border-t border-[var(--color-border)]">
+    <div class="sidebar-link" onclick="handleLogout()">
+      <i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Log Out
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div class="lg:ml-64 min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="h-16 border-b border-[var(--color-border)] bg-[var(--color-surface)]/70 backdrop-blur-sm flex items-center justify-between px-5 lg:px-6 sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <button class="lg:hidden text-ink-200" onclick="toggleSidebar()">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+      <h1 class="text-lg font-bold text-white">Settings</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span class="hidden md:inline">Create Deal</span>
+      </button>
+      <button class="btn-primary" onclick="location.href='/create-deal.html'">
+        <i data-lucide="shield-plus" class="w-4 h-4"></i>
+        <span>Create Deal</span>
+      </button>
+      <div class="w-px h-8 bg-[var(--color-border-strong)]"></div>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-ink-700 border border-[var(--color-border-strong)] flex items-center justify-center">
+          <i data-lucide="user" class="w-4 h-4 text-ink-200"></i>
+        </div>
+        <div class="hidden sm:block leading-tight">
+          <div id="user-name" class="text-sm font-semibold text-white">—</div>
+          <div class="text-[11px] text-ink-300">Verified Account</div>
+        </div>
+      </div>
+      <button class="text-ink-300 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
+        <i data-lucide="log-out" class="w-[18px] h-[18px]"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 p-5 lg:p-6 space-y-6 max-w-5xl">
+
+    <!-- ── Two-Factor Authentication ── -->
+    <section class="card overflow-hidden">
+      <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
+        <i data-lucide="shield-check" class="w-[18px] h-[18px] text-brand"></i>
+        <h2 class="text-sm font-bold text-white">Two-Factor Authentication</h2>
+      </div>
+      <div class="p-5 space-y-4">
+        <!-- 2FA Status -->
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="flex items-center gap-3">
+            <div id="twofa-icon-wrap" class="w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center">
+              <i data-lucide="shield-off" class="w-5 h-5 text-ink-200" id="twofa-icon"></i>
+            </div>
+            <div>
+              <div class="text-[13px] font-semibold text-white">Authenticator App</div>
+              <div class="text-[12px] text-ink-300" id="twofa-status-text">Checking status…</div>
+            </div>
+          </div>
+          <span id="twofa-pill" class="status-pill status-pending">
+            <i data-lucide="loader" class="w-3 h-3"></i> Loading
+          </span>
+        </div>
+
+        <div class="flex gap-3 flex-wrap">
+          <button id="btn-enable-2fa" class="btn-primary" onclick="enable2FA()" style="display:none;">
+            <i data-lucide="shield-plus" class="w-4 h-4"></i> Enable 2FA
+          </button>
+          <button id="btn-disable-2fa" class="btn-secondary" onclick="openDisableModal()" style="display:none;">
+            <i data-lucide="shield-off" class="w-4 h-4"></i> Disable 2FA
+          </button>
+        </div>
+
+        <!-- Backup codes notice -->
+        <div id="backup-notice" class="alert alert-warning hidden">
+          <i data-lucide="alert-triangle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+          <div>
+            <div class="font-semibold mb-1">Save your backup codes</div>
+            <div class="opacity-90">Store these codes in a safe place. Each can be used once to access your account if you lose your authenticator device.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Change Password ── -->
+    <section class="card overflow-hidden">
+      <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
+        <i data-lucide="key-round" class="w-[18px] h-[18px] text-brand"></i>
+        <h2 class="text-sm font-bold text-white">Change Password</h2>
+      </div>
+      <form id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
+        <div id="pw-alert"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="form-label block mb-1.5" for="pw-current">Current Password</label>
+            <div class="relative">
+              <input type="password" id="pw-current" class="form-input pr-10" placeholder="••••••••" required>
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-current', this)">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="form-label block mb-1.5" for="pw-new">New Password</label>
+            <div class="relative">
+              <input type="password" id="pw-new" class="form-input pr-10" placeholder="••••••••" required minlength="8">
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-new', this)">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="form-label block mb-1.5" for="pw-confirm">Confirm New Password</label>
+            <div class="relative">
+              <input type="password" id="pw-confirm" class="form-input pr-10" placeholder="••••••••" required minlength="8">
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-300 hover:text-white" onclick="togglePwVisibility('pw-confirm', this)">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <p class="text-[12px] text-ink-300">Use at least 8 characters with a mix of letters, numbers, and symbols.</p>
+          <button type="submit" id="pw-submit" class="btn-primary">
+            <i data-lucide="save" class="w-4 h-4"></i> Update Password
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ── Active Sessions ── -->
+    <section class="card overflow-hidden">
+      <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
+        <i data-lucide="monitor-smartphone" class="w-[18px] h-[18px] text-brand"></i>
+        <h2 class="text-sm font-bold text-white">Active Sessions</h2>
+      </div>
+      <div id="sessions-container" class="p-5">
+        <div class="flex items-center gap-3 text-ink-300 text-[13px]">
+          <i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Loading sessions…
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Account Info ── -->
+    <section class="card overflow-hidden">
+      <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center gap-2.5">
+        <i data-lucide="user-circle" class="w-[18px] h-[18px] text-brand"></i>
+        <h2 class="text-sm font-bold text-white">Account Information</h2>
+      </div>
+      <div id="account-container" class="p-5">
+        <div class="flex items-center gap-3 text-ink-300 text-[13px]">
+          <i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Loading account info…
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ═══════════════ ENABLE 2FA MODAL ═══════════════ -->
+<div id="enable-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between sticky top-0 bg-[var(--color-surface)] z-10">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="shield-plus" class="w-[18px] h-[18px] text-brand"></i>
+        <h3 class="text-sm font-bold text-white">Enable Two-Factor Authentication</h3>
+      </div>
+      <button class="text-ink-300 hover:text-white" onclick="closeEnableModal()">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-5">
+      <!-- Step 1: Secret + URI + Backup codes -->
+      <div id="enable-step-1" class="space-y-5">
+        <div>
+          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">1</span>
+            Set up your authenticator
+          </div>
+          <p class="text-[12px] text-ink-300 mb-3">Open Google Authenticator, Authy, or a similar TOTP app and scan the URI below — or enter the secret manually.</p>
+
+          <label class="form-label block mb-1.5">Secret Key</label>
+          <div class="code-box mb-3" id="twofa-secret" style="user-select:all;">—</div>
+
+          <label class="form-label block mb-1.5">QR / OTP URI</label>
+          <div class="code-box mb-3" id="twofa-uri" style="user-select:all;">—</div>
+          <button class="btn-ghost text-[12px] flex items-center gap-1" onclick="copyURI()">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy URI
+          </button>
+        </div>
+
+        <div class="border-t border-[var(--color-border)] pt-5">
+          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">2</span>
+            Save your backup codes
+          </div>
+          <div class="alert alert-warning mb-3">
+            <i data-lucide="alert-triangle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+            <div>
+              <div class="font-semibold">Write these down and store them safely.</div>
+              <div class="opacity-90 text-[12px]">Each code can be used once to regain access if you lose your device. They will not be shown again.</div>
+            </div>
+          </div>
+          <div id="backup-codes-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2"></div>
+          <button class="btn-ghost text-[12px] flex items-center gap-1 mt-3" onclick="downloadBackupCodes()">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Download as text file
+          </button>
+        </div>
+
+        <div class="border-t border-[var(--color-border)] pt-5">
+          <div class="text-[13px] font-semibold text-white mb-2 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-brand text-ink-900 text-[11px] font-bold flex items-center justify-center">3</span>
+            Verify with a 6-digit code
+          </div>
+          <div id="verify-alert"></div>
+          <div class="flex gap-3 flex-wrap items-end">
+            <div class="flex-1 min-w-[160px]">
+              <label class="form-label block mb-1.5" for="verify-code">Verification Code</label>
+              <input type="text" id="verify-code" class="form-input text-center tracking-[0.3em] font-mono" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]{6}">
+            </div>
+            <button class="btn-primary" id="verify-btn" onclick="verify2FA()">
+              <i data-lucide="check" class="w-4 h-4"></i> Verify & Enable
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DISABLE 2FA MODAL ═══════════════ -->
+<div id="disable-modal" class="modal-overlay">
+  <div class="modal-card" style="max-width:420px;">
+    <div class="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="shield-off" class="w-[18px] h-[18px] text-danger"></i>
+        <h3 class="text-sm font-bold text-white">Disable 2FA</h3>
+      </div>
+      <button class="text-ink-300 hover:text-white" onclick="closeDisableModal()">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <p class="text-[13px] text-ink-200">Enter a 6-digit code from your authenticator app (or a backup code) to confirm.</p>
+      <div id="disable-alert"></div>
+      <div>
+        <label class="form-label block mb-1.5" for="disable-code">Verification Code</label>
+        <input type="text" id="disable-code" class="form-input text-center tracking-[0.3em] font-mono" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]{6}">
+      </div>
+      <div class="flex justify-end gap-3">
+        <button class="btn-secondary" onclick="closeDisableModal()">Cancel</button>
+        <button class="btn-primary" id="disable-btn" style="background:#EF4444;color:#fff;" onclick="disable2FA()">
+          <i data-lucide="shield-off" class="w-4 h-4"></i> Disable 2FA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════
+  //  API helpers
+  // ═══════════════════════════════════════════
+  function getToken() { return localStorage.getItem('access_token'); }
+
+  function authHeaders() {
+    const token = getToken();
+    return token ? { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
+                 : { 'Content-Type': 'application/json' };
+  }
+
+  async function apiCall(method, path, body) {
+    const opts = { method, headers: authHeaders() };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(path, opts);
+    let data = null;
+    try { data = await res.json(); } catch (e) { /* no json body */ }
+    return { ok: res.ok, status: res.status, data };
+  }
+
+  function showAlert(container, type, message) {
+    const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'x-circle' : 'alert-triangle';
+    container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${message}</div></div>`;
+    lucide.createIcons();
+  }
+
+  // ═══════════════════════════════════════════
+  //  Auth / Nav
+  // ═══════════════════════════════════════════
+  function checkAuth() {
+    const token = getToken();
+    if (!token) { location.href = '/login.html'; return false; }
+    return true;
+  }
+
+  function handleLogout() { localStorage.clear(); location.href = '/login.html'; }
+
+  function setActiveNav(el) {
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    el.classList.add('active');
+    if (window.innerWidth < 1024) toggleSidebar(false);
+  }
+
+  function toggleSidebar(force) {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    const open = force !== undefined ? force : !sb.classList.contains('open');
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
+  }
+
+  // ═══════════════════════════════════════════
+  //  2FA
+  // ═══════════════════════════════════════════
+  let pending2FA = null; // { secret, uri, backup_codes }
+
+  async function fetch2FAStatus() {
+    // GET /auth/me typically includes 2fa_enabled; try it, fall back gracefully
+    const res = await apiCall('GET', '/auth/me');
+    if (res.ok && res.data) {
+      const enabled = !!(res.data.two_factor_enabled ?? res.data.twofa_enabled ?? res.data['2fa_enabled']);
+      render2FAStatus(enabled);
+    } else {
+      // Assume disabled if we can't tell
+      render2FAStatus(false);
+    }
+  }
+
+  function render2FAStatus(enabled) {
+    const pill = document.getElementById('twofa-pill');
+    const statusText = document.getElementById('twofa-status-text');
+    const iconWrap = document.getElementById('twofa-icon-wrap');
+    const icon = document.getElementById('twofa-icon');
+    const btnEnable = document.getElementById('btn-enable-2fa');
+    const btnDisable = document.getElementById('btn-disable-2fa');
+    const backupNotice = document.getElementById('backup-notice');
+
+    if (enabled) {
+      pill.className = 'status-pill status-on';
+      pill.innerHTML = '<i data-lucide="check" class="w-3 h-3"></i> Enabled';
+      statusText.textContent = 'Two-factor authentication is active. Your account is protected.';
+      iconWrap.className = 'w-10 h-10 rounded-lg bg-positive/10 flex items-center justify-center';
+      icon.setAttribute('data-lucide', 'shield-check');
+      icon.classList.remove('text-ink-200'); icon.classList.add('text-positive');
+      btnEnable.style.display = 'none';
+      btnDisable.style.display = 'inline-flex';
+      backupNotice.classList.add('hidden');
+    } else {
+      pill.className = 'status-pill status-off';
+      pill.innerHTML = '<i data-lucide="shield-off" class="w-3 h-3"></i> Disabled';
+      statusText.textContent = 'Your account is not protected by two-factor authentication.';
+      iconWrap.className = 'w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center';
+      icon.setAttribute('data-lucide', 'shield-off');
+      icon.classList.remove('text-positive'); icon.classList.add('text-ink-200');
+      btnEnable.style.display = 'inline-flex';
+      btnDisable.style.display = 'none';
+    }
+    lucide.createIcons();
+  }
+
+  async function enable2FA() {
+    const res = await apiCall('POST', '/auth/2fa/enable', {});
+    if (!res.ok || !res.data) {
+      showAlert(document.createElement('div'), 'error', 'Could not start 2FA enrollment. Please try again.');
+      // still open modal with placeholder so user sees error? Better: show inline alert
+      showInlineAlert('2fa-section', 'error', 'Could not start 2FA enrollment. Please try again.');
+      return;
+    }
+    pending2FA = {
+      secret: res.data.secret || res.data.otp_secret || '',
+      uri: res.data.uri || res.data.otpauth_uri || '',
+      backup_codes: res.data.backup_codes || [],
+    };
+    openEnableModal();
+  }
+
+  function showInlineAlert(sectionId, type, message) {
+    // helper: show alert inside a section before its content
+    // for 2FA, just create a temp alert after the status area
+    let host = document.querySelector('#btn-enable-2fa').parentElement.parentElement;
+    let existing = host.querySelector('#inline-2fa-alert');
+    if (existing) existing.remove();
+    const div = document.createElement('div');
+    div.id = 'inline-2fa-alert';
+    div.className = 'mt-3';
+    showAlert(div, type, message);
+    host.appendChild(div);
+  }
+
+  function openEnableModal() {
+    const m = document.getElementById('enable-modal');
+    document.getElementById('twofa-secret').textContent = pending2FA.secret || '(not provided)';
+    document.getElementById('twofa-uri').textContent = pending2FA.uri || '(not provided)';
+    const grid = document.getElementById('backup-codes-grid');
+    const codes = pending2FA.backup_codes || [];
+    grid.innerHTML = codes.length
+      ? codes.map(c => `<div class="backup-code">${c}</div>`).join('')
+      : '<div class="text-ink-300 text-[12px] col-span-full">No backup codes returned.</div>';
+    document.getElementById('verify-code').value = '';
+    document.getElementById('verify-alert').innerHTML = '';
+    m.classList.add('show');
+    lucide.createIcons();
+  }
+
+  function closeEnableModal() {
+    document.getElementById('enable-modal').classList.remove('show');
+  }
+
+  async function verify2FA() {
+    const code = document.getElementById('verify-code').value.trim();
+    const alertBox = document.getElementById('verify-alert');
+    const btn = document.getElementById('verify-btn');
+
+    if (!/^\d{6}$/.test(code)) {
+      showAlert(alertBox, 'error', 'Please enter the 6-digit code from your authenticator app.');
+      return;
+    }
+    btn.disabled = true;
+    const res = await apiCall('POST', '/auth/2fa/verify', { token: code });
+    btn.disabled = false;
+    if (res.ok) {
+      showAlert(alertBox, 'success', 'Two-factor authentication enabled successfully.');
+      setTimeout(() => { closeEnableModal(); fetch2FAStatus(); }, 1200);
+    } else {
+      const msg = res.data?.detail || res.data?.message || 'Verification failed. Check the code and try again.';
+      showAlert(alertBox, 'error', msg);
+    }
+  }
+
+  // ── Disable ──
+  function openDisableModal() {
+    document.getElementById('disable-code').value = '';
+    document.getElementById('disable-alert').innerHTML = '';
+    document.getElementById('disable-modal').classList.add('show');
+    lucide.createIcons();
+  }
+  function closeDisableModal() {
+    document.getElementById('disable-modal').classList.remove('show');
+  }
+  async function disable2FA() {
+    const code = document.getElementById('disable-code').value.trim();
+    const alertBox = document.getElementById('disable-alert');
+    const btn = document.getElementById('disable-btn');
+    if (!/^\d{6}$/.test(code)) {
+      showAlert(alertBox, 'error', 'Please enter a 6-digit code.');
+      return;
+    }
+    btn.disabled = true;
+    const res = await apiCall('POST', '/auth/2fa/disable', { token: code });
+    btn.disabled = false;
+    if (res.ok) {
+      showAlert(alertBox, 'success', 'Two-factor authentication disabled.');
+      setTimeout(() => { closeDisableModal(); fetch2FAStatus(); }, 1200);
+    } else {
+      const msg = res.data?.detail || res.data?.message || 'Could not disable 2FA. Check your code and try again.';
+      showAlert(alertBox, 'error', msg);
+    }
+  }
+
+  function copyURI() {
+    const uri = document.getElementById('twofa-uri').textContent;
+    navigator.clipboard.writeText(uri).then(() => {
+      showInlineAlert('2fa-section', 'success', 'URI copied to clipboard.');
+      setTimeout(() => { const e = document.getElementById('inline-2fa-alert'); if (e) e.remove(); }, 2000);
+    }).catch(() => {});
+  }
+
+  function downloadBackupCodes() {
+    const codes = (pending2FA?.backup_codes || []).join('\n');
+    const blob = new Blob([`DealShield — 2FA Backup Codes\n\n${codes}\n\nStore these safely. Each code can be used once.\n`], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'dealshield-backup-codes.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ═══════════════════════════════════════════
+  //  Change Password
+  // ═══════════════════════════════════════════
+  async function changePassword(e) {
+    e.preventDefault();
+    const current = document.getElementById('pw-current').value;
+    const next = document.getElementById('pw-new').value;
+    const confirm = document.getElementById('pw-confirm').value;
+    const alertBox = document.getElementById('pw-alert');
+    const btn = document.getElementById('pw-submit');
+
+    if (next !== confirm) {
+      showAlert(alertBox, 'error', 'New passwords do not match.');
+      return;
+    }
+    if (next.length < 8) {
+      showAlert(alertBox, 'error', 'New password must be at least 8 characters.');
+      return;
+    }
+    btn.disabled = true;
+    const res = await apiCall('POST', '/auth/change-password', {
+      current_password: current, new_password: next
+    });
+    btn.disabled = false;
+    if (res.ok) {
+      showAlert(alertBox, 'success', 'Password updated successfully.');
+      document.getElementById('change-pw-form').reset();
+    } else {
+      const msg = res.data?.detail || res.data?.message || 'Could not change password. Verify your current password is correct.';
+      showAlert(alertBox, 'error', msg);
+    }
+  }
+
+  function togglePwVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isPw = input.type === 'password';
+    input.type = isPw ? 'text' : 'password';
+    btn.querySelector('i').setAttribute('data-lucide', isPw ? 'eye-off' : 'eye');
+    lucide.createIcons();
+  }
+
+  // ═══════════════════════════════════════════
+  //  Active Sessions
+  // ═══════════════════════════════════════════
+  function formatDate(d) {
+    if (!d) return '—';
+    try { return new Date(d).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' }); }
+    catch { return d; }
+  }
+  function parseUA(ua) {
+    if (!ua) return { browser: 'Unknown', os: 'Unknown', raw: '' };
+    let browser = 'Unknown', os = 'Unknown';
+    if (/Chrome\/[\d.]+/.test(ua) && !/Edg|OPR/.test(ua)) browser = 'Chrome';
+    else if (/Edg/.test(ua)) browser = 'Edge';
+    else if (/Firefox/.test(ua)) browser = 'Firefox';
+    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    if (/Windows/.test(ua)) os = 'Windows';
+    else if (/Mac OS/.test(ua)) os = 'macOS';
+    else if (/Android/.test(ua)) os = 'Android';
+    else if (/iPhone|iPad/.test(ua)) os = 'iOS';
+    else if (/Linux/.test(ua)) os = 'Linux';
+    return { browser, os, raw: ua };
+  }
+
+  async function fetchSessions() {
+    const container = document.getElementById('sessions-container');
+    const res = await apiCall('GET', '/auth/sessions');
+    if (!res.ok || !res.data) {
+      container.innerHTML = '<div class="text-[13px] text-ink-300">No session data available.</div>';
+      return;
+    }
+    const sessions = Array.isArray(res.data) ? res.data : (res.data.sessions || []);
+    if (!sessions.length) {
+      container.innerHTML = '<div class="text-[13px] text-ink-300">No active sessions found.</div>';
+      return;
+    }
+    container.innerHTML = '<div class="space-y-3">' + sessions.map(s => {
+      const ua = parseUA(s.user_agent || s.userAgent);
+      const isCurrent = s.current || s.is_current;
+      return `<div class="flex items-center gap-4 p-4 rounded-lg border ${isCurrent ? 'border-brand/30 bg-brand/5' : 'border-[var(--color-border)] bg-[var(--color-bg)]'}">
+        <div class="w-10 h-10 rounded-lg bg-ink-700 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="monitor" class="w-5 h-5 text-ink-100"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[13px] font-semibold text-white">${ua.browser} · ${ua.os}</span>
+            ${isCurrent ? '<span class="status-pill status-on"><i data-lucide=\"check\" class=\"w-3 h-3\"></i> This device</span>' : ''}
+          </div>
+          <div class="text-[12px] text-ink-300 mt-0.5 truncate" title="${ua.raw}">${ua.raw || 'Unknown device'}</div>
+          <div class="text-[12px] text-ink-400 mt-1 flex gap-4 flex-wrap">
+            <span><i data-lucide="map-pin" class="w-3 h-3 inline -mt-0.5"></i> ${s.ip || s.ip_address || '—'}</span>
+            <span><i data-lucide="clock" class="w-3 h-3 inline -mt-0.5"></i> Created ${formatDate(s.created_at || s.created)}</span>
+            <span><i data-lucide="hourglass" class="w-3 h-3 inline -mt-0.5"></i> Expires ${formatDate(s.expires_at || s.expires)}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+    lucide.createIcons();
+  }
+
+  // ═══════════════════════════════════════════
+  //  Account Info
+  // ═══════════════════════════════════════════
+  function vPill(verified) {
+    return verified
+      ? '<span class="status-pill status-verified"><i data-lucide="check" class="w-3 h-3"></i> Verified</span>'
+      : '<span class="status-pill status-pending"><i data-lucide="clock" class="w-3 h-3"></i> Pending</span>';
+  }
+
+  async function fetchAccount() {
+    const container = document.getElementById('account-container');
+    const res = await apiCall('GET', '/auth/me');
+    if (!res.ok || !res.data) {
+      container.innerHTML = '<div class="text-[13px] text-ink-300">Could not load account information.</div>';
+      return;
+    }
+    const u = res.data;
+    const name = u.name || u.full_name || '—';
+    const email = u.email || '—';
+    const phone = u.phone || u.phone_number || '—';
+    const tier = u.badge_tier || u.tier || 'Standard';
+    document.getElementById('user-name').textContent = name;
+
+    const rows = [
+      { label: 'Full Name', value: name, icon: 'user' },
+      { label: 'Email', value: email, icon: 'mail' },
+      { label: 'Phone', value: phone, icon: 'phone' },
+      { label: 'Badge Tier', value: `<span class="status-pill status-on"><i data-lucide="award" class="w-3 h-3"></i> ${tier}</span>`, icon: 'award' },
+      { label: 'NIN Verification', value: vPill(u.nin_verified), icon: 'badge-check' },
+      { label: 'BVN Verification', value: vPill(u.bvn_verified), icon: 'badge-check' },
+      { label: 'Business Verification', value: vPill(u.business_verified), icon: 'building-2' },
+    ];
+
+    container.innerHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">' + rows.map(r => `
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-lg bg-ink-700 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="${r.icon}" class="w-[18px] h-[18px] text-ink-100"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-300">${r.label}</div>
+          <div class="text-[14px] text-white mt-0.5">${r.value}</div>
+        </div>
+      </div>`).join('') + '</div>';
+    lucide.createIcons();
+  }
+
+  // ═══════════════════════════════════════════
+  //  Init
+  // ═══════════════════════════════════════════
+  (function init() {
+    if (!checkAuth()) return;
+    lucide.createIcons();
+    fetch2FAStatus();
+    fetchSessions();
+    fetchAccount();
+  })();
+</script>
+</body>
+</html>

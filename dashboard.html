@@ -162,18 +162,16 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
     <a class="sidebar-link active" onclick="setActiveNav(this)">
       <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
-      <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
-      <span class="ml-auto text-[11px] bg-ink-700 text-ink-200 px-1.5 py-0.5 rounded-full">6</span>
+    <a class="sidebar-link" onclick="location.href='/facilitator.html'">
+      <i data-lucide="handshake" class="w-[18px] h-[18px]"></i> Facilitate Deal
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
-      <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
+    <a class="sidebar-link" onclick="location.href='/transactions.html'">
+      <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Transactions
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
-      <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
-      <span class="ml-auto text-[11px] bg-brand/15 text-brand px-1.5 py-0.5 rounded-full">3</span>
+    <a class="sidebar-link" onclick="location.href='/create-deal.html'">
+      <i data-lucide="plus-circle" class="w-[18px] h-[18px]"></i> Create Deal
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
+    <a class="sidebar-link" onclick="location.href='/settings.html'">
       <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
     </a>
   </nav>
@@ -197,9 +195,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
       <h1 class="text-lg font-bold text-white">Dashboard</h1>
     </div>
     <div class="flex items-center gap-3">
-      <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/create-deal.html'">
-        <i data-lucide="plus" class="w-4 h-4"></i>
-        <span class="hidden md:inline">Create Deal</span>
+      <button class="btn-secondary hidden sm:inline-flex" onclick="location.href='/facilitator.html'">
+        <i data-lucide="handshake" class="w-4 h-4"></i>
+        <span class="hidden md:inline">Facilitate</span>
       </button>
       <button class="btn-primary" onclick="location.href='/create-deal.html'">
         <i data-lucide="shield-plus" class="w-4 h-4"></i>
@@ -337,89 +335,124 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
 </div>
 
 <script>
-  // ── Mock data ──
-  const MOCK_USER = { name: 'Adaeze Okonkwo', email: 'adaeze@dealshield.ng' };
-
-  const MOCK_DEALS = [
-    { id: 'DS-2026-0048', category: 'Real Estate',   amount: 45000000, status: 'locked',    inspection: '48h',  counterparty: 'Lekki Homes Ltd.' },
-    { id: 'DS-2026-0047', category: 'Vehicle',       amount: 12500000, status: 'pending',   inspection: '72h',  counterparty: 'Bashir Mohammed' },
-    { id: 'DS-2026-0046', category: 'Gold (LBMA)',   amount: 28000000, status: 'verified',  inspection: '24h',  counterparty: 'Lagos Gold Co.' },
-    { id: 'DS-2026-0045', category: 'FX (USDT)',     amount: 8900000,  status: 'locked',    inspection: '12h',  counterparty: 'CryptoNaija FX' },
-    { id: 'DS-2026-0044', category: 'Commodities',   amount: 15750000, status: 'disputed',  inspection: '48h',  counterparty: 'Northern Grains PLC' },
-    { id: 'DS-2026-0043', category: 'Vehicle',       amount: 9800000,  status: 'verified',  inspection: '24h',  counterparty: 'AutoDealers NG' },
-  ];
-
-  const MOCK_ACTIVITIES = [
-    { icon: 'lock',             color: 'warning',  title: 'Funds locked in escrow',     detail: 'DS-2026-0048 · ₦45,000,000', time: '12 min ago' },
-    { icon: 'check',            color: 'positive', title: 'Deal marked as verified',    detail: 'DS-2026-0046 · Lagos Gold Co.', time: '1 hour ago' },
-    { icon: 'alert-triangle',   color: 'danger',   title: 'Dispute raised on deal',    detail: 'DS-2026-0044 · Northern Grains', time: '3 hours ago' },
-    { icon: 'user-plus',        color: 'brand',    title: 'New counterparty verified', detail: 'Bashir Mohammed · KYC complete', time: '5 hours ago' },
-    { icon: 'arrow-down-left',  color: 'ink-200',  title: 'Funds received into escrow',  detail: 'DS-2026-0045 · ₦8,900,000', time: '8 hours ago' },
-    { icon: 'shield-check',     color: 'positive', title: 'Inspection window opened',  detail: 'DS-2026-0043 · AutoDealers NG', time: '1 day ago' },
-    { icon: 'check-circle-2',   color: 'brand',    title: 'Deal released to seller',   detail: 'DS-2026-0039 · ₦32,000,000', time: '2 days ago' },
-  ];
-
-  const STATUS_MAP = {
-    locked:   { cls: 'status-locked',   icon: 'lock',         label: 'In Escrow' },
-    verified: { cls: 'status-verified', icon: 'check',        label: 'Verified' },
-    pending:  { cls: 'status-pending',  icon: 'clock',         label: 'Pending' },
-    disputed: { cls: 'status-disputed', icon: 'alert-triangle', label: 'Disputed' },
-    released: { cls: 'status-released', icon: 'shield-check', label: 'Released' },
-  };
-
-  const ICON_COLOR_MAP = {
-    warning: '#F59E0B', positive: '#22C55E', danger: '#EF4444', brand: '#C8A45C', 'ink-200': '#9BA5BC',
+  // ── API helpers ──
+  const API = {
+    async get(path) {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(path, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      return res;
+    }
   };
 
   function formatNaira(n) {
-    return '₦' + n.toLocaleString('en-NG');
+    return '₦' + Number(n || 0).toLocaleString('en-NG');
   }
+
+  // ── Escrow status mapping (16 statuses from backend) ──
+  const STATUS_MAP = {
+    created:             { cls: 'status-pending',   icon: 'plus-circle',      label: 'Created' },
+    seller_accepted:     { cls: 'status-pending',   icon: 'check',            label: 'Seller Accepted' },
+    payment_pending:     { cls: 'status-locked',    icon: 'clock',            label: 'Awaiting Payment' },
+    funded:              { cls: 'status-locked',    icon: 'lock',             label: 'Funded' },
+    seller_fulfilling:   { cls: 'status-locked',    icon: 'package',          label: 'Fulfilling' },
+    buyer_review:        { cls: 'status-locked',    icon: 'eye',              label: 'Buyer Review' },
+    buyer_approved:      { cls: 'status-verified',  icon: 'check-circle-2',   label: 'Approved' },
+    released:            { cls: 'status-released',  icon: 'shield-check',     label: 'Released' },
+    closed:              { cls: 'status-verified',  icon: 'check-circle-2',   label: 'Closed' },
+    disputed:            { cls: 'status-disputed',  icon: 'alert-triangle',   label: 'Disputed' },
+    under_investigation: { cls: 'status-disputed',  icon: 'search',           label: 'Under Investigation' },
+    refunded:            { cls: 'status-released',  icon: 'rotate-ccw',       label: 'Refunded' },
+    split_resolution:    { cls: 'status-released',  icon: 'split',            label: 'Split Resolution' },
+    cancelled:           { cls: 'status-pending',   icon: 'x-circle',         label: 'Cancelled' },
+    expired:             { cls: 'status-pending',   icon: 'clock',            label: 'Expired' },
+  };
 
   // ── Render ──
-  function renderUser() {
-    document.getElementById('user-name').textContent = MOCK_USER.name;
+  async function loadUser() {
+    try {
+      const res = await API.get('/auth/me');
+      if (res.ok) {
+        const user = await res.json();
+        document.getElementById('user-name').textContent = user.name || 'User';
+      }
+    } catch (e) { /* fall back to stored data */ }
   }
 
-  function renderCards() {
-    const totalVolume = MOCK_DEALS.reduce((s, d) => s + d.amount, 0);
-    document.getElementById('card-volume').textContent = formatNaira(totalVolume);
-    document.getElementById('card-active').textContent = MOCK_DEALS.length;
-    document.getElementById('card-completed').textContent = 14;
-    document.getElementById('card-pending').textContent = 3;
-  }
+  async function loadDashboard() {
+    try {
+      const res = await API.get('/escrow/transactions');
+      if (!res.ok) throw new Error('Failed to load');
+      const data = await res.json();
+      const transactions = data.transactions || [];
 
-  function renderDeals() {
-    const tbody = document.getElementById('deals-tbody');
-    tbody.innerHTML = MOCK_DEALS.map(d => {
-      const s = STATUS_MAP[d.status];
-      return `
-        <tr>
-          <td class="font-mono font-semibold text-brand">${d.id}</td>
-          <td class="text-ink-100">${d.category}</td>
-          <td class="font-semibold">${formatNaira(d.amount)}</td>
-          <td><span class="status-pill ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}</span></td>
-          <td class="text-ink-200">${d.inspection}</td>
-          <td class="text-ink-100">${d.counterparty}</td>
-        </tr>`;
-    }).join('');
-  }
+      // Stats
+      const totalVolume = transactions.reduce((s, t) => s + (t.amount || 0), 0);
+      const active = transactions.filter(t => !['closed', 'cancelled', 'expired', 'refunded'].includes(t.status));
+      const completed = transactions.filter(t => ['closed', 'released'].includes(t.status));
+      const disputed = transactions.filter(t => ['disputed', 'under_investigation'].includes(t.status));
 
-  function renderActivity() {
-    const feed = document.getElementById('activity-feed');
-    feed.innerHTML = MOCK_ACTIVITIES.map(a => {
-      const color = ICON_COLOR_MAP[a.color];
-      return `
-        <div class="activity-item">
-          <div class="activity-dot">
-            <i data-lucide="${a.icon}" class="w-[14px] h-[14px]" style="color:${color}"></i>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="text-[13px] font-semibold text-white truncate">${a.title}</div>
-            <div class="text-[12px] text-ink-300 truncate">${a.detail}</div>
-            <div class="text-[11px] text-ink-400 mt-0.5">${a.time}</div>
-          </div>
-        </div>`;
-    }).join('');
+      document.getElementById('card-volume').textContent = formatNaira(totalVolume);
+      document.getElementById('card-active').textContent = active.length;
+      document.getElementById('card-completed').textContent = completed.length;
+      document.getElementById('card-pending').textContent = disputed.length;
+
+      // Deals table
+      const tbody = document.getElementById('deals-tbody');
+      if (transactions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-ink-300 py-8">No deals yet. <a href="/create-deal.html" class="text-brand font-semibold">Create your first deal</a></td></tr>`;
+      } else {
+        tbody.innerHTML = transactions.slice(0, 8).map(t => {
+          const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
+          const cat = t.category || t.listing_title || '—';
+          return `
+            <tr class="cursor-pointer" onclick="location.href='/transactions.html?id=${t.id}'">
+              <td class="font-mono font-semibold text-brand">DS-${String(t.id).padStart(6, '0')}</td>
+              <td class="text-ink-100">${cat}</td>
+              <td class="font-semibold">${formatNaira(t.amount)}</td>
+              <td><span class="status-pill ${s.cls}"><i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}</span></td>
+              <td class="text-ink-200">${t.is_facilitated ? 'Facilitated' : 'Direct'}</td>
+              <td class="text-ink-100">${t.seller_name || t.buyer_name || '—'}</td>
+            </tr>`;
+        }).join('');
+      }
+
+      // Activity feed (generate from recent transactions)
+      const feed = document.getElementById('activity-feed');
+      if (transactions.length === 0) {
+        feed.innerHTML = `<div class="text-center text-ink-300 py-6 text-sm">No recent activity</div>`;
+      } else {
+        feed.innerHTML = transactions.slice(0, 7).map(t => {
+          const s = STATUS_MAP[t.status] || { icon: 'circle', cls: 'pending' };
+          const colorMap = { locked: '#F59E0B', verified: '#22C55E', disputed: '#EF4444', released: '#C8A45C', pending: '#9BA5BC' };
+          const color = colorMap[s.cls.replace('status-','')] || '#9BA5BC';
+          const titleMap = {
+            created: 'Deal created', funded: 'Funds locked in escrow', released: 'Funds released to seller',
+            disputed: 'Dispute raised', closed: 'Deal closed', cancelled: 'Deal cancelled',
+            seller_accepted: 'Seller accepted deal', buyer_review: 'Buyer review started'
+          };
+          const title = titleMap[t.status] || `Status: ${t.status}`;
+          return `
+            <div class="activity-item">
+              <div class="activity-dot">
+                <i data-lucide="${s.icon}" class="w-[14px] h-[14px]" style="color:${color}"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-[13px] font-semibold text-white truncate">${title}</div>
+                <div class="text-[12px] text-ink-300 truncate">DS-${String(t.id).padStart(6, '0')} · ${formatNaira(t.amount)}</div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      lucide.createIcons();
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+      // Show empty state
+      document.getElementById('deals-tbody').innerHTML = `<tr><td colspan="6" class="text-center text-ink-300 py-8">Unable to load deals. Please try again later.</td></tr>`;
+    }
   }
 
   // ── Nav ──
@@ -453,13 +486,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; }
   }
 
   // ── Init ──
-  (function init() {
+  (async function init() {
     if (!checkAuth()) return;
-    renderUser();
-    renderCards();
-    renderDeals();
-    renderActivity();
     lucide.createIcons();
+    await loadUser();
+    await loadDashboard();
   })();
 </script>
 </body>
