@@ -296,7 +296,8 @@
   }
 
   .section-pad { padding-top: 96px; padding-bottom: 96px; }
-  @media (max-width: 768px) { .section-pad { padding-top: 56px; padding-bottom: 56px; } }
+  @media (max-width: 768px) { .section-pad { padding-top: 48px; padding-bottom: 48px; } }
+  @media (max-width: 480px) { .section-pad { padding-top: 36px; padding-bottom: 36px; } }
 
   /* ── Nav ── */
   .nav-blur {
@@ -392,6 +393,21 @@
   @keyframes orbit {
     0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
     100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+  }
+  @media (max-width: 768px) {
+    @keyframes orbit {
+      0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+    }
+    .hero-shield { max-width: 300px; }
+    .hero-orb { width: 40px !important; height: 40px !important; }
+  }
+  @media (max-width: 380px) {
+    @keyframes orbit {
+      0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+    }
+    .hero-shield { max-width: 260px; }
   }
 
   /* ── Process Timeline ── */
@@ -627,7 +643,7 @@
 </header>
 
 <!-- ═══════════════ HERO ═══════════════ -->
-<section class="relative pt-36 pb-20 section-pad overflow-hidden">
+<section class="relative pt-28 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
   <!-- Animated background glows -->
   <div class="hero-bg"></div>
   <!-- Grid pattern -->
@@ -639,7 +655,7 @@
       <!-- Left: Text -->
       <div class="fade-in">
         <div class="eyebrow mb-6">Escrow Infrastructure for Nigeria</div>
-        <h1 class="text-[42px] sm:text-5xl lg:text-[58px] font-extrabold leading-[1.05] tracking-tight text-white mb-6 font-display">
+        <h1 class="text-[34px] sm:text-5xl lg:text-[58px] font-extrabold leading-[1.08] tracking-tight text-white mb-5 lg:mb-6 font-display">
           Protect the Deal.<br>
           <span class="gradient-gold">Not Just the Money.</span>
         </h1>
@@ -661,7 +677,7 @@
         </div>
 
         <!-- Quick trust badges -->
-        <div class="flex items-center gap-6 mt-10 pt-8 border-t border-[var(--color-border)]">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 lg:mt-10 pt-6 lg:pt-8 border-t border-[var(--color-border)]">
           <div class="flex items-center gap-2">
             <i data-lucide="shield-check" class="w-4 h-4 text-positive"></i>
             <span class="text-[12px] text-ink-300 font-medium">CBN-Aligned</span>
@@ -678,7 +694,7 @@
       </div>
 
       <!-- Right: Animated Escrow Visual -->
-      <div class="fade-in-delay-2">
+      <div class="fade-in-delay-2 mt-8 lg:mt-0">
         <div class="hero-visual">
           <div class="hero-shield">
             <div class="hero-shield-glow"></div>
@@ -770,20 +786,20 @@
   <div class="max-w-7xl mx-auto container-px py-14">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-[var(--color-border)]">
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display" data-target="2.4" data-suffix="B+">₦2.4B+</div>
-        <div class="text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Escrow Volume</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display" data-target="2.4" data-suffix="B+">₦2.4B+</div>
+        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Escrow Volume</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">100%</div>
-        <div class="text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Fund Protection</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">100%</div>
+        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Fund Protection</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">&lt;3 min</div>
-        <div class="text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Deal Setup</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">&lt;3 min</div>
+        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Deal Setup</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-3xl lg:text-[40px] font-extrabold gradient-gold tracking-tight stat-counter font-display">0.5%</div>
-        <div class="text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Lowest Crypto Fee</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold gradient-gold tracking-tight stat-counter font-display">0.5%</div>
+        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Lowest Crypto Fee</div>
       </div>
     </div>
   </div>
@@ -792,16 +808,16 @@
 <!-- ═══════════════ SOLUTIONS ═══════════════ -->
 <section id="solutions" class="section-pad">
   <div class="max-w-7xl mx-auto container-px">
-    <div class="mb-14 reveal">
+    <div class="mb-10 lg:mb-14 reveal">
       <div class="eyebrow mb-4">Solutions</div>
-      <h2 class="text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Escrow for every high-value market</h2>
-      <p class="text-[16px] text-ink-300 mt-4 max-w-2xl">From cars to crypto, real estate to gold — DealShield provides the structured protection each transaction type demands.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Escrow for every high-value market</h2>
+      <p class="text-[15px] lg:text-[16px] text-ink-300 mt-3 lg:mt-4 max-w-2xl">From cars to crypto, real estate to gold — DealShield provides the structured protection each transaction type demands.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
       <!-- Automotive -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="car" class="w-5 h-5 text-brand"></i>
@@ -818,7 +834,7 @@
       </div>
 
       <!-- Real Estate -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="building-2" class="w-5 h-5 text-brand"></i>
@@ -835,7 +851,7 @@
       </div>
 
       <!-- Gold & Bullion -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="gem" class="w-5 h-5 text-brand"></i>
@@ -852,7 +868,7 @@
       </div>
 
       <!-- Digital Assets -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="bitcoin" class="w-5 h-5 text-brand"></i>
@@ -869,7 +885,7 @@
       </div>
 
       <!-- FX Transactions -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="banknote" class="w-5 h-5 text-brand"></i>
@@ -886,7 +902,7 @@
       </div>
 
       <!-- Bulk Commodities -->
-      <div class="card card-hover p-7 reveal">
+      <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
           <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
             <i data-lucide="truck" class="w-5 h-5 text-brand"></i>
@@ -909,10 +925,10 @@
 <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
 <section id="how-it-works" class="section-pad bg-ink-800/40 border-y border-[var(--color-border)]">
   <div class="max-w-7xl mx-auto container-px">
-    <div class="mb-16 reveal">
+    <div class="mb-10 lg:mb-16 reveal">
       <div class="eyebrow mb-4">How It Works</div>
-      <h2 class="text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">A structured escrow process</h2>
-      <p class="text-[16px] text-ink-300 mt-4 max-w-2xl">Four steps from deal creation to fund release. Every stage is documented, timed, and protected.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">A structured escrow process</h2>
+      <p class="text-[15px] lg:text-[16px] text-ink-300 mt-3 lg:mt-4 max-w-2xl">Four steps from deal creation to fund release. Every stage is documented, timed, and protected.</p>
     </div>
 
     <div class="relative">
@@ -951,10 +967,10 @@
 <!-- ═══════════════ FEE CALCULATOR ═══════════════ -->
 <section id="calculator" class="section-pad">
   <div class="max-w-3xl mx-auto container-px">
-    <div class="mb-12 text-center reveal">
+    <div class="mb-10 lg:mb-12 text-center reveal">
       <div class="eyebrow mb-4" style="justify-content: center;">Fees</div>
-      <h2 class="text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-4 font-display">Know your protection cost<br>before you commit</h2>
-      <p class="text-[15px] text-ink-300 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-4 font-display">Know your protection cost<br>before you commit</h2>
+      <p class="text-[14px] lg:text-[15px] text-ink-300 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
     </div>
 
     <div class="card p-8 lg:p-10 reveal">
@@ -996,21 +1012,21 @@
 
     <!-- Fee schedule reference -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6 reveal">
-      <div class="card p-4 text-center">
-        <div class="text-[11px] text-ink-300 uppercase tracking-wider mb-1">Under ₦500k</div>
-        <div class="text-lg font-bold text-white font-display">1.5%</div>
+      <div class="card p-3 lg:p-4 text-center">
+        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">Under ₦500k</div>
+        <div class="text-base lg:text-lg font-bold text-white font-display">1.5%</div>
       </div>
-      <div class="card p-4 text-center">
-        <div class="text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦500k – ₦5M</div>
-        <div class="text-lg font-bold text-white font-display">1.0%</div>
+      <div class="card p-3 lg:p-4 text-center">
+        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦500k – ₦5M</div>
+        <div class="text-base lg:text-lg font-bold text-white font-display">1.0%</div>
       </div>
-      <div class="card p-4 text-center">
-        <div class="text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦5M – ₦20M</div>
-        <div class="text-lg font-bold text-white font-display">0.5%</div>
+      <div class="card p-3 lg:p-4 text-center">
+        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦5M – ₦20M</div>
+        <div class="text-base lg:text-lg font-bold text-white font-display">0.5%</div>
       </div>
-      <div class="card p-4 text-center">
-        <div class="text-[11px] text-ink-300 uppercase tracking-wider mb-1">Above ₦20M</div>
-        <div class="text-lg font-bold gradient-gold font-display">₦100k cap</div>
+      <div class="card p-3 lg:p-4 text-center">
+        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">Above ₦20M</div>
+        <div class="text-base lg:text-lg font-bold gradient-gold font-display">₦100k cap</div>
       </div>
     </div>
   </div>
@@ -1022,7 +1038,7 @@
     <div class="grid lg:grid-cols-3 gap-12">
       <div class="lg:col-span-1 reveal">
         <div class="eyebrow mb-4">Security</div>
-        <h2 class="text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-5 font-display">Why users trust DealShield</h2>
+        <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-5 font-display">Why users trust DealShield</h2>
         <p class="text-[15px] text-ink-300 leading-relaxed mb-8">
           Every transaction follows a structured escrow protocol designed to protect both parties throughout the deal lifecycle.
         </p>
@@ -1114,7 +1130,7 @@
   <div class="max-w-3xl mx-auto container-px">
     <div class="mb-12 text-center reveal">
       <div class="eyebrow mb-4" style="justify-content: center;">FAQ</div>
-      <h2 class="text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Questions, answered</h2>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Questions, answered</h2>
     </div>
 
     <div class="space-y-3">
@@ -1188,7 +1204,7 @@
   </div>
   <div class="max-w-4xl mx-auto container-px text-center relative z-10 reveal">
     <div class="eyebrow mb-5" style="justify-content: center;">Get Started</div>
-    <h2 class="text-3xl lg:text-[52px] font-extrabold text-white tracking-tight mb-6 font-display">
+    <h2 class="text-2xl sm:text-3xl lg:text-[52px] font-extrabold text-white tracking-tight mb-6 font-display">
       Your next high-value transaction<br>
       <span class="gradient-gold">deserves protection.</span>
     </h2>
