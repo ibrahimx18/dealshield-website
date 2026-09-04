@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +10,13 @@
 <meta name="description" content="Neutral escrow protection for Cars, Gold, FX Dollars, Real Estate, Crypto (USDT/BTC) and bulk commodities. Verified counterparties, structured verification and controlled fund release.">
 <meta name="keywords" content="escrow Nigeria, USDT escrow Nigeria, safe car buying Nigeria, gold trading escrow, dollar exchange escrow, real estate escrow Nigeria, DealShield">
 <meta name="author" content="DealShield Technologies">
-<meta name="theme-color" content="#0B0F1A">
+<meta name="theme-color" content="#0d2818">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dealshield.ng/">
 <meta property="og:title" content="DealShield — Escrow Protection for High-Value Transactions in Nigeria">
 <meta property="og:description" content="Neutral escrow protection for Cars, Gold, FX, Real Estate, Crypto and bulk commodities. Verified counterparties, structured verification and controlled fund release.">
-<meta property="og:image" content="https://dealshield.ng/assets/art/dealshield-hero.jpg">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DealShield — Escrow Protection for High-Value Transactions">
-<meta name="twitter:description" content="Neutral escrow for Cars, Gold, FX, Real Estate, Crypto. Verified counterparties, controlled fund release.">
 
 <!-- === FAVICON === -->
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
@@ -41,76 +35,59 @@
 
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
         colors: {
-          ink: {
-            900: '#0B0F1A',
-            800: '#0F1420',
-            700: '#161C2C',
-            600: '#1E2536',
-            500: '#2A3346',
-            400: '#3D4860',
-            300: '#6B7693',
-            200: '#9BA5BC',
-            100: '#C9D1E0',
+          forest: {
+            900: '#061a0e',
+            800: '#0a2415',
+            700: '#0d2818',
+            600: '#123a23',
+            500: '#1a4d2e',
+            400: '#2d6a4f',
+            300: '#52b788',
+            200: '#74c69d',
+            100: '#95d5b2',
+            50: '#b7e4c7',
           },
-          brand: {
-            DEFAULT: '#C8A45C',
-            light: '#E0C180',
-            dark: '#9A7B3E',
-            glow: 'rgba(200,164,92,0.15)',
+          leaf: {
+            DEFAULT: '#40916c',
+            light: '#52b788',
+            bright: '#74c69d',
           },
-          surface: '#FFFFFF',
-          positive: '#22C55E',
-          warning: '#F59E0B',
-          danger: '#EF4444',
+          cream: '#f8faf9',
+            white: '#ffffff',
+          mist: '#e8f5ee',
         },
         fontFamily: {
           sans: ['Inter', 'system-ui', 'sans-serif'],
           display: ['Space Grotesk', 'Inter', 'sans-serif'],
         },
-        maxWidth: {
-          '7xl': '1280px',
-        },
-        spacing: {
-          '18': '4.5rem',
-        },
+        maxWidth: { '7xl': '1280px' },
       }
     }
   }
 </script>
 
 <style>
-  /* ── DESIGN SYSTEM ── */
+  /* ── DESIGN SYSTEM: Nature Green + White ── */
   :root {
-    --color-bg: #0B0F1A;
-    --color-surface: #0F1420;
-    --color-surface-elevated: #131927;
-    --color-border: rgba(255,255,255,0.06);
-    --color-border-strong: rgba(255,255,255,0.12);
-    --color-accent: #C8A45C;
-    --color-accent-light: #E0C180;
-    --color-text-primary: #F8FAFC;
-    --color-text-secondary: #9BA5BC;
-    --color-text-muted: #6B7693;
-    --space-1: 8px;
-    --space-2: 16px;
-    --space-3: 24px;
-    --space-4: 32px;
-    --space-5: 40px;
-    --space-6: 56px;
-    --space-7: 72px;
-    --space-8: 96px;
+    --color-bg: #f8faf9;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #f0f7f2;
+    --color-border: rgba(13,40,24,0.08);
+    --color-border-strong: rgba(13,40,24,0.16);
+    --color-accent: #2d6a4f;
+    --color-accent-light: #52b788;
+    --color-accent-bright: #74c69d;
+    --color-text-primary: #0a1f12;
+    --color-text-secondary: #3a5a44;
+    --color-text-muted: #6b8f78;
+    --color-white: #ffffff;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 20px;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-    --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
-    --shadow-glow: 0 0 60px rgba(200,164,92,0.08);
   }
 
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -146,23 +123,170 @@
     opacity: 0.5;
   }
 
-  /* ── Gradient Text ── */
   .gradient-text {
-    background: linear-gradient(135deg, #F8FAFC 0%, #C8A45C 100%);
+    background: linear-gradient(135deg, #0a1f12 0%, #2d6a4f 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .gradient-gold {
-    background: linear-gradient(135deg, #E0C180 0%, #C8A45C 50%, #9A7B3E 100%);
+  .gradient-green {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 50%, #1a4d2e 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  /* ═══════════════ LIVING WATERFALL + MOUNTAINS BACKGROUND ═══════════════ */
+  .living-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* Sky gradient */
+  .bg-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #c8e6d6 0%,
+      #d4ebdf 20%,
+      #e8f5ee 40%,
+      #f0f7f2 60%,
+      #f8faf9 85%,
+      #ffffff 100%
+    );
+  }
+
+  /* Mountains - back layer */
+  .bg-mountains-back {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 600' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,600 L0,350 L120,200 L250,280 L380,150 L500,250 L620,120 L750,220 L880,140 L1000,260 L1120,180 L1280,300 L1280,600 Z' fill='%231a4d2e' opacity='0.25'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
+
+  /* Mountains - mid layer */
+  .bg-mountains-mid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 500' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,500 L0,320 L100,220 L220,280 L340,180 L450,260 L560,160 L680,240 L800,140 L920,220 L1050,160 L1180,260 L1280,200 L1280,500 Z' fill='%232d6a4f' opacity='0.3'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
+
+  /* Mountains - front layer */
+  .bg-mountains-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 400' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,400 L0,280 L80,220 L180,260 L280,180 L380,240 L480,160 L580,220 L680,140 L800,200 L900,120 L1020,200 L1140,140 L1280,220 L1280,400 Z' fill='%2340916c' opacity='0.2'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
+
+  /* Waterfall */
+  .waterfall {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 45%;
+    overflow: hidden;
+    border-radius: 60px 60px 0 0;
+    opacity: 0.35;
+  }
+  .waterfall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(116,198,157,0.6) 0%,
+      rgba(82,183,136,0.4) 30%,
+      rgba(82,183,136,0.2) 70%,
+      rgba(116,198,157,0.5) 100%
+    );
+  }
+  /* Waterfall stream lines */
+  .water-stream {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    animation: water-fall 1.5s linear infinite;
+  }
+  @keyframes water-fall {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(200%); opacity: 0; }
+  }
+
+  /* Waterfall splash pool */
+  .splash-pool {
+    position: absolute;
+    top: calc(15% + 45%);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(116,198,157,0.3) 0%, transparent 70%);
+    animation: splash-pulse 2s ease-in-out infinite;
+  }
+  @keyframes splash-pulse {
+    0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.3; }
+    50% { transform: translateX(-50%) scaleX(1.3); opacity: 0.5; }
+  }
+
+  /* Mist particles */
+  .mist-particle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+    animation: mist-drift 8s ease-in-out infinite;
+  }
+  @keyframes mist-drift {
+    0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+    30% { opacity: 0.6; }
+    70% { opacity: 0.4; }
+    100% { transform: translate(30px, -40px) scale(1.2); opacity: 0; }
+  }
+
+  /* Floating leaves */
+  .leaf-particle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+    animation: leaf-fall 12s linear infinite;
+  }
+  @keyframes leaf-fall {
+    0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(100vh) translateX(100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Content wrapper above background */
+  .content-layer {
+    position: relative;
+    z-index: 10;
+  }
+
   /* ── Surfaces ── */
   .card {
-    background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
@@ -174,25 +298,22 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    background: linear-gradient(90deg, transparent, rgba(45,106,79,0.1), transparent);
   }
   .card-hover:hover {
-    border-color: rgba(200,164,92,0.3);
+    border-color: rgba(45,106,79,0.3);
     transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(200,164,92,0.05);
+    box-shadow: 0 20px 60px rgba(13,40,24,0.08), 0 0 40px rgba(82,183,136,0.06);
   }
   .card-hover:hover .card-icon-wrap {
-    border-color: rgba(200,164,92,0.4);
-    background: rgba(200,164,92,0.08);
+    border-color: rgba(45,106,79,0.4);
+    background: rgba(82,183,136,0.08);
   }
-
-  .card-icon-wrap {
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
+  .card-icon-wrap { transition: border-color 0.3s ease, background 0.3s ease; }
 
   .input-field {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     padding: 14px 16px;
     color: var(--color-text-primary);
@@ -204,14 +325,14 @@
   }
   .input-field:focus {
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(200,164,92,0.1);
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
   }
   .input-field::placeholder { color: var(--color-text-muted); }
 
   /* ── Buttons ── */
   .btn-primary {
-    background: linear-gradient(135deg, #E0C180 0%, #C8A45C 100%);
-    color: #0B0F1A;
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+    color: #ffffff;
     font-weight: 700;
     font-size: 14px;
     padding: 12px 24px;
@@ -237,14 +358,14 @@
   }
   .btn-primary:hover::after { left: 100%; }
   .btn-primary:hover {
-    box-shadow: 0 8px 30px rgba(200,164,92,0.35);
+    box-shadow: 0 8px 30px rgba(45,106,79,0.3);
     transform: translateY(-1px);
   }
   .btn-primary:active { transform: translateY(0); }
   .btn-primary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
   .btn-secondary {
-    background: transparent;
+    background: rgba(255,255,255,0.7);
     color: var(--color-text-primary);
     font-weight: 600;
     font-size: 14px;
@@ -260,8 +381,8 @@
     white-space: nowrap;
   }
   .btn-secondary:hover {
-    border-color: rgba(200,164,92,0.4);
-    background: rgba(200,164,92,0.05);
+    border-color: rgba(45,106,79,0.4);
+    background: rgba(82,183,136,0.08);
   }
   .btn-secondary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
@@ -277,7 +398,7 @@
     transition: color 0.2s ease;
     position: relative;
   }
-  .btn-ghost:hover { color: var(--color-text-primary); }
+  .btn-ghost:hover { color: var(--color-accent); }
   .btn-ghost::after {
     content: '';
     position: absolute;
@@ -291,9 +412,7 @@
 
   /* ── Layout ── */
   .container-px { padding-left: 24px; padding-right: 24px; }
-  @media (max-width: 640px) {
-    .container-px { padding-left: 16px; padding-right: 16px; }
-  }
+  @media (max-width: 640px) { .container-px { padding-left: 16px; padding-right: 16px; } }
 
   .section-pad { padding-top: 96px; padding-bottom: 96px; }
   @media (max-width: 768px) { .section-pad { padding-top: 48px; padding-bottom: 48px; } }
@@ -301,94 +420,29 @@
 
   /* ── Nav ── */
   .nav-blur {
-    background: rgba(11,15,26,0.72);
+    background: rgba(255,255,255,0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--color-border);
     transition: background 0.3s ease, border-color 0.3s ease;
   }
   .nav-scrolled {
-    background: rgba(11,15,26,0.92);
-    border-bottom-color: rgba(200,164,92,0.15);
+    background: rgba(255,255,255,0.92);
+    border-bottom-color: rgba(45,106,79,0.15);
   }
 
-  /* ── Hero Background ── */
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .hero-bg::before {
-    content: '';
-    position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(200,164,92,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: float-slow 12s ease-in-out infinite;
-  }
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    bottom: -300px; left: -200px;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(40,160,60,0.04) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: float-slow 15s ease-in-out infinite reverse;
-  }
-
-  @keyframes float-slow {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(40px, 30px); }
-  }
-
-  /* ── Grid Pattern ── */
-  .grid-pattern {
-    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-  }
-
-  /* ── Hero Shield Animation ── */
-  .hero-visual {
-    position: relative;
-    perspective: 1000px;
-  }
-  .hero-shield {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    aspect-ratio: 1;
-    animation: shield-float 6s ease-in-out infinite;
-  }
-  @keyframes shield-float {
-    0%, 100% { transform: translateY(0) rotateX(0deg); }
-    50% { transform: translateY(-12px) rotateX(2deg); }
-  }
-  .hero-shield-glow {
-    position: absolute;
-    inset: -20%;
-    background: radial-gradient(circle, rgba(200,164,92,0.12) 0%, transparent 60%);
-    border-radius: 50%;
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-  @keyframes pulse-glow {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.1); }
-  }
+  /* ── Hero ── */
   .hero-orb {
     position: absolute;
     border-radius: 50%;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     animation: orbit 20s linear infinite;
+    box-shadow: 0 4px 20px rgba(45,106,79,0.1);
   }
   @keyframes orbit {
     0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
@@ -410,28 +464,47 @@
     .hero-shield { max-width: 260px; }
   }
 
-  /* ── Process Timeline ── */
+  .hero-visual { position: relative; perspective: 1000px; }
+  .hero-shield {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+    animation: shield-float 6s ease-in-out infinite;
+  }
+  @keyframes shield-float {
+    0%, 100% { transform: translateY(0) rotateX(0deg); }
+    50% { transform: translateY(-12px) rotateX(2deg); }
+  }
+  .hero-shield-glow {
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle, rgba(82,183,136,0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
+
+  /* ── Timeline ── */
   .timeline-line {
     position: absolute;
     top: 28px;
-    left: 0;
-    right: 0;
+    left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(200,164,92,0.2) 15%, rgba(200,164,92,0.2) 85%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(45,106,79,0.2) 15%, rgba(45,106,79,0.2) 85%, transparent);
   }
-
   .timeline-step { position: relative; z-index: 1; }
   .timeline-dot {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     border: 1px solid var(--color-border-strong);
-    background: linear-gradient(145deg, var(--color-surface), var(--color-surface-elevated));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
+    background: linear-gradient(145deg, #ffffff, #f0f7f2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
     color: var(--color-text-secondary);
     margin-bottom: 24px;
     transition: all 0.3s ease;
@@ -439,79 +512,54 @@
   .timeline-step:hover .timeline-dot {
     border-color: var(--color-accent);
     color: var(--color-accent);
-    box-shadow: 0 0 20px rgba(200,164,92,0.15);
+    box-shadow: 0 0 20px rgba(82,183,136,0.15);
     transform: scale(1.05);
   }
 
-  /* ── Transaction Card (hero visual) ── */
+  /* ── Transaction Card ── */
   .tx-card {
-    background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%);
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 12px 40px rgba(13,40,24,0.08);
     overflow: hidden;
   }
-
   .tx-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--color-border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px; border-bottom: 1px solid var(--color-border);
   }
   .tx-row:last-child { border-bottom: none; }
   .tx-label { font-size: 13px; color: var(--color-text-muted); font-weight: 500; }
   .tx-value { font-size: 13px; color: var(--color-text-primary); font-weight: 600; }
 
   .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 10px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 99px;
+    font-size: 11px; font-weight: 600;
   }
-  .status-locked { background: rgba(245,158,11,0.12); color: #F59E0B; }
-  .status-verified { background: rgba(34,197,94,0.12); color: #22C55E; }
-  .status-pending { background: rgba(107,118,147,0.15); color: #9BA5BC; }
-  .status-released { background: rgba(200,164,92,0.12); color: #C8A45C; }
+  .status-locked { background: rgba(245,158,11,0.12); color: #d97706; }
+  .status-verified { background: rgba(34,197,94,0.12); color: #16a34a; }
+  .status-pending { background: rgba(107,143,120,0.15); color: #6b8f78; }
+  .status-released { background: rgba(45,106,79,0.12); color: #2d6a4f; }
 
-  .flow-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 0;
-    color: var(--color-text-muted);
-  }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--color-bg); }
-  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
-
-  /* ── Chat Modal ── */
+  /* ── Chat ── */
   .chat-trigger {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: 24px; right: 24px;
     z-index: 50;
-    width: 52px;
-    height: 52px;
+    width: 52px; height: 52px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #E0C180 0%, #C8A45C 100%);
-    color: #0B0F1A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+    color: #ffffff;
+    display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(200,164,92,0.35);
+    box-shadow: 0 8px 30px rgba(45,106,79,0.3);
     transition: transform 0.3s ease;
   }
   .chat-trigger:hover { transform: scale(1.08); }
 
-  /* ── Reveal Animation ── */
+  /* ── Reveal ── */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -522,70 +570,50 @@
     transform: translateY(0);
   }
 
-  /* ── Stat Counter ── */
-  .stat-counter { font-variant-numeric: tabular-nums; }
-
-  /* ── FAQ Accordion ── */
+  /* ── FAQ ── */
   .faq-item {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     overflow: hidden;
     transition: border-color 0.3s ease;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
   }
-  .faq-item.open { border-color: rgba(200,164,92,0.3); }
+  .faq-item.open { border-color: rgba(45,106,79,0.3); }
   .faq-question {
-    width: 100%;
-    text-align: left;
+    width: 100%; text-align: left;
     padding: 20px 24px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    color: var(--color-text-primary);
-    font-weight: 600;
-    font-size: 15px;
+    background: transparent; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    color: var(--color-text-primary); font-weight: 600; font-size: 15px;
     transition: color 0.2s ease;
   }
-  .faq-question:hover { color: var(--color-accent-light); }
+  .faq-question:hover { color: var(--color-accent); }
   .faq-icon { transition: transform 0.3s ease; flex-shrink: 0; }
   .faq-item.open .faq-icon { transform: rotate(45deg); }
   .faq-answer {
-    max-height: 0;
-    overflow: hidden;
+    max-height: 0; overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
     padding: 0 24px;
   }
-  .faq-item.open .faq-answer {
-    max-height: 300px;
-    padding: 0 24px 20px 24px;
-  }
-  .faq-answer p {
-    color: var(--color-text-secondary);
-    font-size: 14px;
-    line-height: 1.7;
-  }
+  .faq-item.open .faq-answer { max-height: 300px; padding: 0 24px 20px 24px; }
+  .faq-answer p { color: var(--color-text-secondary); font-size: 14px; line-height: 1.7; }
 
-  /* ── Code for JS compatibility ── */
-  .gold-btn {
-    background: var(--color-accent);
-    color: #0B0F1A;
-    font-weight: 700;
-    transition: all 0.2s ease;
-  }
-  .glass-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    backdrop-filter: blur(20px);
-  }
+  /* ── JS compatibility ── */
+  .gold-btn { background: var(--color-accent); color: #fff; font-weight: 700; transition: all 0.2s ease; }
+  .glass-card { background: rgba(255,255,255,0.85); border: 1px solid var(--color-border); backdrop-filter: blur(20px); }
   .font-syne { font-family: 'Space Grotesk', sans-serif; }
   .gold-gradient-text { color: var(--color-accent); }
   .gold-400 { color: var(--color-accent); }
   .gold-500 { color: var(--color-accent); }
   .gold-600 { color: var(--color-accent); }
-  .text-dark { color: #0B0F1A; }
+  .text-dark { color: #0a1f12; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(45,106,79,0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
   /* ── Animations ── */
   @media (prefers-reduced-motion: no-preference) {
@@ -602,21 +630,63 @@
 </head>
 <body class="relative min-h-screen">
 
+<!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
+<div class="living-bg">
+  <div class="bg-sky"></div>
+  <div class="bg-mountains-back"></div>
+
+  <!-- Waterfall -->
+  <div class="waterfall">
+    <div class="water-stream" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="water-stream" style="left: 30%; animation-delay: 0.3s;"></div>
+    <div class="water-stream" style="left: 45%; animation-delay: 0.6s;"></div>
+    <div class="water-stream" style="left: 60%; animation-delay: 0.2s;"></div>
+    <div class="water-stream" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="water-stream" style="left: 90%; animation-delay: 0.8s;"></div>
+  </div>
+  <div class="splash-pool"></div>
+
+  <!-- Mist around waterfall -->
+  <div class="mist-particle" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
+  <div class="mist-particle" style="top: 52%; left: 55%; animation-delay: 2s;"></div>
+  <div class="mist-particle" style="top: 48%; left: 52%; animation-delay: 4s;"></div>
+  <div class="mist-particle" style="top: 55%; left: 48%; animation-delay: 1s;"></div>
+  <div class="mist-particle" style="top: 50%; left: 60%; animation-delay: 3s;"></div>
+
+  <div class="bg-mountains-mid"></div>
+  <div class="bg-mountains-front"></div>
+
+  <!-- Floating leaves -->
+  <div class="leaf-particle" style="top: 0; left: 10%; animation-delay: 0s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 30%; animation-delay: 3s;">
+    <svg viewBox="0 0 24 24" fill="#40916c"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 60%; animation-delay: 6s;">
+    <svg viewBox="0 0 24 24" fill="#74c69d"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 85%; animation-delay: 9s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+</div>
+
+<!-- ═══════════════ CONTENT LAYER ═══════════════ -->
+<div class="content-layer">
+
 <!-- ═══════════════ NAVIGATION ═══════════════ -->
 <header id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur">
   <nav class="max-w-7xl mx-auto container-px h-16 flex items-center justify-between">
-    <!-- Logo -->
     <a href="/" class="flex items-center gap-2.5">
-      <div class="w-9 h-9 rounded-xl border border-brand/30 flex items-center justify-center" style="background: rgba(200,164,92,0.05);">
+      <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
         <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
         </svg>
       </div>
-      <span class="font-bold text-[15px] tracking-tight text-white font-display">DealShield</span>
+      <span class="font-bold text-[15px] tracking-tight text-forest-700 font-display">DealShield</span>
     </a>
 
-    <!-- Center nav -->
     <div class="hidden lg:flex items-center gap-1">
       <a href="#how-it-works" class="btn-ghost">How It Works</a>
       <a href="#solutions" class="btn-ghost">Solutions</a>
@@ -626,7 +696,6 @@
       <a href="#about" class="btn-ghost">About</a>
     </div>
 
-    <!-- Right side -->
     <div class="flex items-center gap-2">
       <button onclick="location.href='/login.html'" class="btn-ghost hidden sm:inline-flex">Log In</button>
       <button onclick="location.href='/create-deal.html'" class="btn-primary text-[13px]">
@@ -644,25 +713,19 @@
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="relative pt-28 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
-  <!-- Animated background glows -->
-  <div class="hero-bg"></div>
-  <!-- Grid pattern -->
-  <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
-
   <div class="max-w-7xl mx-auto container-px relative z-10">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-      <!-- Left: Text -->
       <div class="fade-in">
         <div class="eyebrow mb-6">Escrow Infrastructure for Nigeria</div>
-        <h1 class="text-[34px] sm:text-5xl lg:text-[58px] font-extrabold leading-[1.08] tracking-tight text-white mb-5 lg:mb-6 font-display">
+        <h1 class="text-[34px] sm:text-5xl lg:text-[58px] font-extrabold leading-[1.08] tracking-tight text-forest-700 mb-5 lg:mb-6 font-display">
           Protect the Deal.<br>
-          <span class="gradient-gold">Not Just the Money.</span>
+          <span class="gradient-green">Not Just the Money.</span>
         </h1>
-        <p class="text-[17px] text-ink-200 leading-relaxed max-w-lg mb-5">
+        <p class="text-[17px] text-forest-600 leading-relaxed max-w-lg mb-5">
           DealShield provides neutral escrow protection for high-value transactions in Nigeria, giving buyers and sellers a structured process for payment, verification and release.
         </p>
-        <p class="text-sm text-ink-300 italic mb-8 max-w-lg border-l-2 border-brand/30 pl-4">
+        <p class="text-sm text-forest-500 italic mb-8 max-w-lg border-l-2 border-leaf/30 pl-4">
           A business is not concluded until the buyer and seller get the value they deserve.
         </p>
         <div class="flex flex-col sm:flex-row gap-3">
@@ -675,102 +738,93 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
         </div>
-
-        <!-- Quick trust badges -->
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 lg:mt-10 pt-6 lg:pt-8 border-t border-[var(--color-border)]">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 lg:mt-10 pt-6 lg:pt-8 border-t border-forest-200/30">
           <div class="flex items-center gap-2">
-            <i data-lucide="shield-check" class="w-4 h-4 text-positive"></i>
-            <span class="text-[12px] text-ink-300 font-medium">CBN-Aligned</span>
+            <i data-lucide="shield-check" class="w-4 h-4 text-leaf"></i>
+            <span class="text-[12px] text-forest-600 font-medium">CBN-Aligned</span>
           </div>
           <div class="flex items-center gap-2">
-            <i data-lucide="lock-keyhole" class="w-4 h-4 text-brand"></i>
-            <span class="text-[12px] text-ink-300 font-medium">Bank-Grade Security</span>
+            <i data-lucide="lock-keyhole" class="w-4 h-4 text-forest-400"></i>
+            <span class="text-[12px] text-forest-600 font-medium">Bank-Grade Security</span>
           </div>
           <div class="flex items-center gap-2">
-            <i data-lucide="zap" class="w-4 h-4 text-warning"></i>
-            <span class="text-[12px] text-ink-300 font-medium">Instant Setup</span>
+            <i data-lucide="zap" class="w-4 h-4 text-leaf"></i>
+            <span class="text-[12px] text-forest-600 font-medium">Instant Setup</span>
           </div>
         </div>
       </div>
 
-      <!-- Right: Animated Escrow Visual -->
       <div class="fade-in-delay-2 mt-8 lg:mt-0">
         <div class="hero-visual">
           <div class="hero-shield">
             <div class="hero-shield-glow"></div>
-
-            <!-- Central shield -->
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="relative w-[60%] aspect-square rounded-2xl border border-brand/20 flex items-center justify-center" style="background: linear-gradient(145deg, rgba(15,20,32,0.95), rgba(19,25,39,0.95)); box-shadow: 0 0 80px rgba(200,164,92,0.1), inset 0 0 40px rgba(200,164,92,0.03);">
+              <div class="relative w-[60%] aspect-square rounded-2xl border border-forest-300/30 flex items-center justify-center" style="background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(240,247,242,0.9)); box-shadow: 0 0 80px rgba(82,183,136,0.1), inset 0 0 40px rgba(82,183,136,0.03);">
                 <svg width="48%" height="48%" viewBox="0 0 100 100" fill="none">
-                  <path d="M50 10L85 25v30c0 22-16 38-35 43-19-5-35-21-35-43V25z" fill="none" stroke="#C8A45C" stroke-width="4" opacity="0.6"/>
-                  <path d="M50 10L85 25v30c0 22-16 38-35 43-19-5-35-21-35-43V25z" fill="rgba(200,164,92,0.05)"/>
-                  <path d="M35 50l10 10 20-22" stroke="#C8A45C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <path d="M50 10L85 25v30c0 22-16 38-35 43-19-5-35-21-35-43V25z" fill="none" stroke="#2d6a4f" stroke-width="4" opacity="0.6"/>
+                  <path d="M50 10L85 25v30c0 22-16 38-35 43-19-5-35-21-35-43V25z" fill="rgba(82,183,136,0.08)"/>
+                  <path d="M35 50l10 10 20-22" stroke="#2d6a4f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                 </svg>
               </div>
             </div>
-
-            <!-- Orbiting elements -->
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="hero-orb w-12 h-12" style="animation-delay: 0s;">
-                <i data-lucide="car" class="w-5 h-5 text-brand"></i>
+                <i data-lucide="car" class="w-5 h-5 text-forest-500"></i>
               </div>
             </div>
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="hero-orb w-12 h-12" style="animation-delay: -5s;">
-                <i data-lucide="bitcoin" class="w-5 h-5 text-warning"></i>
+                <i data-lucide="bitcoin" class="w-5 h-5 text-leaf"></i>
               </div>
             </div>
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="hero-orb w-12 h-12" style="animation-delay: -10s;">
-                <i data-lucide="building-2" class="w-5 h-5 text-positive"></i>
+                <i data-lucide="building-2" class="w-5 h-5 text-forest-400"></i>
               </div>
             </div>
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="hero-orb w-12 h-12" style="animation-delay: -15s;">
-                <i data-lucide="gem" class="w-5 h-5 text-brand"></i>
+                <i data-lucide="gem" class="w-5 h-5 text-forest-500"></i>
               </div>
             </div>
           </div>
 
-          <!-- Floating stats card -->
           <div class="absolute -bottom-4 -left-4 lg:left-0 tx-card w-56 hidden sm:block" style="animation: shield-float 8s ease-in-out infinite; animation-delay: 1s;">
             <div class="px-5 py-4 border-b border-[var(--color-border)]">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] text-ink-300 font-medium uppercase tracking-wider">Live Deal</span>
+                <span class="text-[11px] text-forest-500 font-medium uppercase tracking-wider">Live Deal</span>
                 <span class="status-pill status-locked">
-                  <span class="w-1.5 h-1.5 rounded-full bg-warning animate-pulse"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                   Funds Locked
                 </span>
               </div>
             </div>
             <div class="px-5 py-3">
-              <div class="text-[11px] text-ink-300 mb-1">2019 Toyota Camry</div>
-              <div class="text-lg font-bold text-white">₦8.5M</div>
+              <div class="text-[11px] text-forest-500 mb-1">2019 Toyota Camry</div>
+              <div class="text-lg font-bold text-forest-700">₦8.5M</div>
             </div>
             <div class="px-5 py-2.5 border-t border-[var(--color-border)]">
               <div class="flex items-center justify-between text-[11px]">
-                <span class="text-ink-300">Inspection Window</span>
-                <span class="text-positive font-medium">48h remaining</span>
+                <span class="text-forest-500">Inspection Window</span>
+                <span class="text-leaf font-medium">48h remaining</span>
               </div>
             </div>
           </div>
 
-          <!-- Floating release notification -->
           <div class="absolute -top-4 -right-4 lg:right-0 tx-card w-52 hidden sm:block" style="animation: shield-float 7s ease-in-out infinite; animation-delay: 2s;">
             <div class="px-5 py-4">
               <div class="flex items-center gap-3 mb-3">
-                <div class="w-8 h-8 rounded-full bg-positive/10 border border-positive/20 flex items-center justify-center">
-                  <i data-lucide="check" class="w-4 h-4 text-positive"></i>
+                <div class="w-8 h-8 rounded-full bg-leaf/10 border border-leaf/20 flex items-center justify-center">
+                  <i data-lucide="check" class="w-4 h-4 text-leaf"></i>
                 </div>
                 <div>
-                  <div class="text-[12px] font-semibold text-white">Funds Released</div>
-                  <div class="text-[10px] text-ink-300">Gold Bullion — 500g</div>
+                  <div class="text-[12px] font-semibold text-forest-700">Funds Released</div>
+                  <div class="text-[10px] text-forest-500">Gold Bullion — 500g</div>
                 </div>
               </div>
               <div class="flex items-center justify-between text-[11px]">
-                <span class="text-ink-300">Payout</span>
-                <span class="text-brand font-semibold">₦42M → Seller</span>
+                <span class="text-forest-500">Payout</span>
+                <span class="text-forest-600 font-semibold">₦42M → Seller</span>
               </div>
             </div>
           </div>
@@ -782,24 +836,24 @@
 </section>
 
 <!-- ═══════════════ TRUST STRIP ═══════════════ -->
-<section class="border-y border-[var(--color-border)] bg-ink-800/50 relative overflow-hidden">
+<section class="border-y border-forest-200/20 bg-white/40 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto container-px py-14">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-[var(--color-border)]">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-forest-200/20">
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display" data-target="2.4" data-suffix="B+">₦2.4B+</div>
-        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Escrow Volume</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-forest-700 tracking-tight font-display">₦2.4B+</div>
+        <div class="text-[11px] lg:text-[12px] text-forest-500 font-medium mt-2 tracking-wide uppercase">Escrow Volume</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">100%</div>
-        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Fund Protection</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-forest-700 tracking-tight font-display">100%</div>
+        <div class="text-[11px] lg:text-[12px] text-forest-500 font-medium mt-2 tracking-wide uppercase">Fund Protection</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-white tracking-tight stat-counter font-display">&lt;3 min</div>
-        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Deal Setup</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold text-forest-700 tracking-tight font-display">&lt;3 min</div>
+        <div class="text-[11px] lg:text-[12px] text-forest-500 font-medium mt-2 tracking-wide uppercase">Deal Setup</div>
       </div>
       <div class="lg:px-10 text-center lg:text-left">
-        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold gradient-gold tracking-tight stat-counter font-display">0.5%</div>
-        <div class="text-[11px] lg:text-[12px] text-ink-300 font-medium mt-2 tracking-wide uppercase">Lowest Crypto Fee</div>
+        <div class="text-2xl sm:text-3xl lg:text-[40px] font-extrabold gradient-green tracking-tight font-display">0.5%</div>
+        <div class="text-[11px] lg:text-[12px] text-forest-500 font-medium mt-2 tracking-wide uppercase">Lowest Crypto Fee</div>
       </div>
     </div>
   </div>
@@ -810,111 +864,93 @@
   <div class="max-w-7xl mx-auto container-px">
     <div class="mb-10 lg:mb-14 reveal">
       <div class="eyebrow mb-4">Solutions</div>
-      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Escrow for every high-value market</h2>
-      <p class="text-[15px] lg:text-[16px] text-ink-300 mt-3 lg:mt-4 max-w-2xl">From cars to crypto, real estate to gold — DealShield provides the structured protection each transaction type demands.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight font-display">Escrow for every high-value market</h2>
+      <p class="text-[15px] lg:text-[16px] text-forest-600 mt-3 lg:mt-4 max-w-2xl">From cars to crypto, real estate to gold — DealShield provides the structured protection each transaction type demands.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <!-- Automotive -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="car" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="car" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">Automotive</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">Automotive</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          Funds held while mechanic verifies engine, VIN, chassis and custom papers.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> VIN verified</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> 24–72h</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">Funds held while mechanic verifies engine, VIN, chassis and custom papers.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> VIN verified</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> 24–72h</span>
         </div>
       </div>
 
-      <!-- Real Estate -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="building-2" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="building-2" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">Real Estate</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">Real Estate</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          Funds locked during lawyer's Deed of Assignment and Ministry of Lands search.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Title search</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Legal verified</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">Funds locked during lawyer's Deed of Assignment and Ministry of Lands search.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Title search</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Legal verified</span>
         </div>
       </div>
 
-      <!-- Gold & Bullion -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="gem" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="gem" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">Gold & Bullion</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">Gold & Bullion</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          Disbursement released upon lab purity test and physical density assay.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Assay tested</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Purity verified</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">Disbursement released upon lab purity test and physical density assay.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Assay tested</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Purity verified</span>
         </div>
       </div>
 
-      <!-- Digital Assets -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="bitcoin" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="bitcoin" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">Digital Assets</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">Digital Assets</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          OTC USDT and Bitcoin swaps with zero chargeback risk and multi-sig release.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> 0.5% flat fee</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Multi-sig</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">OTC USDT and Bitcoin swaps with zero chargeback risk and multi-sig release.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> 0.5% flat fee</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Multi-sig</span>
         </div>
       </div>
 
-      <!-- FX Transactions -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="banknote" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="banknote" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">FX Transactions</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">FX Transactions</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          BDC currency swaps with instant escrow confirmation before distribution.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Instant confirm</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Parallel rates</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">BDC currency swaps with instant escrow confirmation before distribution.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Instant confirm</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Parallel rates</span>
         </div>
       </div>
 
-      <!-- Bulk Commodities -->
       <div class="card card-hover p-5 lg:p-7 reveal">
         <div class="flex items-center gap-3 mb-5">
-          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-[var(--color-border-strong)] flex items-center justify-center">
-            <i data-lucide="truck" class="w-5 h-5 text-brand"></i>
+          <div class="card-icon-wrap w-11 h-11 rounded-xl border border-forest-200/40 flex items-center justify-center">
+            <i data-lucide="truck" class="w-5 h-5 text-forest-500"></i>
           </div>
-          <h3 class="text-[17px] font-bold text-white font-display">Bulk Commodities</h3>
+          <h3 class="text-[17px] font-bold text-forest-700 font-display">Bulk Commodities</h3>
         </div>
-        <p class="text-[14px] text-ink-200 leading-relaxed mb-5">
-          Dangote/BUA cement trucks and produce. Release on weighbridge ticket.
-        </p>
-        <div class="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> ₦10/bag</span>
-          <span class="text-[11px] text-ink-300 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-positive"></i> Weighbridge</span>
+        <p class="text-[14px] text-forest-600 leading-relaxed mb-5">Dangote/BUA cement trucks and produce. Release on weighbridge ticket.</p>
+        <div class="flex items-center gap-4 pt-4 border-t border-forest-200/20">
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> ₦10/bag</span>
+          <span class="text-[11px] text-forest-500 font-medium flex items-center gap-1.5"><i data-lucide="check" class="w-3 h-3 text-leaf"></i> Weighbridge</span>
         </div>
       </div>
 
@@ -923,12 +959,12 @@
 </section>
 
 <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-<section id="how-it-works" class="section-pad bg-ink-800/40 border-y border-[var(--color-border)]">
+<section id="how-it-works" class="section-pad bg-white/30 backdrop-blur-sm border-y border-forest-200/20">
   <div class="max-w-7xl mx-auto container-px">
     <div class="mb-10 lg:mb-16 reveal">
       <div class="eyebrow mb-4">How It Works</div>
-      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">A structured escrow process</h2>
-      <p class="text-[15px] lg:text-[16px] text-ink-300 mt-3 lg:mt-4 max-w-2xl">Four steps from deal creation to fund release. Every stage is documented, timed, and protected.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight font-display">A structured escrow process</h2>
+      <p class="text-[15px] lg:text-[16px] text-forest-600 mt-3 lg:mt-4 max-w-2xl">Four steps from deal creation to fund release. Every stage is documented, timed, and protected.</p>
     </div>
 
     <div class="relative">
@@ -937,26 +973,26 @@
 
         <div class="timeline-step reveal">
           <div class="timeline-dot">01</div>
-          <h3 class="text-[16px] font-bold text-white mb-3 font-display">Initiate Deal</h3>
-          <p class="text-[14px] text-ink-300 leading-relaxed">Buyer or seller creates the agreement, sets inspection timeline and specifies counterparty.</p>
+          <h3 class="text-[16px] font-bold text-forest-700 mb-3 font-display">Initiate Deal</h3>
+          <p class="text-[14px] text-forest-600 leading-relaxed">Buyer or seller creates the agreement, sets inspection timeline and specifies counterparty.</p>
         </div>
 
         <div class="timeline-step reveal">
           <div class="timeline-dot">02</div>
-          <h3 class="text-[16px] font-bold text-white mb-3 font-display">Lock Funds</h3>
-          <p class="text-[14px] text-ink-300 leading-relaxed">Buyer deposits funds into a dynamic bank vault or USDT escrow address. Funds are isolated instantly.</p>
+          <h3 class="text-[16px] font-bold text-forest-700 mb-3 font-display">Lock Funds</h3>
+          <p class="text-[14px] text-forest-600 leading-relaxed">Buyer deposits funds into a dynamic bank vault or USDT escrow address. Funds are isolated instantly.</p>
         </div>
 
         <div class="timeline-step reveal">
           <div class="timeline-dot">03</div>
-          <h3 class="text-[16px] font-bold text-white mb-3 font-display">Fulfil & Verify</h3>
-          <p class="text-[14px] text-ink-300 leading-relaxed">Seller delivers the asset. Buyer inspects during the verification window — cars, documents, assays.</p>
+          <h3 class="text-[16px] font-bold text-forest-700 mb-3 font-display">Fulfil & Verify</h3>
+          <p class="text-[14px] text-forest-600 leading-relaxed">Seller delivers the asset. Buyer inspects during the verification window — cars, documents, assays.</p>
         </div>
 
         <div class="timeline-step reveal">
           <div class="timeline-dot">04</div>
-          <h3 class="text-[16px] font-bold text-white mb-3 font-display">Release</h3>
-          <p class="text-[14px] text-ink-300 leading-relaxed">Funds released when conditions are satisfied. Buyer clicks release or timer auto-expires. Seller gets instant payout.</p>
+          <h3 class="text-[16px] font-bold text-forest-700 mb-3 font-display">Release</h3>
+          <p class="text-[14px] text-forest-600 leading-relaxed">Funds released when conditions are satisfied. Buyer clicks release or timer auto-expires. Seller gets instant payout.</p>
         </div>
 
       </div>
@@ -969,40 +1005,37 @@
   <div class="max-w-3xl mx-auto container-px">
     <div class="mb-10 lg:mb-12 text-center reveal">
       <div class="eyebrow mb-4" style="justify-content: center;">Fees</div>
-      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-4 font-display">Know your protection cost<br>before you commit</h2>
-      <p class="text-[14px] lg:text-[15px] text-ink-300 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight mb-4 font-display">Know your protection cost<br>before you commit</h2>
+      <p class="text-[14px] lg:text-[15px] text-forest-600 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
     </div>
 
     <div class="card p-8 lg:p-10 reveal">
       <div class="space-y-5">
         <div>
-          <label class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Transaction Category</label>
+          <label class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Transaction Category</label>
           <select id="calc-category" onchange="calculateFee()" class="input-field cursor-pointer">
             <option value="standard">General Deals (Cars, Land, FX, Gold)</option>
             <option value="crypto">Crypto P2P / USDT Swaps (0.5%)</option>
             <option value="cement">Cement Logistics (₦10 per bag)</option>
           </select>
         </div>
-
         <div>
-          <label id="amount-label" class="block text-[12px] uppercase tracking-wider font-semibold text-ink-300 mb-2">Transaction Amount (₦)</label>
+          <label id="amount-label" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Transaction Amount (₦)</label>
           <input type="number" id="calc-amount" value="5000000" oninput="calculateFee()" placeholder="Enter amount in Naira" class="input-field">
         </div>
-
-        <div class="pt-5 border-t border-[var(--color-border)]">
+        <div class="pt-5 border-t border-forest-200/20">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
             <div>
-              <span class="text-[12px] uppercase text-ink-300 font-semibold block mb-1">Estimated Protection Fee</span>
-              <span id="fee-breakdown-text" class="text-[13px] text-brand font-medium">1.0% Bracket (₦500k – ₦5M)</span>
+              <span class="text-[12px] uppercase text-forest-500 font-semibold block mb-1">Estimated Protection Fee</span>
+              <span id="fee-breakdown-text" class="text-[13px] text-forest-600 font-medium">1.0% Bracket (₦500k – ₦5M)</span>
             </div>
-            <div id="calc-result" class="text-3xl font-extrabold gradient-gold font-display">₦50,000</div>
+            <div id="calc-result" class="text-3xl font-extrabold gradient-green font-display">₦50,000</div>
           </div>
-          <div class="flex justify-between items-center pt-3 border-t border-[var(--color-border)]">
-            <span class="text-[13px] text-ink-300 font-medium">Total Amount (Fee + Principal)</span>
-            <span id="calc-total" class="text-[15px] font-bold text-white">₦5,050,000</span>
+          <div class="flex justify-between items-center pt-3 border-t border-forest-200/20">
+            <span class="text-[13px] text-forest-500 font-medium">Total Amount (Fee + Principal)</span>
+            <span id="calc-total" class="text-[15px] font-bold text-forest-700">₦5,050,000</span>
           </div>
         </div>
-
         <button onclick="location.href='/create-deal.html'" class="btn-primary w-full mt-2">
           <i data-lucide="shield-plus" class="w-4 h-4"></i>
           Create Protected Deal
@@ -1010,38 +1043,35 @@
       </div>
     </div>
 
-    <!-- Fee schedule reference -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6 reveal">
       <div class="card p-3 lg:p-4 text-center">
-        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">Under ₦500k</div>
-        <div class="text-base lg:text-lg font-bold text-white font-display">1.5%</div>
+        <div class="text-[10px] lg:text-[11px] text-forest-500 uppercase tracking-wider mb-1">Under ₦500k</div>
+        <div class="text-base lg:text-lg font-bold text-forest-700 font-display">1.5%</div>
       </div>
       <div class="card p-3 lg:p-4 text-center">
-        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦500k – ₦5M</div>
-        <div class="text-base lg:text-lg font-bold text-white font-display">1.0%</div>
+        <div class="text-[10px] lg:text-[11px] text-forest-500 uppercase tracking-wider mb-1">₦500k – ₦5M</div>
+        <div class="text-base lg:text-lg font-bold text-forest-700 font-display">1.0%</div>
       </div>
       <div class="card p-3 lg:p-4 text-center">
-        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">₦5M – ₦20M</div>
-        <div class="text-base lg:text-lg font-bold text-white font-display">0.5%</div>
+        <div class="text-[10px] lg:text-[11px] text-forest-500 uppercase tracking-wider mb-1">₦5M – ₦20M</div>
+        <div class="text-base lg:text-lg font-bold text-forest-700 font-display">0.5%</div>
       </div>
       <div class="card p-3 lg:p-4 text-center">
-        <div class="text-[10px] lg:text-[11px] text-ink-300 uppercase tracking-wider mb-1">Above ₦20M</div>
-        <div class="text-base lg:text-lg font-bold gradient-gold font-display">₦100k cap</div>
+        <div class="text-[10px] lg:text-[11px] text-forest-500 uppercase tracking-wider mb-1">Above ₦20M</div>
+        <div class="text-base lg:text-lg font-bold gradient-green font-display">₦100k cap</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════ SECURITY ═══════════════ -->
-<section id="security" class="section-pad bg-ink-800/40 border-y border-[var(--color-border)]">
+<section id="security" class="section-pad bg-white/30 backdrop-blur-sm border-y border-forest-200/20">
   <div class="max-w-7xl mx-auto container-px">
     <div class="grid lg:grid-cols-3 gap-12">
       <div class="lg:col-span-1 reveal">
         <div class="eyebrow mb-4">Security</div>
-        <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight mb-5 font-display">Why users trust DealShield</h2>
-        <p class="text-[15px] text-ink-300 leading-relaxed mb-8">
-          Every transaction follows a structured escrow protocol designed to protect both parties throughout the deal lifecycle.
-        </p>
+        <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight mb-5 font-display">Why users trust DealShield</h2>
+        <p class="text-[15px] text-forest-600 leading-relaxed mb-8">Every transaction follows a structured escrow protocol designed to protect both parties throughout the deal lifecycle.</p>
         <button onclick="location.href='/register.html'" class="btn-secondary">
           Start Verification
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -1051,72 +1081,67 @@
       <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="scale" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="scale" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Neutral Escrow</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">Funds held by a neutral third party, accessible to neither buyer nor seller until conditions are met.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Neutral Escrow</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">Funds held by a neutral third party, accessible to neither buyer nor seller until conditions are met.</p>
             </div>
           </div>
         </div>
-
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="badge-check" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="badge-check" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Verified Counterparties</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">NIN, BVN, phone and business verification before any deal can be initiated.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Verified Counterparties</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">NIN, BVN, phone and business verification before any deal can be initiated.</p>
             </div>
           </div>
         </div>
-
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="search-check" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="search-check" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Structured Verification</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">Configurable inspection windows for asset delivery, documents and quality checks.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Structured Verification</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">Configurable inspection windows for asset delivery, documents and quality checks.</p>
             </div>
           </div>
         </div>
-
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="file-text" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="file-text" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Transaction Records</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">Full audit trail of every action, message and status change for dispute resolution.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Transaction Records</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">Full audit trail of every action, message and status change for dispute resolution.</p>
             </div>
           </div>
         </div>
-
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="lock-keyhole" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="lock-keyhole" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Controlled Fund Release</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">Funds released only on buyer confirmation or automatic timer expiry — no manual override.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Controlled Fund Release</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">Funds released only on buyer confirmation or automatic timer expiry — no manual override.</p>
             </div>
           </div>
         </div>
-
         <div class="card p-6 reveal">
           <div class="flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl border border-brand/20 flex items-center justify-center flex-shrink-0" style="background: rgba(200,164,92,0.05);">
-              <i data-lucide="gavel" class="w-5 h-5 text-brand"></i>
+            <div class="w-10 h-10 rounded-xl border border-forest-300/30 flex items-center justify-center flex-shrink-0" style="background: rgba(82,183,136,0.08);">
+              <i data-lucide="gavel" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div>
-              <h3 class="text-[15px] font-bold text-white mb-2 font-display">Dispute Resolution</h3>
-              <p class="text-[13px] text-ink-300 leading-relaxed">Evidence-based dispute process. Both parties submit documentation. Resolution within 48 hours.</p>
+              <h3 class="text-[15px] font-bold text-forest-700 mb-2 font-display">Dispute Resolution</h3>
+              <p class="text-[13px] text-forest-600 leading-relaxed">Evidence-based dispute process. Both parties submit documentation. Resolution within 48 hours.</p>
             </div>
           </div>
         </div>
@@ -1128,70 +1153,53 @@
 <!-- ═══════════════ FAQ ═══════════════ -->
 <section id="faq" class="section-pad">
   <div class="max-w-3xl mx-auto container-px">
-    <div class="mb-12 text-center reveal">
+    <div class="mb-10 lg:mb-12 text-center reveal">
       <div class="eyebrow mb-4" style="justify-content: center;">FAQ</div>
-      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-white tracking-tight font-display">Questions, answered</h2>
+      <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight font-display">Questions, answered</h2>
     </div>
 
     <div class="space-y-3">
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>What happens if the seller doesn't deliver?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>If the seller fails to deliver within the agreed timeline, the buyer can raise a dispute. Funds remain locked in escrow. DealShield reviews the evidence and refunds the buyer if the seller is found in default.</p>
-        </div>
+        <div class="faq-answer"><p>If the seller fails to deliver within the agreed timeline, the buyer can raise a dispute. Funds remain locked in escrow. DealShield reviews the evidence and refunds the buyer if the seller is found in default.</p></div>
       </div>
-
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>How long does fund release take?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>Funds are released instantly to the seller's bank account once the buyer confirms delivery or the inspection timer auto-expires. No manual approval from DealShield is needed.</p>
-        </div>
+        <div class="faq-answer"><p>Funds are released instantly to the seller's bank account once the buyer confirms delivery or the inspection timer auto-expires. No manual approval from DealShield is needed.</p></div>
       </div>
-
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>What verification do I need to start?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>You'll need a valid NIN or BVN, a verified phone number, and email verification. Business accounts require additional CAC documentation. The entire KYC process takes under 5 minutes.</p>
-        </div>
+        <div class="faq-answer"><p>You'll need a valid NIN or BVN, a verified phone number, and email verification. Business accounts require additional CAC documentation. The entire KYC process takes under 5 minutes.</p></div>
       </div>
-
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>Can I use DealShield for crypto transactions?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>Yes. DealShield supports OTC USDT and Bitcoin P2P trades with a flat 0.5% escrow fee. Funds are held in a dedicated escrow address with multi-sig release, eliminating chargeback risk.</p>
-        </div>
+        <div class="faq-answer"><p>Yes. DealShield supports OTC USDT and Bitcoin P2P trades with a flat 0.5% escrow fee. Funds are held in a dedicated escrow address with multi-sig release, eliminating chargeback risk.</p></div>
       </div>
-
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>What are the fees?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>Fees are tiered: 1.5% under ₦500k, 1.0% for ₦500k–₦5M, 0.5% for ₦5M–₦20M, capped at ₦100k above ₦20M. Crypto P2P is 0.5% flat. Cement logistics is ₦10 per bag. Use the fee calculator above for exact amounts.</p>
-        </div>
+        <div class="faq-answer"><p>Fees are tiered: 1.5% under ₦500k, 1.0% for ₦500k–₦5M, 0.5% for ₦5M–₦20M, capped at ₦100k above ₦20M. Crypto P2P is 0.5% flat. Cement logistics is ₦10 per bag. Use the fee calculator above for exact amounts.</p></div>
       </div>
-
       <div class="faq-item reveal">
         <button class="faq-question" onclick="toggleFAQ(this)">
           <span>Is DealShield regulated?</span>
-          <i data-lucide="plus" class="w-5 h-5 text-ink-300 faq-icon"></i>
+          <i data-lucide="plus" class="w-5 h-5 text-forest-500 faq-icon"></i>
         </button>
-        <div class="faq-answer">
-          <p>DealShield operates in alignment with Nigerian financial regulations and CBN guidelines for escrow and payment service providers. All transactions are governed by the laws of the Federal Republic of Nigeria.</p>
-        </div>
+        <div class="faq-answer"><p>DealShield operates in alignment with Nigerian financial regulations and CBN guidelines for escrow and payment service providers. All transactions are governed by the laws of the Federal Republic of Nigeria.</p></div>
       </div>
     </div>
   </div>
@@ -1200,17 +1208,15 @@
 <!-- ═══════════════ ABOUT / FINAL CTA ═══════════════ -->
 <section id="about" class="section-pad relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand/5 rounded-full blur-[100px]"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-leaf/5 rounded-full blur-[100px]"></div>
   </div>
   <div class="max-w-4xl mx-auto container-px text-center relative z-10 reveal">
     <div class="eyebrow mb-5" style="justify-content: center;">Get Started</div>
-    <h2 class="text-2xl sm:text-3xl lg:text-[52px] font-extrabold text-white tracking-tight mb-6 font-display">
+    <h2 class="text-2xl sm:text-3xl lg:text-[52px] font-extrabold text-forest-700 tracking-tight mb-6 font-display">
       Your next high-value transaction<br>
-      <span class="gradient-gold">deserves protection.</span>
+      <span class="gradient-green">deserves protection.</span>
     </h2>
-    <p class="text-[17px] text-ink-200 leading-relaxed max-w-xl mx-auto mb-10">
-      Bring both sides of the transaction into a structured escrow process designed to protect the buyer, seller and the value of the deal.
-    </p>
+    <p class="text-[17px] text-forest-600 leading-relaxed max-w-xl mx-auto mb-10">Bring both sides of the transaction into a structured escrow process designed to protect the buyer, seller and the value of the deal.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <button onclick="location.href='/create-deal.html'" class="btn-primary text-[15px] px-8 py-4">
         <i data-lucide="shield-plus" class="w-5 h-5"></i>
@@ -1225,65 +1231,55 @@
 </section>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
-<footer class="border-t border-[var(--color-border)] bg-ink-800/60">
+<footer class="border-t border-forest-200/20 bg-white/40 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto container-px py-14">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      <!-- Brand -->
       <div class="col-span-2 lg:col-span-1">
         <a href="/" class="flex items-center gap-2.5 mb-4">
-          <div class="w-9 h-9 rounded-xl border border-brand/30 flex items-center justify-center" style="background: rgba(200,164,92,0.05);">
+          <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
             <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#C8A45C" stroke-width="6"/>
-              <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#C8A45C">DS</text>
+              <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+              <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
             </svg>
           </div>
-          <span class="font-bold text-[15px] text-white font-display">DealShield</span>
+          <span class="font-bold text-[15px] text-forest-700 font-display">DealShield</span>
         </a>
-        <p class="text-[13px] text-ink-300 leading-relaxed max-w-xs">
-          Neutral escrow infrastructure for high-value transactions in Nigeria. Protect the deal, not just the money.
-        </p>
+        <p class="text-[13px] text-forest-500 leading-relaxed max-w-xs">Neutral escrow infrastructure for high-value transactions in Nigeria. Protect the deal, not just the money.</p>
       </div>
-
-      <!-- Solutions -->
       <div>
-        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4 font-display">Solutions</h4>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Solutions</h4>
         <ul class="space-y-2.5">
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Automotive</a></li>
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Real Estate</a></li>
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Gold & Bullion</a></li>
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Digital Assets</a></li>
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">FX Transactions</a></li>
-          <li><a href="#solutions" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Bulk Commodities</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Automotive</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Real Estate</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Gold & Bullion</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Digital Assets</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FX Transactions</a></li>
+          <li><a href="#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Bulk Commodities</a></li>
         </ul>
       </div>
-
-      <!-- Company -->
       <div>
-        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4 font-display">Company</h4>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Company</h4>
         <ul class="space-y-2.5">
-          <li><a href="#how-it-works" class="text-[13px] text-ink-300 hover:text-brand transition-colors">How It Works</a></li>
-          <li><a href="#security" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Security</a></li>
-          <li><a href="#calculator" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Fees</a></li>
-          <li><a href="#faq" class="text-[13px] text-ink-300 hover:text-brand transition-colors">FAQ</a></li>
-          <li><a href="/terms.html" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Terms</a></li>
-          <li><a href="/privacy.html" class="text-[13px] text-ink-300 hover:text-brand transition-colors">Privacy</a></li>
+          <li><a href="#how-it-works" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">How It Works</a></li>
+          <li><a href="#security" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Security</a></li>
+          <li><a href="#calculator" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Fees</a></li>
+          <li><a href="#faq" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FAQ</a></li>
+          <li><a href="/terms.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Terms</a></li>
+          <li><a href="/privacy.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Privacy</a></li>
         </ul>
       </div>
-
-      <!-- Contact -->
       <div>
-        <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-4 font-display">Contact</h4>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Contact</h4>
         <ul class="space-y-2.5">
-          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
-          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-ink-300"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
         </ul>
       </div>
     </div>
-
-    <div class="pt-8 border-t border-[var(--color-border)] flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p class="text-[12px] text-ink-300">© 2026 DealShield Technologies. Built for Nigeria. Trusted worldwide.</p>
-      <p class="text-[12px] text-ink-300">Governed by the laws of the Federal Republic of Nigeria.</p>
+    <div class="pt-8 border-t border-forest-200/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-[12px] text-forest-500">© 2026 DealShield Technologies. Built for Nigeria. Trusted worldwide.</p>
+      <p class="text-[12px] text-forest-500">Governed by the laws of the Federal Republic of Nigeria.</p>
     </div>
   </div>
 </footer>
@@ -1293,30 +1289,30 @@
   <i data-lucide="bot" class="w-5 h-5"></i>
 </div>
 
-<div id="chat-modal-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-  <div class="w-full max-w-md h-[520px] card rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-[var(--color-border-strong)]">
-    <div class="px-4 py-3.5 border-b border-[var(--color-border)] flex items-center justify-between bg-ink-800/80">
+<div id="chat-modal-overlay" class="fixed inset-0 bg-forest-900/30 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+  <div class="w-full max-w-md h-[520px] card rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-forest-200/30">
+    <div class="px-4 py-3.5 border-b border-forest-200/20 flex items-center justify-between bg-white/80">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl border border-brand/30 flex items-center justify-center" style="background: rgba(200,164,92,0.05);">
-          <i data-lucide="shield" class="w-4 h-4 text-brand"></i>
+        <div class="w-9 h-9 rounded-xl border border-forest-300/30 flex items-center justify-center" style="background: rgba(82,183,136,0.08);">
+          <i data-lucide="shield" class="w-4 h-4 text-forest-500"></i>
         </div>
         <div>
-          <div class="font-bold text-[13px] text-white font-display">DealShield Assistant</div>
-          <div class="text-[10px] text-positive flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-positive animate-pulse"></span> Online
+          <div class="font-bold text-[13px] text-forest-700 font-display">DealShield Assistant</div>
+          <div class="text-[10px] text-leaf flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse"></span> Online
           </div>
         </div>
       </div>
-      <button onclick="toggleChatModal()" class="text-ink-300 hover:text-white p-1 transition-colors">
+      <button onclick="toggleChatModal()" class="text-forest-500 hover:text-forest-700 p-1 transition-colors">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
     <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-[13px]">
-      <div class="bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100">
+      <div class="bg-forest-50/40 border border-forest-200/20 p-3 rounded-lg max-w-[85%] text-forest-700">
         Hello! I am your DealShield assistant. Ask me anything about car escrow, land verification, USDT P2P protection, or fees.
       </div>
     </div>
-    <div class="p-3 border-t border-[var(--color-border)] flex gap-2 bg-ink-800/90">
+    <div class="p-3 border-t border-forest-200/20 flex gap-2 bg-white/70">
       <input type="text" id="chat-input" onkeypress="handleChatKey(event)" placeholder="Ask about escrow terms or fees..." class="input-field !py-2.5 !text-[13px] flex-1">
       <button onclick="sendChatMessage()" class="btn-primary !px-4 !py-2.5">
         <i data-lucide="send" class="w-4 h-4"></i>
@@ -1327,17 +1323,16 @@
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
-  // ── Initialize Lucide Icons ──
   lucide.createIcons();
 
-  // ── Navbar scroll effect ──
+  // Navbar scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) navbar.classList.add('nav-scrolled');
     else navbar.classList.remove('nav-scrolled');
   });
 
-  // ── Reveal on scroll ──
+  // Reveal on scroll
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1348,32 +1343,16 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // ── GSAP Scroll Animations ──
+  // GSAP
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     gsap.registerPlugin(ScrollTrigger);
-
-    gsap.from("#solutions .card", {
-      opacity: 0, y: 30, duration: 0.6, stagger: 0.08, ease: "power2.out",
-      scrollTrigger: { trigger: "#solutions", start: "top 80%" }
-    });
-
-    gsap.from("#how-it-works .timeline-step", {
-      opacity: 0, y: 20, duration: 0.5, stagger: 0.12, ease: "power2.out",
-      scrollTrigger: { trigger: "#how-it-works", start: "top 75%" }
-    });
-
-    gsap.from("#calculator .card", {
-      opacity: 0, y: 30, duration: 0.7, ease: "power3.out",
-      scrollTrigger: { trigger: "#calculator", start: "top 80%" }
-    });
-
-    gsap.from("#security .card", {
-      opacity: 0, y: 20, duration: 0.5, stagger: 0.06, ease: "power2.out",
-      scrollTrigger: { trigger: "#security", start: "top 80%" }
-    });
+    gsap.from("#solutions .card", { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, ease: "power2.out", scrollTrigger: { trigger: "#solutions", start: "top 80%" } });
+    gsap.from("#how-it-works .timeline-step", { opacity: 0, y: 20, duration: 0.5, stagger: 0.12, ease: "power2.out", scrollTrigger: { trigger: "#how-it-works", start: "top 75%" } });
+    gsap.from("#calculator .card", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: "#calculator", start: "top 80%" } });
+    gsap.from("#security .card", { opacity: 0, y: 20, duration: 0.5, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: "#security", start: "top 80%" } });
   }
 
-  // ── FAQ Accordion ──
+  // FAQ
   function toggleFAQ(btn) {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('open');
@@ -1381,7 +1360,7 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  // ── Fee Calculator Logic ──
+  // Fee Calculator
   function calculateFee() {
     const cat = document.getElementById('calc-category').value;
     const amountInput = document.getElementById('calc-amount');
@@ -1389,10 +1368,8 @@
     const breakdownText = document.getElementById('fee-breakdown-text');
     const resultEl = document.getElementById('calc-result');
     const totalEl = document.getElementById('calc-total');
-
     let val = parseFloat(amountInput.value) || 0;
     let fee = 0;
-
     if (cat === 'cement') {
       amountLabel.innerText = "Number of Cement Bags";
       fee = val * 10;
@@ -1403,74 +1380,51 @@
       breakdownText.innerText = "0.5% OTC/USDT Escrow Rate";
     } else {
       amountLabel.innerText = "Transaction Amount (₦)";
-      if (val < 500000) {
-        fee = val * 0.015;
-        breakdownText.innerText = "1.5% (Under ₦500,000)";
-      } else if (val <= 5000000) {
-        fee = val * 0.01;
-        breakdownText.innerText = "1.0% (₦500k – ₦5M)";
-      } else if (val <= 20000000) {
-        fee = val * 0.005;
-        breakdownText.innerText = "0.5% (₦5M – ₦20M)";
-      } else {
-        fee = 100000;
-        breakdownText.innerText = "Maximum ₦100k cap (Above ₦20M)";
-      }
+      if (val < 500000) { fee = val * 0.015; breakdownText.innerText = "1.5% (Under ₦500,000)"; }
+      else if (val <= 5000000) { fee = val * 0.01; breakdownText.innerText = "1.0% (₦500k – ₦5M)"; }
+      else if (val <= 20000000) { fee = val * 0.005; breakdownText.innerText = "0.5% (₦5M – ₦20M)"; }
+      else { fee = 100000; breakdownText.innerText = "Maximum ₦100k cap (Above ₦20M)"; }
     }
-
-    const feeStr = "₦" + Math.round(fee).toLocaleString();
-    resultEl.innerText = feeStr;
+    resultEl.innerText = "₦" + Math.round(fee).toLocaleString();
     totalEl.innerText = "₦" + Math.round(val + fee).toLocaleString();
   }
   calculateFee();
 
-  // ── AI Chat Modal ──
+  // Chat
   function toggleChatModal() {
     const modal = document.getElementById('chat-modal-overlay');
     modal.classList.toggle('hidden');
     modal.classList.toggle('flex');
   }
-
-  function handleChatKey(e) {
-    if (e.key === 'Enter') sendChatMessage();
-  }
-
+  function handleChatKey(e) { if (e.key === 'Enter') sendChatMessage(); }
   async function sendChatMessage() {
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
     if (!text) return;
-
     const messages = document.getElementById('chat-messages');
-
     const userDiv = document.createElement('div');
-    userDiv.className = 'bg-brand text-ink-900 font-medium p-3 rounded-lg max-w-[85%] ml-auto';
+    userDiv.className = 'bg-forest-500 text-white font-medium p-3 rounded-lg max-w-[85%] ml-auto';
     userDiv.innerText = text;
     messages.appendChild(userDiv);
     input.value = '';
     messages.scrollTop = messages.scrollHeight;
-
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
+      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
       const data = await res.json();
-
       const botDiv = document.createElement('div');
-      botDiv.className = 'bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100';
+      botDiv.className = 'bg-forest-50/40 border border-forest-200/20 p-3 rounded-lg max-w-[85%] text-forest-700';
       botDiv.innerText = data.reply || "DealShield escrow protection guarantees funds are held securely until deal completion.";
       messages.appendChild(botDiv);
-      messages.scrollTop = messages.scrollHeight;
     } catch (err) {
       const botDiv = document.createElement('div');
-      botDiv.className = 'bg-ink-700/60 border border-[var(--color-border)] p-3 rounded-lg max-w-[85%] text-ink-100';
+      botDiv.className = 'bg-forest-50/40 border border-forest-200/20 p-3 rounded-lg max-w-[85%] text-forest-700';
       botDiv.innerText = "DealShield protects high-value deals across Nigeria. You can lock escrow funds via bank transfer or USDT.";
       messages.appendChild(botDiv);
-      messages.scrollTop = messages.scrollHeight;
     }
+    messages.scrollTop = messages.scrollHeight;
   }
 </script>
 
+</div><!-- /content-layer -->
 </body>
 </html>
