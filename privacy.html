@@ -1,115 +1,694 @@
-# DealShield — Privacy Policy
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealShield — Privacy Policy</title>
+<meta name="description" content="DealShield Privacy Policy — How we collect, use, store and protect your data.">
+<meta name="theme-color" content="#0d2818">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
-**Last Updated: August 25, 2026**
+<!-- === FONTS === -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-## 1. What We Collect
+<!-- === LIBRARIES === -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-### Personal Information:
-- Full name
-- Phone number
-- Email address
-- National Identity Number (NIN)
-- Bank Verification Number (BVN) — if you request verification
-- Business registration details — if you request business verification
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: {
+            900: '#061a0e', 800: '#0a2415', 700: '#0d2818', 600: '#123a23',
+            500: '#1a4d2e', 400: '#2d6a4f', 300: '#52b788', 200: '#74c69d',
+            100: '#95d5b2', 50: '#b7e4c7',
+          },
+          leaf: { DEFAULT: '#40916c', light: '#52b788', bright: '#74c69d' },
+          cream: '#f8faf9', mist: '#e8f5ee',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Space Grotesk', 'Inter', 'sans-serif'],
+        },
+        maxWidth: { '7xl': '1280px' },
+      }
+    }
+  }
+</script>
 
-### Transaction Information:
-- Listing details (item, price, description, location)
-- Escrow transaction records
-- Wallet balance and transaction history
-- Payment gateway references (Paystack/Flutterwave)
-- Chat messages with our AI assistant (for service improvement)
+<style>
 
-### Device Information:
-- IP address
-- Device type (for security and fraud prevention)
+  /* ═══════════════ LIVING WATERFALL + MOUNTAINS BACKGROUND ═══════════════ */
+  .living-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
 
-## 2. How We Use Your Data
+  /* Sky gradient */
+  .bg-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #c8e6d6 0%,
+      #d4ebdf 20%,
+      #e8f5ee 40%,
+      #f0f7f2 60%,
+      #f8faf9 85%,
+      #ffffff 100%
+    );
+  }
 
-- **To provide escrow services**: hold funds, process transactions, release payments
-- **To verify identity**: NIN, BVN, and business verification for trust badges
-- **To prevent fraud**: AI analysis of listings and transaction patterns
-- **To resolve disputes**: review evidence and make fair decisions
-- **To communicate**: transaction updates, deal status, support messages
-- **To improve our service**: aggregate analytics (no individual identification)
+  /* Mountains - back layer */
+  .bg-mountains-back {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 600' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,600 L0,350 L120,200 L250,280 L380,150 L500,250 L620,120 L750,220 L880,140 L1000,260 L1120,180 L1280,300 L1280,600 Z' fill='%231a4d2e' opacity='0.25'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-We do NOT:
-- Sell your data to third parties
-- Use your data for advertising
-- Share your transaction details with other users (except as needed for a deal)
+  /* Mountains - mid layer */
+  .bg-mountains-mid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 500' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,500 L0,320 L100,220 L220,280 L340,180 L450,260 L560,160 L680,240 L800,140 L920,220 L1050,160 L1180,260 L1280,200 L1280,500 Z' fill='%232d6a4f' opacity='0.3'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-## 3. Data Storage
+  /* Mountains - front layer */
+  .bg-mountains-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 400' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,400 L0,280 L80,220 L180,260 L280,180 L380,240 L480,160 L580,220 L680,140 L800,200 L900,120 L1020,200 L1140,140 L1280,220 L1280,400 Z' fill='%2340916c' opacity='0.2'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-- Your data is stored in a secure PostgreSQL database on our servers
-- Payment data is handled by Paystack/Flutterwave (PCI-DSS compliant) — we do not store card numbers
-- Passwords are hashed using bcrypt — we cannot see your password
-- JWT tokens expire after 24 hours
+  /* Waterfall */
+  .waterfall {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 45%;
+    overflow: hidden;
+    border-radius: 60px 60px 0 0;
+    opacity: 0.35;
+  }
+  .waterfall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(116,198,157,0.6) 0%,
+      rgba(82,183,136,0.4) 30%,
+      rgba(82,183,136,0.2) 70%,
+      rgba(116,198,157,0.5) 100%
+    );
+  }
+  .water-stream {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    animation: water-fall 1.5s linear infinite;
+  }
+  @keyframes water-fall {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(200%); opacity: 0; }
+  }
 
-## 4. Data Sharing
+  /* Waterfall splash pool */
+  .splash-pool {
+    position: absolute;
+    top: calc(15% + 45%);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(116,198,157,0.3) 0%, transparent 70%);
+    animation: splash-pulse 2s ease-in-out infinite;
+  }
+  @keyframes splash-pulse {
+    0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.3; }
+    50% { transform: translateX(-50%) scaleX(1.3); opacity: 0.5; }
+  }
 
-We share data only when:
-- **Required by law**: court order, law enforcement request, or regulatory compliance
-- **For a transaction**: buyer/seller see each other's names and verified badges for a specific deal
-- **With payment processors**: Paystack/Flutterwave receive transaction amounts
-- **With logistics partners**: rider dispatch service receives delivery address (for shipped deals)
+  /* Mist particles */
+  .mist-particle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+    animation: mist-drift 8s ease-in-out infinite;
+  }
+  @keyframes mist-drift {
+    0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+    30% { opacity: 0.6; }
+    70% { opacity: 0.4; }
+    100% { transform: translate(30px, -40px) scale(1.2); opacity: 0; }
+  }
 
-## 5. Your Rights
+  /* Floating leaves */
+  .leaf-particle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+    animation: leaf-fall 12s linear infinite;
+  }
+  @keyframes leaf-fall {
+    0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(100vh) translateX(100px) rotate(360deg); opacity: 0; }
+  }
 
-You have the right to:
-- **Access**: request a copy of your data
-- **Correct**: fix inaccurate information
-- **Delete**: request account deletion (escrow funds must be settled first)
-- **Export**: download your transaction history
-- **Object**: opt out of AI analysis (reduced fraud protection)
+  /* Content wrapper above background */
+  .content-layer {
+    position: relative;
+    z-index: 10;
+  }
 
-To exercise these rights, email support@dealshield.ng
+  /* ── Nav shared ── */
+  .nav-blur {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .nav-scrolled {
+    background: rgba(255,255,255,0.92);
+    border-bottom-color: rgba(45,106,79,0.15);
+  }
 
-## 6. Data Retention
+  /* ── Design System ── */
+  :root {
+    --color-bg: #f8faf9;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #f0f7f2;
+    --color-border: rgba(13,40,24,0.08);
+    --color-border-strong: rgba(13,40,24,0.16);
+    --color-accent: #2d6a4f;
+    --color-accent-light: #52b788;
+    --color-accent-bright: #74c69d;
+    --color-text-primary: #0a1f12;
+    --color-text-secondary: #3a5a44;
+    --color-text-muted: #6b8f78;
+    --color-white: #ffffff;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
 
-- Active account data: kept as long as your account is active
-- Closed account data: retained for 5 years for fraud prevention and legal compliance
-- Transaction records: kept for 7 years (financial regulations)
-- Chat logs: kept for 1 year for dispute resolution
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    letter-spacing: -0.01em;
+  }
+  h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
-## 7. Security Measures
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--color-accent);
+    opacity: 0.5;
+  }
 
-- **Encryption**: All API traffic uses HTTPS/TLS
-- **Authentication**: JWT tokens with 24-hour expiry
-- **Rate limiting**: Prevents brute force attacks
-- **Security headers**: HSTS, X-Frame-Options, X-Content-Type-Options
-- **Database security**: PostgreSQL with restricted access, encrypted connections
-- **Regular updates**: security patches applied promptly
+  .gradient-green {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 50%, #1a4d2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-## 8. NDPA Compliance
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(45,106,79,0.1), transparent);
+  }
 
-DealShield complies with the Nigeria Data Protection Act (NDPA) 2023. We are registered as a data controller and follow the principles of:
-- Lawfulness, fairness, and transparency
-- Purpose limitation
-- Data minimization
-- Accuracy
-- Storage limitation
-- Integrity and confidentiality
+  .btn-primary {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(45,106,79,0.3);
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.7);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-strong);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(45,106,79,0.4);
+    background: rgba(82,183,136,0.08);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--color-accent); }
 
-## 9. Cookies
+  .container-px { padding-left: 24px; padding-right: 24px; }
+  @media (max-width: 640px) { .container-px { padding-left: 16px; padding-right: 16px; } }
 
-DealShield uses localStorage (not cookies) for:
-- Authentication token (JWT)
-- User session (no tracking)
+  /* Legal document styling */
+  .legal-doc h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal-doc h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .legal-doc p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+  .legal-doc ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-doc ul li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .legal-doc ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-doc ol li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .legal-doc strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+  .legal-doc hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
 
-We do not use third-party analytics or tracking cookies.
+</style>
+</head>
+<body class="relative min-h-screen">
 
-## 10. Children's Privacy
+<!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
+<div class="living-bg">
+  <div class="bg-sky"></div>
+  <div class="bg-mountains-back"></div>
 
-DealShield is not available to anyone under 18. We do not knowingly collect data from minors.
+  <!-- Waterfall -->
+  <div class="waterfall">
+    <div class="water-stream" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="water-stream" style="left: 30%; animation-delay: 0.3s;"></div>
+    <div class="water-stream" style="left: 45%; animation-delay: 0.6s;"></div>
+    <div class="water-stream" style="left: 60%; animation-delay: 0.2s;"></div>
+    <div class="water-stream" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="water-stream" style="left: 90%; animation-delay: 0.8s;"></div>
+  </div>
+  <div class="splash-pool"></div>
 
-## 11. Changes to This Policy
+  <!-- Mist around waterfall -->
+  <div class="mist-particle" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
+  <div class="mist-particle" style="top: 52%; left: 55%; animation-delay: 2s;"></div>
+  <div class="mist-particle" style="top: 48%; left: 52%; animation-delay: 4s;"></div>
+  <div class="mist-particle" style="top: 55%; left: 48%; animation-delay: 1s;"></div>
+  <div class="mist-particle" style="top: 50%; left: 60%; animation-delay: 3s;"></div>
 
-We will notify users via WhatsApp/SMS/email of any material changes to this Privacy Policy.
+  <div class="bg-mountains-mid"></div>
+  <div class="bg-mountains-front"></div>
 
-## 12. Contact
+  <!-- Floating leaves -->
+  <div class="leaf-particle" style="top: 0; left: 10%; animation-delay: 0s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 30%; animation-delay: 3s;">
+    <svg viewBox="0 0 24 24" fill="#40916c"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 60%; animation-delay: 6s;">
+    <svg viewBox="0 0 24 24" fill="#74c69d"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 85%; animation-delay: 9s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+</div>
 
-- Email: privacy@dealshield.ng
-- Website: https://dealshield-website.vercel.app
+<!-- ═══════════════ CONTENT LAYER ═══════════════ -->
+<div class="content-layer">
 
----
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur">
+  <nav class="max-w-7xl mx-auto container-px h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
+        <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
+        </svg>
+      </div>
+      <span class="font-bold text-[15px] tracking-tight text-forest-700 font-display">DealShield</span>
+    </a>
 
-© 2026 DealShield. Built for Nigeria. Trusted worldwide.
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="/#how-it-works" class="btn-ghost">How It Works</a>
+      <a href="/#solutions" class="btn-ghost">Solutions</a>
+      <a href="/#calculator" class="btn-ghost">Fees</a>
+      <a href="/#security" class="btn-ghost">Security</a>
+      <a href="/#faq" class="btn-ghost">FAQ</a>
+      <a href="/#about" class="btn-ghost">About</a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button onclick="location.href='/login.html'" class="btn-ghost hidden sm:inline-flex">Log In</button>
+      <button onclick="location.href='/create-deal.html'" class="btn-primary text-[13px]">
+        <i data-lucide="shield-plus" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Create Protected Deal</span>
+        <span class="sm:hidden">Deal</span>
+      </button>
+      <a href="/download/dealshield.apk" download class="btn-secondary hidden md:inline-flex text-[13px]">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        APK
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════ LEGAL CONTENT ═══════════════ -->
+<section class="pt-28 pb-20 px-4">
+  <div class="max-w-3xl mx-auto container-px">
+    <div class="mb-8 text-center">
+      <div class="eyebrow mb-4" style="justify-content: center;">Legal</div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-forest-700 tracking-tight font-display mb-3">Privacy Policy</h1>
+    </div>
+    <div class="card p-8 lg:p-12 legal-doc shadow-lg">
+      
+<p><strong>Last Updated: August 25, 2026</strong></p>
+
+<h2>1. What We Collect</h2>
+
+<h3>Personal Information:</h3>
+<ul>
+<li>Full name</li>
+<li>Phone number</li>
+<li>Email address</li>
+<li>National Identity Number (NIN)</li>
+<li>Bank Verification Number (BVN) — if you request verification</li>
+<li>Business registration details — if you request business verification</li>
+</ul>
+
+<h3>Transaction Information:</h3>
+<ul>
+<li>Listing details (item, price, description, location)</li>
+<li>Escrow transaction records</li>
+<li>Wallet balance and transaction history</li>
+<li>Payment gateway references (Paystack/Flutterwave)</li>
+<li>Chat messages with our AI assistant (for service improvement)</li>
+</ul>
+
+<h3>Device Information:</h3>
+<ul>
+<li>IP address</li>
+<li>Device type (for security and fraud prevention)</li>
+</ul>
+
+<h2>2. How We Use Your Data</h2>
+
+<ul>
+<li><strong>To provide escrow services</strong>: hold funds, process transactions, release payments</li>
+<li><strong>To verify identity</strong>: NIN, BVN, and business verification for trust badges</li>
+<li><strong>To prevent fraud</strong>: AI analysis of listings and transaction patterns</li>
+<li><strong>To resolve disputes</strong>: review evidence and make fair decisions</li>
+<li><strong>To communicate</strong>: transaction updates, deal status, support messages</li>
+<li><strong>To improve our service</strong>: aggregate analytics (no individual identification)</li>
+</ul>
+
+<p>We do NOT:</p>
+<ul>
+<li>Sell your data to third parties</li>
+<li>Use your data for advertising</li>
+<li>Share your transaction details with other users (except as needed for a deal)</li>
+</ul>
+
+<h2>3. Data Storage</h2>
+
+<ul>
+<li>Your data is stored in a secure PostgreSQL database on our servers</li>
+<li>Payment data is handled by Paystack/Flutterwave (PCI-DSS compliant) — we do not store card numbers</li>
+<li>Passwords are hashed using bcrypt — we cannot see your password</li>
+<li>JWT tokens expire after 24 hours</li>
+</ul>
+
+<h2>4. Data Sharing</h2>
+
+<p>We share data only when:</p>
+<ul>
+<li><strong>Required by law</strong>: court order, law enforcement request, or regulatory compliance</li>
+<li><strong>For a transaction</strong>: buyer/seller see each other's names and verified badges for a specific deal</li>
+<li><strong>With payment processors</strong>: Paystack/Flutterwave receive transaction amounts</li>
+<li><strong>With logistics partners</strong>: rider dispatch service receives delivery address (for shipped deals)</li>
+</ul>
+
+<h2>5. Your Rights</h2>
+
+<p>You have the right to:</p>
+<ul>
+<li><strong>Access</strong>: request a copy of your data</li>
+<li><strong>Correct</strong>: fix inaccurate information</li>
+<li><strong>Delete</strong>: request account deletion (escrow funds must be settled first)</li>
+<li><strong>Export</strong>: download your transaction history</li>
+<li><strong>Object</strong>: opt out of AI analysis (reduced fraud protection)</li>
+</ul>
+
+<p>To exercise these rights, email support@dealshield.ng</p>
+
+<h2>6. Data Retention</h2>
+
+<ul>
+<li>Active account data: kept as long as your account is active</li>
+<li>Closed account data: retained for 5 years for fraud prevention and legal compliance</li>
+<li>Transaction records: kept for 7 years (financial regulations)</li>
+<li>Chat logs: kept for 1 year for dispute resolution</li>
+</ul>
+
+<h2>7. Security Measures</h2>
+
+<ul>
+<li><strong>Encryption</strong>: All API traffic uses HTTPS/TLS</li>
+<li><strong>Authentication</strong>: JWT tokens with 24-hour expiry</li>
+<li><strong>Rate limiting</strong>: Prevents brute force attacks</li>
+<li><strong>Security headers</strong>: HSTS, X-Frame-Options, X-Content-Type-Options</li>
+<li><strong>Database security</strong>: PostgreSQL with restricted access, encrypted connections</li>
+<li><strong>Regular updates</strong>: security patches applied promptly</li>
+</ul>
+
+<h2>8. NDPA Compliance</h2>
+
+<p>DealShield complies with the Nigeria Data Protection Act (NDPA) 2023. We are registered as a data controller and follow the principles of:</p>
+<ul>
+<li>Lawfulness, fairness, and transparency</li>
+<li>Purpose limitation</li>
+<li>Data minimization</li>
+<li>Accuracy</li>
+<li>Storage limitation</li>
+<li>Integrity and confidentiality</li>
+</ul>
+
+<h2>9. Cookies</h2>
+
+<p>DealShield uses localStorage (not cookies) for:</p>
+<ul>
+<li>Authentication token (JWT)</li>
+<li>User session (no tracking)</li>
+</ul>
+
+<p>We do not use third-party analytics or tracking cookies.</p>
+
+<h2>10. Children's Privacy</h2>
+
+<p>DealShield is not available to anyone under 18. We do not knowingly collect data from minors.</p>
+
+<h2>11. Changes to This Policy</h2>
+
+<p>We will notify users via WhatsApp/SMS/email of any material changes to this Privacy Policy.</p>
+
+<h2>12. Contact</h2>
+
+<ul>
+<li>Email: privacy@dealshield.ng</li>
+<li>Website: https://dealshield-website.vercel.app</li>
+</ul>
+
+<hr>
+
+<p>© 2026 DealShield. Built for Nigeria. Trusted worldwide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="border-t border-forest-200/20 bg-white/40 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto container-px py-14">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div class="col-span-2 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
+            <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+              <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
+            </svg>
+          </div>
+          <span class="font-bold text-[15px] text-forest-700 font-display">DealShield</span>
+        </a>
+        <p class="text-[13px] text-forest-500 leading-relaxed max-w-xs">Neutral escrow infrastructure for high-value transactions in Nigeria. Protect the deal, not just the money.</p>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Solutions</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Automotive</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Real Estate</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Gold &amp; Bullion</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Digital Assets</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FX Transactions</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Bulk Commodities</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Company</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/#how-it-works" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">How It Works</a></li>
+          <li><a href="/#security" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Security</a></li>
+          <li><a href="/#calculator" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Fees</a></li>
+          <li><a href="/#faq" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FAQ</a></li>
+          <li><a href="/terms.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Terms</a></li>
+          <li><a href="/privacy.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Contact</h4>
+        <ul class="space-y-2.5">
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-8 border-t border-forest-200/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-[12px] text-forest-500">© 2026 DealShield Technologies. Built for Nigeria. Trusted worldwide.</p>
+      <p class="text-[12px] text-forest-500">Governed by the laws of the Federal Republic of Nigeria.</p>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /content-layer -->
+
+<script>
+  lucide.createIcons();
+
+  // Navbar scroll effect
+  var navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) navbar.classList.add('nav-scrolled');
+      else navbar.classList.remove('nav-scrolled');
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,101 +1,676 @@
-# DealShield — Terms of Service
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealShield — Terms of Service</title>
+<meta name="description" content="DealShield Terms of Service — Escrow rules, fees, user responsibilities, disputes and liability.">
+<meta name="theme-color" content="#0d2818">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
-**Last Updated: August 25, 2026**
+<!-- === FONTS === -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-## 1. Introduction
+<!-- === LIBRARIES === -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-DealShield ("we", "us", "our") is an escrow platform that protects buyers and sellers in transactions involving cars, gold, currency, land, oil, and other high-value goods. By using DealShield (via our website, Android app, or WhatsApp bot), you agree to these Terms.
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: {
+            900: '#061a0e', 800: '#0a2415', 700: '#0d2818', 600: '#123a23',
+            500: '#1a4d2e', 400: '#2d6a4f', 300: '#52b788', 200: '#74c69d',
+            100: '#95d5b2', 50: '#b7e4c7',
+          },
+          leaf: { DEFAULT: '#40916c', light: '#52b788', bright: '#74c69d' },
+          cream: '#f8faf9', mist: '#e8f5ee',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Space Grotesk', 'Inter', 'sans-serif'],
+        },
+        maxWidth: { '7xl': '1280px' },
+      }
+    }
+  }
+</script>
 
-## 2. How DealShield Works
+<style>
 
-1. **Buyer** deposits payment into DealShield escrow
-2. **Seller** delivers the goods
-3. **Buyer** confirms receipt
-4. DealShield releases funds to the seller (minus 2.5% commission)
+  /* ═══════════════ LIVING WATERFALL + MOUNTAINS BACKGROUND ═══════════════ */
+  .living-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
 
-DealShield acts as a neutral third-party escrow agent. We do not take ownership of goods being traded.
+  /* Sky gradient */
+  .bg-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #c8e6d6 0%,
+      #d4ebdf 20%,
+      #e8f5ee 40%,
+      #f0f7f2 60%,
+      #f8faf9 85%,
+      #ffffff 100%
+    );
+  }
 
-## 3. Fees
+  /* Mountains - back layer */
+  .bg-mountains-back {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 600' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,600 L0,350 L120,200 L250,280 L380,150 L500,250 L620,120 L750,220 L880,140 L1000,260 L1120,180 L1280,300 L1280,600 Z' fill='%231a4d2e' opacity='0.25'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-- **Commission**: 2.5% of the transaction amount, charged to the seller on completed deals
-- **Payment Gateway Fees**: Paystack/Flutterwave processing fees (1.5%) apply to deposits
-- **No Hidden Fees**: We do not charge for account creation, wallet storage, or withdrawals
+  /* Mountains - mid layer */
+  .bg-mountains-mid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 500' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,500 L0,320 L100,220 L220,280 L340,180 L450,260 L560,160 L680,240 L800,140 L920,220 L1050,160 L1180,260 L1280,200 L1280,500 Z' fill='%232d6a4f' opacity='0.3'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-## 4. User Responsibilities
+  /* Mountains - front layer */
+  .bg-mountains-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 400' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0,400 L0,280 L80,220 L180,260 L280,180 L380,240 L480,160 L580,220 L680,140 L800,200 L900,120 L1020,200 L1140,140 L1280,220 L1280,400 Z' fill='%2340916c' opacity='0.2'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  }
 
-### Buyers must:
-- Pay the agreed amount into escrow before the seller ships
-- Confirm receipt within 48 hours of delivery, or open a dispute
-- Provide accurate delivery information
+  /* Waterfall */
+  .waterfall {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 45%;
+    overflow: hidden;
+    border-radius: 60px 60px 0 0;
+    opacity: 0.35;
+  }
+  .waterfall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(116,198,157,0.6) 0%,
+      rgba(82,183,136,0.4) 30%,
+      rgba(82,183,136,0.2) 70%,
+      rgba(116,198,157,0.5) 100%
+    );
+  }
+  .water-stream {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2), rgba(255,255,255,0.5));
+    animation: water-fall 1.5s linear infinite;
+  }
+  @keyframes water-fall {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(200%); opacity: 0; }
+  }
 
-### Sellers must:
-- Ship goods as described in the listing
-- Upload video proof for high-value items (gold, land)
-- Use verified logistics providers for tracked shipments
+  /* Waterfall splash pool */
+  .splash-pool {
+    position: absolute;
+    top: calc(15% + 45%);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(116,198,157,0.3) 0%, transparent 70%);
+    animation: splash-pulse 2s ease-in-out infinite;
+  }
+  @keyframes splash-pulse {
+    0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.3; }
+    50% { transform: translateX(-50%) scaleX(1.3); opacity: 0.5; }
+  }
 
-### All users must:
-- Provide real name, phone number, and NIN for verification
-- Not use DealShield for illegal goods, money laundering, or fraud
-- Not create multiple accounts to manipulate reviews
+  /* Mist particles */
+  .mist-particle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+    animation: mist-drift 8s ease-in-out infinite;
+  }
+  @keyframes mist-drift {
+    0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+    30% { opacity: 0.6; }
+    70% { opacity: 0.4; }
+    100% { transform: translate(30px, -40px) scale(1.2); opacity: 0; }
+  }
 
-## 5. Escrow Rules
+  /* Floating leaves */
+  .leaf-particle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+    animation: leaf-fall 12s linear infinite;
+  }
+  @keyframes leaf-fall {
+    0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(100vh) translateX(100px) rotate(360deg); opacity: 0; }
+  }
 
-- Funds in escrow are held safely and cannot be accessed by DealShield for any purpose other than releasing to the seller or refunding the buyer
-- If the buyer does not confirm receipt within 7 days and does not open a dispute, funds are automatically released to the seller
-- If a dispute is opened, DealShield reviews evidence from both parties and resolves within 48 hours
+  /* Content wrapper above background */
+  .content-layer {
+    position: relative;
+    z-index: 10;
+  }
 
-## 6. Disputes
+  /* ── Nav shared ── */
+  .nav-blur {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .nav-scrolled {
+    background: rgba(255,255,255,0.92);
+    border-bottom-color: rgba(45,106,79,0.15);
+  }
 
-- Either party may open a dispute before funds are released
-- DealShield's decision is final and binding
-- Evidence includes: chat logs, delivery confirmation, video proof, and tracking data
-- If the seller is found at fault, the buyer receives a full refund
-- If the buyer is found at fault (e.g., received goods but falsely claimed non-delivery), the seller receives the funds
+  /* ── Design System ── */
+  :root {
+    --color-bg: #f8faf9;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #f0f7f2;
+    --color-border: rgba(13,40,24,0.08);
+    --color-border-strong: rgba(13,40,24,0.16);
+    --color-accent: #2d6a4f;
+    --color-accent-light: #52b788;
+    --color-accent-bright: #74c69d;
+    --color-text-primary: #0a1f12;
+    --color-text-secondary: #3a5a44;
+    --color-text-muted: #6b8f78;
+    --color-white: #ffffff;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
 
-## 7. Verification & Trust Badges
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    letter-spacing: -0.01em;
+  }
+  h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
-- **NIN Verified**: National Identity Number confirmed
-- **BVN Verified**: Bank Verification Number confirmed
-- **Business Verified**: CAC registration confirmed
-- **Phone Verified**: Phone number confirmed via OTP
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--color-accent);
+    opacity: 0.5;
+  }
 
-Trust badges are based on verified data. DealShield does not guarantee the character or reliability of any user.
+  .gradient-green {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 50%, #1a4d2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-## 8. AI Fraud Detection
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(45,106,79,0.1), transparent);
+  }
 
-DealShield uses AI to analyze listings for potential fraud. This is a tool to assist users, not a guarantee. DealShield is not liable for transactions that proceed despite an AI fraud warning.
+  .btn-primary {
+    background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(45,106,79,0.3);
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.7);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-strong);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(45,106,79,0.4);
+    background: rgba(82,183,136,0.08);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--color-accent); }
 
-## 9. Limitation of Liability
+  .container-px { padding-left: 24px; padding-right: 24px; }
+  @media (max-width: 640px) { .container-px { padding-left: 16px; padding-right: 16px; } }
 
-- DealShield's maximum liability is limited to the commission charged on the specific transaction
-- We are not liable for the quality, safety, or legality of goods traded
-- We are not liable for indirect, consequential, or punitive damages
-- We are not liable if a user misrepresents themselves despite our verification processes
+  /* Legal document styling */
+  .legal-doc h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal-doc h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .legal-doc p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+  .legal-doc ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-doc ul li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .legal-doc ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-doc ol li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .legal-doc strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+  .legal-doc hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
 
-## 10. Account Suspension
+</style>
+</head>
+<body class="relative min-h-screen">
 
-We may suspend accounts for:
-- Fraud or attempted fraud
-- Money laundering or illegal activity
-- Creating fake reviews or manipulating ratings
-- Violating these Terms
+<!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
+<div class="living-bg">
+  <div class="bg-sky"></div>
+  <div class="bg-mountains-back"></div>
 
-Suspended accounts forfeit pending commissions. Funds in escrow are returned to their rightful owner.
+  <!-- Waterfall -->
+  <div class="waterfall">
+    <div class="water-stream" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="water-stream" style="left: 30%; animation-delay: 0.3s;"></div>
+    <div class="water-stream" style="left: 45%; animation-delay: 0.6s;"></div>
+    <div class="water-stream" style="left: 60%; animation-delay: 0.2s;"></div>
+    <div class="water-stream" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="water-stream" style="left: 90%; animation-delay: 0.8s;"></div>
+  </div>
+  <div class="splash-pool"></div>
 
-## 11. Privacy
+  <!-- Mist around waterfall -->
+  <div class="mist-particle" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
+  <div class="mist-particle" style="top: 52%; left: 55%; animation-delay: 2s;"></div>
+  <div class="mist-particle" style="top: 48%; left: 52%; animation-delay: 4s;"></div>
+  <div class="mist-particle" style="top: 55%; left: 48%; animation-delay: 1s;"></div>
+  <div class="mist-particle" style="top: 50%; left: 60%; animation-delay: 3s;"></div>
 
-See our Privacy Policy for how we handle your data.
+  <div class="bg-mountains-mid"></div>
+  <div class="bg-mountains-front"></div>
 
-## 12. Governing Law
+  <!-- Floating leaves -->
+  <div class="leaf-particle" style="top: 0; left: 10%; animation-delay: 0s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 30%; animation-delay: 3s;">
+    <svg viewBox="0 0 24 24" fill="#40916c"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 60%; animation-delay: 6s;">
+    <svg viewBox="0 0 24 24" fill="#74c69d"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+  <div class="leaf-particle" style="top: 0; left: 85%; animation-delay: 9s;">
+    <svg viewBox="0 0 24 24" fill="#52b788"><path d="M17 8C8 10 5 16 5 21c0-6 5-11 12-13z"/></svg>
+  </div>
+</div>
 
-These Terms are governed by the laws of the Federal Republic of Nigeria. Disputes are resolved in Nigerian courts.
+<!-- ═══════════════ CONTENT LAYER ═══════════════ -->
+<div class="content-layer">
 
-## 13. Contact
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur">
+  <nav class="max-w-7xl mx-auto container-px h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
+        <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+          <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
+        </svg>
+      </div>
+      <span class="font-bold text-[15px] tracking-tight text-forest-700 font-display">DealShield</span>
+    </a>
 
-- Email: support@dealshield.ng
-- WhatsApp: +234 (DealShield bot)
-- Website: https://dealshield-website.vercel.app
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="/#how-it-works" class="btn-ghost">How It Works</a>
+      <a href="/#solutions" class="btn-ghost">Solutions</a>
+      <a href="/#calculator" class="btn-ghost">Fees</a>
+      <a href="/#security" class="btn-ghost">Security</a>
+      <a href="/#faq" class="btn-ghost">FAQ</a>
+      <a href="/#about" class="btn-ghost">About</a>
+    </div>
 
----
+    <div class="flex items-center gap-2">
+      <button onclick="location.href='/login.html'" class="btn-ghost hidden sm:inline-flex">Log In</button>
+      <button onclick="location.href='/create-deal.html'" class="btn-primary text-[13px]">
+        <i data-lucide="shield-plus" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Create Protected Deal</span>
+        <span class="sm:hidden">Deal</span>
+      </button>
+      <a href="/download/dealshield.apk" download class="btn-secondary hidden md:inline-flex text-[13px]">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        APK
+      </a>
+    </div>
+  </nav>
+</header>
 
-© 2026 DealShield. Built for Nigeria. Trusted worldwide.
+<!-- ═══════════════ LEGAL CONTENT ═══════════════ -->
+<section class="pt-28 pb-20 px-4">
+  <div class="max-w-3xl mx-auto container-px">
+    <div class="mb-8 text-center">
+      <div class="eyebrow mb-4" style="justify-content: center;">Legal</div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-forest-700 tracking-tight font-display mb-3">Terms of Service</h1>
+    </div>
+    <div class="card p-8 lg:p-12 legal-doc shadow-lg">
+      
+<p><strong>Last Updated: August 25, 2026</strong></p>
+
+<h2>1. Introduction</h2>
+
+<p>DealShield ("we", "us", "our") is an escrow platform that protects buyers and sellers in transactions involving cars, gold, currency, land, oil, and other high-value goods. By using DealShield (via our website, Android app, or WhatsApp bot), you agree to these Terms.</p>
+
+<h2>2. How DealShield Works</h2>
+
+<ol>
+<li><strong>Buyer</strong> deposits payment into DealShield escrow</li>
+<li><strong>Seller</strong> delivers the goods</li>
+<li><strong>Buyer</strong> confirms receipt</li>
+<li>DealShield releases funds to the seller (minus 2.5% commission)</li>
+</ol>
+
+<p>DealShield acts as a neutral third-party escrow agent. We do not take ownership of goods being traded.</p>
+
+<h2>3. Fees</h2>
+
+<ul>
+<li><strong>Commission</strong>: 2.5% of the transaction amount, charged to the seller on completed deals</li>
+<li><strong>Payment Gateway Fees</strong>: Paystack/Flutterwave processing fees (1.5%) apply to deposits</li>
+<li><strong>No Hidden Fees</strong>: We do not charge for account creation, wallet storage, or withdrawals</li>
+</ul>
+
+<h2>4. User Responsibilities</h2>
+
+<h3>Buyers must:</h3>
+<ul>
+<li>Pay the agreed amount into escrow before the seller ships</li>
+<li>Confirm receipt within 48 hours of delivery, or open a dispute</li>
+<li>Provide accurate delivery information</li>
+</ul>
+
+<h3>Sellers must:</h3>
+<ul>
+<li>Ship goods as described in the listing</li>
+<li>Upload video proof for high-value items (gold, land)</li>
+<li>Use verified logistics providers for tracked shipments</li>
+</ul>
+
+<h3>All users must:</h3>
+<ul>
+<li>Provide real name, phone number, and NIN for verification</li>
+<li>Not use DealShield for illegal goods, money laundering, or fraud</li>
+<li>Not create multiple accounts to manipulate reviews</li>
+</ul>
+
+<h2>5. Escrow Rules</h2>
+
+<ul>
+<li>Funds in escrow are held safely and cannot be accessed by DealShield for any purpose other than releasing to the seller or refunding the buyer</li>
+<li>If the buyer does not confirm receipt within 7 days and does not open a dispute, funds are automatically released to the seller</li>
+<li>If a dispute is opened, DealShield reviews evidence from both parties and resolves within 48 hours</li>
+</ul>
+
+<h2>6. Disputes</h2>
+
+<ul>
+<li>Either party may open a dispute before funds are released</li>
+<li>DealShield's decision is final and binding</li>
+<li>Evidence includes: chat logs, delivery confirmation, video proof, and tracking data</li>
+<li>If the seller is found at fault, the buyer receives a full refund</li>
+<li>If the buyer is found at fault (e.g., received goods but falsely claimed non-delivery), the seller receives the funds</li>
+</ul>
+
+<h2>7. Verification & Trust Badges</h2>
+
+<ul>
+<li><strong>NIN Verified</strong>: National Identity Number confirmed</li>
+<li><strong>BVN Verified</strong>: Bank Verification Number confirmed</li>
+<li><strong>Business Verified</strong>: CAC registration confirmed</li>
+<li><strong>Phone Verified</strong>: Phone number confirmed via OTP</li>
+</ul>
+
+<p>Trust badges are based on verified data. DealShield does not guarantee the character or reliability of any user.</p>
+
+<h2>8. AI Fraud Detection</h2>
+
+<p>DealShield uses AI to analyze listings for potential fraud. This is a tool to assist users, not a guarantee. DealShield is not liable for transactions that proceed despite an AI fraud warning.</p>
+
+<h2>9. Limitation of Liability</h2>
+
+<ul>
+<li>DealShield's maximum liability is limited to the commission charged on the specific transaction</li>
+<li>We are not liable for the quality, safety, or legality of goods traded</li>
+<li>We are not liable for indirect, consequential, or punitive damages</li>
+<li>We are not liable if a user misrepresents themselves despite our verification processes</li>
+</ul>
+
+<h2>10. Account Suspension</h2>
+
+<p>We may suspend accounts for:</p>
+<ul>
+<li>Fraud or attempted fraud</li>
+<li>Money laundering or illegal activity</li>
+<li>Creating fake reviews or manipulating ratings</li>
+<li>Violating these Terms</li>
+</ul>
+
+<p>Suspended accounts forfeit pending commissions. Funds in escrow are returned to their rightful owner.</p>
+
+<h2>11. Privacy</h2>
+
+<p>See our Privacy Policy for how we handle your data.</p>
+
+<h2>12. Governing Law</h2>
+
+<p>These Terms are governed by the laws of the Federal Republic of Nigeria. Disputes are resolved in Nigerian courts.</p>
+
+<h2>13. Contact</h2>
+
+<ul>
+<li>Email: support@dealshield.ng</li>
+<li>WhatsApp: +234 (DealShield bot)</li>
+<li>Website: https://dealshield-website.vercel.app</li>
+</ul>
+
+<hr>
+
+<p>© 2026 DealShield. Built for Nigeria. Trusted worldwide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="border-t border-forest-200/20 bg-white/40 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto container-px py-14">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div class="col-span-2 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 rounded-xl border border-forest-400/30 flex items-center justify-center" style="background: rgba(82,183,136,0.05);">
+            <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 15L80 30v25c0 20-15 35-30 40-15-5-30-20-30-40V30z" fill="none" stroke="#2d6a4f" stroke-width="6"/>
+              <text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="32" font-weight="900" fill="#2d6a4f">DS</text>
+            </svg>
+          </div>
+          <span class="font-bold text-[15px] text-forest-700 font-display">DealShield</span>
+        </a>
+        <p class="text-[13px] text-forest-500 leading-relaxed max-w-xs">Neutral escrow infrastructure for high-value transactions in Nigeria. Protect the deal, not just the money.</p>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Solutions</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Automotive</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Real Estate</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Gold &amp; Bullion</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Digital Assets</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FX Transactions</a></li>
+          <li><a href="/#solutions" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Bulk Commodities</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Company</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/#how-it-works" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">How It Works</a></li>
+          <li><a href="/#security" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Security</a></li>
+          <li><a href="/#calculator" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Fees</a></li>
+          <li><a href="/#faq" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FAQ</a></li>
+          <li><a href="/terms.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Terms</a></li>
+          <li><a href="/privacy.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[12px] font-bold text-forest-700 uppercase tracking-wider mb-4 font-display">Contact</h4>
+        <ul class="space-y-2.5">
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-8 border-t border-forest-200/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-[12px] text-forest-500">© 2026 DealShield Technologies. Built for Nigeria. Trusted worldwide.</p>
+      <p class="text-[12px] text-forest-500">Governed by the laws of the Federal Republic of Nigeria.</p>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /content-layer -->
+
+<script>
+  lucide.createIcons();
+
+  // Navbar scroll effect
+  var navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) navbar.classList.add('nav-scrolled');
+      else navbar.classList.remove('nav-scrolled');
+    });
+  }
+</script>
+
+</body>
+</html>
