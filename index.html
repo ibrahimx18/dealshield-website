@@ -1332,7 +1332,7 @@
     else navbar.classList.remove('nav-scrolled');
   });
 
-  // Reveal on scroll
+  // Reveal on scroll — with safety fallback
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1340,16 +1340,39 @@
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // GSAP
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Safety: force-reveal any .reveal elements still hidden after 2s (in case observer fails)
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 100) el.classList.add('visible');
+    });
+  }, 2000);
+
+  // Safety: force-reveal on scroll even if observer missed
+  let _revealScrollTimer = null;
+  window.addEventListener('scroll', () => {
+    if (_revealScrollTimer) return;
+    _revealScrollTimer = setTimeout(() => {
+      _revealScrollTimer = null;
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) el.classList.add('visible');
+      });
+    }, 100);
+  }, { passive: true });
+
+  // GSAP — disabled .from() animations that conflict with .reveal CSS (caused invisible sections)
+  // The IntersectionObserver + safety fallback above handles all reveal animations
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.from("#solutions .card", { opacity: 0, y: 30, duration: 0.6, stagger: 0.08, ease: "power2.out", scrollTrigger: { trigger: "#solutions", start: "top 80%" } });
-    gsap.from("#how-it-works .timeline-step", { opacity: 0, y: 20, duration: 0.5, stagger: 0.12, ease: "power2.out", scrollTrigger: { trigger: "#how-it-works", start: "top 75%" } });
-    gsap.from("#calculator .card", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: "#calculator", start: "top 80%" } });
-    gsap.from("#security .card", { opacity: 0, y: 20, duration: 0.5, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: "#security", start: "top 80%" } });
+    // Only animate y-position (not opacity) to avoid conflicting with .reveal class
+    gsap.from("#solutions .card", { y: 20, duration: 0.4, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: "#solutions", start: "top 85%" } });
+    gsap.from("#how-it-works .timeline-step", { y: 15, duration: 0.3, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: "#how-it-works", start: "top 80%" } });
+    gsap.from("#calculator .card", { y: 20, duration: 0.4, ease: "power3.out", scrollTrigger: { trigger: "#calculator", start: "top 85%" } });
+    gsap.from("#security .card", { y: 15, duration: 0.3, stagger: 0.05, ease: "power2.out", scrollTrigger: { trigger: "#security", start: "top 85%" } });
   }
 
   // FAQ
