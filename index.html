@@ -561,12 +561,14 @@
   }
   .chat-trigger:hover { transform: scale(1.08); }
 
-  /* ── Reveal ── */
-  .reveal {
+  /* ── Reveal (progressive enhancement) ── */
+  /* Content visible by default. JS adds .js class to enable animations. */
+  .js .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
+  .js .reveal.visible,
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
@@ -1323,6 +1325,8 @@
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
+  // Enable JS-only reveal animations (content stays visible if JS fails)
+  document.documentElement.classList.add('js');
   lucide.createIcons();
 
   // Navbar scroll
