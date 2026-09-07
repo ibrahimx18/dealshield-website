@@ -561,16 +561,15 @@
   }
   .chat-trigger:hover { transform: scale(1.08); }
 
-  /* ── Reveal (progressive enhancement) ── */
-  /* Content visible by default. JS adds .js class to enable animations. */
-  .js .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+  /* ── Reveal (progressive enhancement, no opacity hiding) ── */
+  .reveal {
+    transform: translateY(0);
+    transition: transform 0.6s ease;
   }
-  .js .reveal.visible,
-  .reveal.visible {
-    opacity: 1;
+  .js .reveal {
+    transform: translateY(20px);
+  }
+  .js .reveal.visible {
     transform: translateY(0);
   }
 
@@ -1327,16 +1326,8 @@
 <script>
   // Enable JS-only reveal animations (content stays visible if JS fails)
   document.documentElement.classList.add('js');
-  lucide.createIcons();
 
-  // Navbar scroll
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) navbar.classList.add('nav-scrolled');
-    else navbar.classList.remove('nav-scrolled');
-  });
-
-  // Reveal on scroll — with safety fallback
+  // Reveal on scroll — runs FIRST, before any CDN-dependent code
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1372,10 +1363,8 @@
       if (!targetId) return;
       const target = document.getElementById(targetId);
       if (!target) return;
-      // Reveal the section itself and all .reveal children
       target.classList.add('visible');
       target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-      // Also reveal nearby sections (in case user scrolls manually after)
       setTimeout(() => {
         document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
           const rect = el.getBoundingClientRect();
@@ -1385,16 +1374,26 @@
     });
   });
 
-  // GSAP — disabled .from() animations that conflict with .reveal CSS (caused invisible sections)
-  // The IntersectionObserver + safety fallback above handles all reveal animations
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-    // Only animate y-position (not opacity) to avoid conflicting with .reveal class
-    gsap.from("#solutions .card", { y: 20, duration: 0.4, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: "#solutions", start: "top 85%" } });
-    gsap.from("#how-it-works .timeline-step", { y: 15, duration: 0.3, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: "#how-it-works", start: "top 80%" } });
-    gsap.from("#calculator .card", { y: 20, duration: 0.4, ease: "power3.out", scrollTrigger: { trigger: "#calculator", start: "top 85%" } });
-    gsap.from("#security .card", { y: 15, duration: 0.3, stagger: 0.05, ease: "power2.out", scrollTrigger: { trigger: "#security", start: "top 85%" } });
-  }
+  // Icons — wrapped in try/catch so CDN failure doesn't break the page
+  try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch(e) { console.warn('Lucide icons failed to load'); }
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) navbar.classList.add('nav-scrolled');
+    else navbar.classList.remove('nav-scrolled');
+  });
+
+  // GSAP — only animate y-position, never opacity. Wrapped in try/catch.
+  try {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.from("#solutions .card", { y: 20, duration: 0.4, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: "#solutions", start: "top 85%" } });
+      gsap.from("#how-it-works .timeline-step", { y: 15, duration: 0.3, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: "#how-it-works", start: "top 80%" } });
+      gsap.from("#calculator .card", { y: 20, duration: 0.4, ease: "power3.out", scrollTrigger: { trigger: "#calculator", start: "top 85%" } });
+      gsap.from("#security .card", { y: 15, duration: 0.3, stagger: 0.05, ease: "power2.out", scrollTrigger: { trigger: "#security", start: "top 85%" } });
+    }
+  } catch(e) { console.warn('GSAP failed, sections still visible'); }
 
   // FAQ
   function toggleFAQ(btn) {
