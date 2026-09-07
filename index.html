@@ -92,6 +92,8 @@
 
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
   body {
     background-color: var(--color-bg);
     color: var(--color-text-primary);
@@ -690,7 +692,6 @@
     <div class="hidden lg:flex items-center gap-1">
       <a href="#how-it-works" class="btn-ghost">How It Works</a>
       <a href="#solutions" class="btn-ghost">Solutions</a>
-      <a href="#calculator" class="btn-ghost">Fees</a>
       <a href="#security" class="btn-ghost">Security</a>
       <a href="#faq" class="btn-ghost">FAQ</a>
       <a href="#about" class="btn-ghost">About</a>
@@ -1262,7 +1263,6 @@
         <ul class="space-y-2.5">
           <li><a href="#how-it-works" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">How It Works</a></li>
           <li><a href="#security" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Security</a></li>
-          <li><a href="#calculator" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Fees</a></li>
           <li><a href="#faq" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">FAQ</a></li>
           <li><a href="/terms.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Terms</a></li>
           <li><a href="/privacy.html" class="text-[13px] text-forest-500 hover:text-forest-600 transition-colors">Privacy</a></li>
@@ -1340,18 +1340,15 @@
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // Safety: force-reveal any .reveal elements still hidden after 2s (in case observer fails)
+  // Force-reveal all .reveal elements after 2s regardless of position
   setTimeout(() => {
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 100) el.classList.add('visible');
-    });
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
   }, 2000);
 
-  // Safety: force-reveal on scroll even if observer missed
+  // Force-reveal on scroll for any remaining hidden elements
   let _revealScrollTimer = null;
   window.addEventListener('scroll', () => {
     if (_revealScrollTimer) return;
@@ -1359,10 +1356,30 @@
       _revealScrollTimer = null;
       document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
         const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) el.classList.add('visible');
+        if (rect.top < window.innerHeight + 200) el.classList.add('visible');
       });
     }, 100);
   }, { passive: true });
+
+  // Force-reveal target section when nav links are clicked
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href').slice(1);
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      // Reveal the section itself and all .reveal children
+      target.classList.add('visible');
+      target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      // Also reveal nearby sections (in case user scrolls manually after)
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight + 200) el.classList.add('visible');
+        });
+      }, 300);
+    });
+  });
 
   // GSAP — disabled .from() animations that conflict with .reveal CSS (caused invisible sections)
   // The IntersectionObserver + safety fallback above handles all reveal animations
