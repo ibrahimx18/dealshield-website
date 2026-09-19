@@ -527,7 +527,8 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
         <i data-lucide="check" class="w-8 h-8" style="color:#22C55E"></i>
       </div>
       <h2 class="text-2xl font-bold text-forest-700 mb-2">Deal Created Successfully</h2>
-      <p class="text-[15px] text-forest-600 mb-6">Funds are now locked in escrow. Your counterparty has been notified.</p>
+      <p class="text-[15px] text-forest-600 mb-2">Your deal is live on DealShield. Share your deal link with the other party — they lock funds and the escrow protection starts.</p>
+        <p id="success-counterparty-note" class="hidden text-[13px] text-forest-500 mb-6">Ask your counterparty to create their DealShield account, then send them this Deal ID. Funds lock the moment they fund the deal.</p>
 
       <div class="rounded-lg p-5 mb-6" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
         <div class="text-[12px] text-forest-600 font-medium mb-2 uppercase tracking-wide">Deal ID</div>
@@ -781,17 +782,59 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
     submitError.classList.add('hidden');
 
     try {
-      const res = await fetch('/api/deal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dealData),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `Server error (${res.status})`);
+      // Real DealShield backend: authenticated seller lists the item,
+      // escrow deal is created against it. Counterparty is notified and
+      // locks funds when they accept from their side (dashboard/app).
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        location.href = '/login.html';
+        return;
       }
-      const json = await res.json();
-      document.getElementById('success-deal-id').textContent = json.deal_id;
+      const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+      // 1. Create the listing for this deal
+      const listingRes = await fetch('/listings', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          title: dealData.title || ('Escrow deal — ' + new Date().toLocaleDateString()),
+          description: (dealData.terms || 'Escrow deal created on dealshield.ng') +
+            ' | Counterparty: ' + dealData.counterparty +
+            ' | Inspection window: ' + dealData.inspection_hours + 'h',
+          category: dealData.category === 'cement' ? 'cement' : dealData.category,
+          price: dealData.amount,
+        }),
+      });
+      if (listingRes.status === 401) { location.href = '/login.html'; return; }
+      if (!listingRes.ok) {
+        const err = await listingRes.json().catch(() => ({}));
+        throw new Error(err.detail || `Could not create listing (${listingRes.status})`);
+      }
+      const listing = await listingRes.json();
+
+      // 2. Buyer-side escrow: if the logged-in user is the payer, they open escrow
+      //    on their own listing — the counterparty will see funds locked on accept.
+      //    Otherwise the counterparty creates escrow against this listing.
+      const escrowRes = await fetch('/escrow/create', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          listing_id: listing.id,
+          insured: false,
+          ...(dealData.category === 'cement' ? { bag_count: dealData.amount } : {}),
+        }),
+      });
+      let dealId = null;
+      if (escrowRes.ok) {
+        const esc = await escrowRes.json();
+        dealId = esc.id;
+      } else {
+        // Counterparty owns escrow creation — listing link is still the deal reference
+        dealId = listing.id;
+      }
+
+      document.getElementById('success-deal-id').textContent = dealId;
+      document.getElementById('success-counterparty-note').classList.remove('hidden');
       showStep(3);
     } catch (err) {
       submitError.textContent = err.message || 'Failed to create deal. Please try again.';
