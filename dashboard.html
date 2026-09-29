@@ -436,7 +436,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       <!-- Total Escrow Volume -->
       <div class="card p-5 card-hover">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Total Escrow Volume</span>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">Funded Deal Volume</span>
           <div class="w-9 h-9 rounded-lg bg-forest-400/10 flex items-center justify-center">
             <i data-lucide="wallet" class="w-[18px] h-[18px] text-forest-500"></i>
           </div>
@@ -618,7 +618,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       const res = await fetch(path, {
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
       });
-      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      if (res.status === 401) { DS.clearSession(); location.href = '/login.html'; throw new Error('Unauthorized'); }
       return res;
     }
   };
@@ -667,8 +667,14 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       const transactions = data.transactions || [];
 
       // Stats
-      const totalVolume = transactions.reduce((s, t) => s + (Number(t.amount) || 0), 0);
-      const active = transactions.filter(t => !['closed', 'released', 'cancelled', 'expired', 'refunded', 'split_resolution', 'seller_declined'].includes(t.status));
+      // Volume = principal of deals that were actually funded and not refunded/cancelled (W15).
+      const NOT_VOLUME = ['refunded', 'cancelled', 'expired', 'seller_declined'];
+      const totalVolume = transactions
+        .filter(t => t.funded_at && !NOT_VOLUME.includes(t.status) && !(t.status === 'closed' && t.admin_resolution === 'refund'))
+        .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+      // Each deal is counted in exactly one bucket: active XOR completed XOR other terminal.
+      const TERMINAL = ['closed', 'released', 'cancelled', 'expired', 'refunded', 'split_resolution', 'seller_declined'];
+      const active = transactions.filter(t => !TERMINAL.includes(t.status) && !['disputed', 'under_investigation'].includes(t.status));
       const completed = transactions.filter(t => t.status === 'released' || (t.status === 'closed' && !['refund', 'split'].includes(t.admin_resolution) && !!t.completed_at));
       const disputed = transactions.filter(t => ['disputed', 'under_investigation'].includes(t.status));
 
