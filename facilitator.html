@@ -559,8 +559,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
     const title = document.getElementById('title').value.trim();
     const category = document.getElementById('category').value;
-    const dealAmount = parseFloat(document.getElementById('deal_amount').value);
-    const facilitatorFee = parseFloat(document.getElementById('facilitator_fee').value);
+    const dealAmountStr = DS.money(document.getElementById('deal_amount').value);
+    const feeRaw = document.getElementById('facilitator_fee').value.trim();
+    const facilitatorFeeStr = /^0+(\.0{1,2})?$/.test(feeRaw) ? '0.00' : DS.money(feeRaw);
+    const dealAmount = Number(dealAmountStr);
+    const facilitatorFee = Number(facilitatorFeeStr);
     const buyerPhone = document.getElementById('buyer_phone').value.trim();
     const sellerPhone = document.getElementById('seller_phone').value.trim();
 
@@ -568,6 +571,8 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       showError('Please fill in all fields.');
       return;
     }
+    if (!dealAmountStr) { showError('Enter the deal amount in naira with at most 2 decimals (e.g. 15000.00).'); return; }
+    if (!facilitatorFeeStr) { showError('Enter the facilitator fee in naira with at most 2 decimals (0 or more).'); return; }
     if (!Number.isFinite(dealAmount) || dealAmount < 1000) { showError('Deal amount must be at least ₦1,000.'); return; }
     if (!Number.isFinite(facilitatorFee) || facilitatorFee < 0) { showError('Facilitator fee cannot be negative.'); return; }
 
@@ -583,11 +588,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     btn.disabled = true;
 
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch('/escrow/facilitate/create', {
+      const token = DS.token();
+      const res = await fetch(DS.url('/escrow/facilitate/create'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ title, category, deal_amount: dealAmount, facilitator_fee: facilitatorFee, buyer_phone: buyerPhone, seller_phone: sellerPhone })
+        body: JSON.stringify({ title, category, deal_amount: dealAmountStr, facilitator_fee: facilitatorFeeStr, buyer_phone: buyerPhone, seller_phone: sellerPhone })
       });
 
       const data = await res.json().catch(() => ({}));
