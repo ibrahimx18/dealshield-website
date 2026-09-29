@@ -3,6 +3,9 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/dashboard.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — DealShield</title>
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
@@ -11,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
@@ -731,7 +734,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
         }).join('');
       }
 
-      window.lucide?.createIcons();
+      DS.icons();
     } catch (err) {
       console.error('Dashboard load error:', err);
       ['card-volume', 'card-active', 'card-completed', 'card-pending'].forEach(id => document.getElementById(id).textContent = '—');
@@ -770,7 +773,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   // ── Init ──
   (async function init() {
     if (!checkAuth()) return;
-    window.lucide?.createIcons();
+    DS.icons();
     await loadUser();
     await loadDashboard();
   })();

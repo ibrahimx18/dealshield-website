@@ -3,6 +3,9 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/register.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Create Account</title>
 <meta name="theme-color" content="#f8faf9">
@@ -12,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
@@ -366,7 +369,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   <div class="card p-6 mt-24 mx-auto shadow-md">
     <h2 class="text-2xl font-bold text-forest-700 mb-1 text-center font-display">Create your DealShield account</h2>
     <p class="text-forest-600 text-sm text-center mb-5">Secure escrow for every transaction on dealshield.com.ng</p>
-    <form method="post" id="register-form" class="space-y-4" novalidate>
+    <form method="post" action="/register.html" id="register-form" class="space-y-4" novalidate>
       <!-- Full Name -->
       <div>
         <div class="input-wrap">
@@ -475,7 +478,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
 
 <script>
-  window.lucide?.createIcons();
+  DS.icons();
 
   function togglePassword() {
     const pw = document.getElementById('password');
@@ -487,7 +490,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       pw.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function clearErrors() {
@@ -546,7 +549,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     const btnHtml = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Creating account...';
-    window.lucide?.createIcons();
+    DS.icons();
 
     fetch('/auth/register', {
       method: 'POST',
@@ -577,7 +580,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       errorEl.classList.remove('hidden');
       btn.disabled = false;
       btn.innerHTML = btnHtml;
-      window.lucide?.createIcons();
+      DS.icons();
     });
   });
 

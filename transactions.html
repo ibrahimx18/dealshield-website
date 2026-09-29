@@ -3,6 +3,9 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/transactions.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Transactions — DealShield</title>
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
@@ -12,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
@@ -676,7 +679,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('toast-msg').textContent = msg;
     icon.setAttribute('data-lucide', type === 'error' ? 'alert-circle' : 'check-circle-2');
     icon.className = `w-5 h-5 ${type === 'error' ? 'text-danger' : 'text-positive'}`;
-    window.lucide?.createIcons();
+    DS.icons();
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4000);
   }
@@ -747,7 +750,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <!-- populated by JS -->
       </section>
     `;
-    window.lucide?.createIcons();
+    DS.icons();
     setFilter(currentFilter);
   }
 
@@ -805,7 +808,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <p class="text-sm text-forest-500">${allTransactions.length === 0 ? 'No deals have been created yet.' : 'Try adjusting your filters or search.'}</p>
           ${allTransactions.length === 0 ? `<button class="btn-primary mt-4" onclick="location.href='/create-deal.html'"><i data-lucide="plus" class="w-4 h-4"></i> Create your first deal</button>` : ''}
         </div>`;
-      window.lucide?.createIcons();
+      DS.icons();
       return;
     }
 
@@ -842,7 +845,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>`;
     }).join('');
 
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   async function loadTransactionList() {
@@ -865,7 +868,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <p class="text-sm text-forest-500 mb-4">Please try again later.</p>
           <button class="btn-secondary" onclick="loadTransactionList()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
         </div>`;
-      window.lucide?.createIcons();
+      DS.icons();
     }
   }
 
@@ -902,7 +905,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <button class="btn-primary" onclick="loadDetail()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
         </div>
       </div>`;
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function renderTimeline(status) {
@@ -1250,7 +1253,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       </section>
     `;
 
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   async function performAction(id, action, label) {
@@ -1368,7 +1371,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ─────────────────────────────────────────────────────────────
   (async function init() {
     if (!checkAuth()) return;
-    window.lucide?.createIcons();
+    DS.icons();
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');

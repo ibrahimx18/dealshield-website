@@ -3,6 +3,8 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/privacy.html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Privacy Policy</title>
 <meta name="description" content="DealShield Privacy Policy — How we collect, use, store and protect your data.">
@@ -15,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- === LIBRARIES === -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
 <script>
@@ -679,7 +681,7 @@
 </div><!-- /content-layer -->
 
 <script>
-  window.lucide?.createIcons();
+  DS.icons();
 
   // Navbar scroll effect
   var navbar = document.getElementById('navbar');

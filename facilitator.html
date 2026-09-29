@@ -3,13 +3,16 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/facilitator.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Facilitate a Deal — DealShield</title>
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
@@ -356,7 +359,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
       <!-- Form -->
       <div class="card p-6 lg:p-8">
-        <form method="post" id="facilitator-form" class="space-y-5">
+        <form method="post" action="/facilitator.html" id="facilitator-form" class="space-y-5">
           <!-- Deal Title -->
           <div>
             <label for="title" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Deal Title</label>
@@ -514,7 +517,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
 
 <script>
-  window.lucide?.createIcons();
+  DS.icons();
 
   function formatNaira(n) { return '₦' + Number(n || 0).toLocaleString('en-NG'); }
 
@@ -548,7 +551,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   function showError(msg) {
     document.getElementById('error-message').textContent = msg;
     document.getElementById('error-banner').classList.add('visible');
-    window.lucide?.createIcons();
+    DS.icons();
   }
   function clearError() { document.getElementById('error-banner').classList.remove('visible'); }
 
@@ -613,7 +616,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       document.getElementById('success-seller-receives').textContent = document.getElementById('seller-receives').textContent;
       document.getElementById('success-payout').textContent = formatNaira(facilitatorFee * 0.9);
       document.getElementById('success-modal').classList.add('visible');
-      window.lucide?.createIcons();
+      DS.icons();
     } catch (err) {
       showError('Could not confirm creation. Check Transactions before retrying to avoid a duplicate deal.');
       spinner.classList.remove('visible');
@@ -624,7 +627,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   });
 
   // Init
-  if (checkAuth()) { updateBreakdown(); window.lucide?.createIcons(); }
+  if (checkAuth()) { updateBreakdown(); DS.icons(); }
 
   // Navbar scroll effect (shared)
   var _dsNavbar = document.getElementById('navbar');

@@ -3,6 +3,9 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/settings.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Settings — DealShield</title>
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
@@ -12,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
@@ -508,7 +511,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <i data-lucide="key-round" class="w-[18px] h-[18px] text-forest-500"></i>
         <h2 class="text-sm font-bold text-forest-700">Change Password</h2>
       </div>
-      <form method="post" id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
+      <form method="post" action="/settings.html" id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
         <div id="pw-alert"></div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
@@ -771,7 +774,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   function showAlert(container, type, message) {
     const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'x-circle' : 'alert-triangle';
     container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${escapeHtml(message)}</div></div>`;
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -847,7 +850,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       btnEnable.style.display = 'inline-flex';
       btnDisable.style.display = 'none';
     }
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   async function enable2FA() {
@@ -893,7 +896,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('verify-code').value = '';
     document.getElementById('verify-alert').innerHTML = '';
     m.classList.add('show');
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function closeEnableModal() {
@@ -931,7 +934,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('disable-code').value = '';
     document.getElementById('disable-alert').innerHTML = '';
     document.getElementById('disable-modal').classList.add('show');
-    window.lucide?.createIcons();
+    DS.icons();
   }
   function closeDisableModal() {
     document.getElementById('disable-modal').classList.remove('show');
@@ -1012,7 +1015,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     const isPw = input.type === 'password';
     input.type = isPw ? 'text' : 'password';
     btn.querySelector('[data-lucide]').setAttribute('data-lucide', isPw ? 'eye-off' : 'eye');
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1071,7 +1074,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>
       </div>`;
     }).join('') + '</div>';
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1117,7 +1120,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <div class="text-[14px] text-forest-700 mt-0.5">${r.value}</div>
         </div>
       </div>`).join('') + '</div>';
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1125,7 +1128,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ═══════════════════════════════════════════
   (function init() {
     if (!checkAuth()) return;
-    window.lucide?.createIcons();
+    DS.icons();
     fetch2FAStatus();
     fetchSessions();
     fetchAccount();

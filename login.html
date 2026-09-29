@@ -3,6 +3,9 @@
 <head>
 <script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.dealshield.ng; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://dealshield.com.ng/login.html">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Log In</title>
 <meta name="description" content="Log in to your DealShield account to manage escrow transactions and protected deals.">
@@ -15,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- === LIBRARIES === -->
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
 <script>
@@ -573,7 +576,7 @@
         </div>
 
         <!-- Form -->
-        <form method="post" id="login-form" class="space-y-4" novalidate>
+        <form method="post" action="/login.html" id="login-form" class="space-y-4" novalidate>
           <!-- Email / Phone -->
           <div>
             <label for="email_or_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
@@ -651,7 +654,7 @@
           <span id="error-message-2fa"></span>
         </div>
 
-        <form method="post" id="twofa-form" class="space-y-4" novalidate>
+        <form method="post" action="/login.html" id="twofa-form" class="space-y-4" novalidate>
           <div>
             <label for="twofa-code" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
               Authentication or Backup Code
@@ -752,7 +755,7 @@
 
 <script>
   // ── Initialize Lucide Icons ──
-  window.lucide?.createIcons();
+  DS.icons();
 
   // ── Password visibility toggle ──
   function togglePassword() {
@@ -765,7 +768,7 @@
       input.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   // ── Error handling helpers ──
@@ -774,7 +777,7 @@
     const msg = document.getElementById('error-message');
     msg.textContent = message;
     banner.classList.add('visible');
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function clearError() {
@@ -875,7 +878,7 @@
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('twofa-section').style.display = 'block';
     document.getElementById('twofa-code').focus();
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function showLoginForm() {
@@ -928,7 +931,7 @@
     const banner = document.getElementById('error-banner-2fa');
     document.getElementById('error-message-2fa').textContent = message;
     banner.classList.add('visible');
-    window.lucide?.createIcons();
+    DS.icons();
   }
 
   function setSubmitting2FA(state) {
