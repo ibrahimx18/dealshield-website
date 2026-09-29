@@ -755,7 +755,7 @@
 
 <script>
   // ── Initialize Lucide Icons ──
-  DS.icons();
+  window.DS && DS.icons();
 
   // ── Password visibility toggle ──
   function togglePassword() {
@@ -768,7 +768,7 @@
       input.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   // ── Error handling helpers ──
@@ -777,7 +777,7 @@
     const msg = document.getElementById('error-message');
     msg.textContent = message;
     banner.classList.add('visible');
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   function clearError() {
@@ -878,7 +878,7 @@
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('twofa-section').style.display = 'block';
     document.getElementById('twofa-code').focus();
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   function showLoginForm() {
@@ -931,7 +931,7 @@
     const banner = document.getElementById('error-banner-2fa');
     document.getElementById('error-message-2fa').textContent = message;
     banner.classList.add('visible');
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   function setSubmitting2FA(state) {

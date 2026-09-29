@@ -544,7 +544,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
       var nav = document.getElementById('navbar');
       if (nav) window.addEventListener('scroll', function () { nav.classList.toggle('nav-scrolled', window.scrollY > 20); });
     } catch (e) { /* decorative */ }
-    DS.icons();
+    window.DS && DS.icons();
   })();
 </script>
 

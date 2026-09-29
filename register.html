@@ -478,7 +478,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
 
 <script>
-  DS.icons();
+  window.DS && DS.icons();
 
   function togglePassword() {
     const pw = document.getElementById('password');
@@ -490,7 +490,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       pw.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   function clearErrors() {
@@ -549,7 +549,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     const btnHtml = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Creating account...';
-    DS.icons();
+    window.DS && DS.icons();
 
     fetch('/auth/register', {
       method: 'POST',
@@ -580,7 +580,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       errorEl.classList.remove('hidden');
       btn.disabled = false;
       btn.innerHTML = btnHtml;
-      DS.icons();
+      window.DS && DS.icons();
     });
   });
 

@@ -734,7 +734,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
         }).join('');
       }
 
-      DS.icons();
+      window.DS && DS.icons();
     } catch (err) {
       console.error('Dashboard load error:', err);
       ['card-volume', 'card-active', 'card-completed', 'card-pending'].forEach(id => document.getElementById(id).textContent = '—');
@@ -773,7 +773,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   // ── Init ──
   (async function init() {
     if (!checkAuth()) return;
-    DS.icons();
+    window.DS && DS.icons();
     await loadUser();
     await loadDashboard();
   })();

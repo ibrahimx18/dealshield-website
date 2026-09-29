@@ -1444,7 +1444,7 @@
   });
 
   // Icons — wrapped in try/catch so CDN failure doesn't break the page
-  DS.icons();
+  window.DS && DS.icons();
 
   // Navbar scroll
   const navbar = document.getElementById('navbar');

@@ -774,7 +774,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   function showAlert(container, type, message) {
     const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'x-circle' : 'alert-triangle';
     container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${escapeHtml(message)}</div></div>`;
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -850,7 +850,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       btnEnable.style.display = 'inline-flex';
       btnDisable.style.display = 'none';
     }
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   async function enable2FA() {
@@ -896,7 +896,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('verify-code').value = '';
     document.getElementById('verify-alert').innerHTML = '';
     m.classList.add('show');
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   function closeEnableModal() {
@@ -934,7 +934,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('disable-code').value = '';
     document.getElementById('disable-alert').innerHTML = '';
     document.getElementById('disable-modal').classList.add('show');
-    DS.icons();
+    window.DS && DS.icons();
   }
   function closeDisableModal() {
     document.getElementById('disable-modal').classList.remove('show');
@@ -1015,7 +1015,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     const isPw = input.type === 'password';
     input.type = isPw ? 'text' : 'password';
     btn.querySelector('[data-lucide]').setAttribute('data-lucide', isPw ? 'eye-off' : 'eye');
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1074,7 +1074,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>
       </div>`;
     }).join('') + '</div>';
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1120,7 +1120,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <div class="text-[14px] text-forest-700 mt-0.5">${r.value}</div>
         </div>
       </div>`).join('') + '</div>';
-    DS.icons();
+    window.DS && DS.icons();
   }
 
   // ═══════════════════════════════════════════
@@ -1128,7 +1128,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ═══════════════════════════════════════════
   (function init() {
     if (!checkAuth()) return;
-    DS.icons();
+    window.DS && DS.icons();
     fetch2FAStatus();
     fetchSessions();
     fetchAccount();
