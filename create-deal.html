@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Create Protected Deal</title>
@@ -13,8 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -139,7 +139,7 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
   .fade-in { animation: fadeIn 0.4s ease forwards; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 }
-.hidden { display: none !important; }
+[hidden] { display: none !important; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
@@ -305,6 +305,7 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -410,82 +411,80 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
       <div class="step-dot" id="dot-3">3</div>
     </div>
 
-    <!-- ═══════ STEP 1: FORM ═══════ -->
+    <!-- STEP 1: FORM -->
     <div id="form-step" class="card p-6 sm:p-8 fade-in" style="box-shadow: var(--shadow-lg);">
-      <form id="deal-form" class="space-y-5">
+      <form id="deal-form" class="space-y-5" method="post" action="/create-deal.html" data-mode="seller" novalidate>
 
-        <!-- Counterparty -->
-        <div>
-          <label class="field-label" for="counterparty">Counterparty Email or Phone <span style="color:var(--color-accent)">*</span></label>
-          <input type="text" id="counterparty" name="counterparty" class="input-field" placeholder="e.g. seller@email.com or +234 801 234 5678" required>
-          <div class="field-hint">The person on the other side of this transaction.</div>
+        <div id="buyer-fields" hidden>
+          <div class="field-label">Seller listing</div>
+          <div id="buyer-listing" class="text-[14px] text-forest-700 font-semibold" role="status">Loading listing...</div>
+          <div class="field-hint">You are the buyer. Opening an escrow request does not move money; the seller must accept, then you fund it from Transactions.</div>
         </div>
 
-        <!-- Deal Title -->
-        <div>
-          <label class="field-label" for="title">Deal Title <span style="color:var(--color-text-muted);font-weight:400">(optional)</span></label>
-          <input type="text" id="title" name="title" class="input-field" placeholder="e.g. 2023 Toyota Camry — Lagos">
+        <div id="seller-fields" class="space-y-5">
+          <div class="rounded-lg p-3 text-[13px] text-forest-600" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
+            As the seller you publish a listing. Your buyer then opens the escrow from their own account using the link you receive. Everything below except private contact details is <strong>publicly visible</strong>.
+          </div>
+
+          <div>
+            <label class="field-label" for="title">Listing Title <span style="color:var(--color-accent)">*</span></label>
+            <input type="text" id="title" name="title" class="input-field" maxlength="200" placeholder="e.g. 2023 Toyota Camry - Lagos">
+          </div>
+
+          <div>
+            <label class="field-label" for="category">Category <span style="color:var(--color-accent)">*</span></label>
+            <select id="category" name="category" class="input-field">
+              <option value="" disabled selected>Select a category...</option>
+              <option value="cars">Cars &amp; Vehicles</option>
+              <option value="crypto">Crypto (USDT / BTC)</option>
+              <option value="realestate">Real Estate</option>
+              <option value="gold">Gold &amp; Precious Metals</option>
+              <option value="fx">FX (Dollar Exchange)</option>
+              <option value="cement">Cement / Bulk Commodity</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="field-label" for="amount">Price in Naira (principal) <span style="color:var(--color-accent)">*</span></label>
+            <input type="text" inputmode="decimal" id="amount" name="amount" class="input-field" placeholder="e.g. 5000000.00" autocomplete="off">
+            <div class="field-hint">The money amount the buyer pays for the goods. Greater than 0, at most 2 decimals.</div>
+          </div>
+
+          <div>
+            <label class="field-label" for="description">Public Description <span style="color:var(--color-text-muted);font-weight:400">(optional)</span></label>
+            <textarea id="description" name="description" rows="4" maxlength="4500" class="input-field" placeholder="Condition, location, what is included. Do NOT include phone numbers, emails or private terms - this text is public." style="resize:vertical;"></textarea>
+            <div class="field-hint">Public. Share contact details and private terms directly with your buyer, not here. The buyer inspection window is set by DealShield (currently 24 hours after delivery), not by this form.</div>
+          </div>
         </div>
 
-        <!-- Category -->
-        <div>
-          <label class="field-label" for="category">Category <span style="color:var(--color-accent)">*</span></label>
-          <select id="category" name="category" class="input-field" required>
-            <option value="" disabled selected>Select a category…</option>
-            <option value="cars">Cars &amp; Vehicles</option>
-            <option value="crypto">Crypto (USDT / BTC)</option>
-            <option value="realestate">Real Estate</option>
-            <option value="gold">Gold &amp; Precious Metals</option>
-            <option value="fx">FX (Dollar Exchange)</option>
-            <option value="cement">Cement / Bulk Commodity (₦10/bag)</option>
-          </select>
+        <div id="bag-section" hidden>
+          <label class="field-label" for="bag-count">Quantity (number of bags) <span style="color:var(--color-accent)">*</span></label>
+          <input type="text" inputmode="numeric" id="bag-count" name="bag_count" class="input-field" placeholder="e.g. 600" autocomplete="off">
+          <div class="field-hint">Quantity is separate from the naira price. Cement commission is NGN 10 per bag.</div>
         </div>
 
-        <!-- Amount -->
-        <div>
-          <label class="field-label" for="amount">Transaction Amount (₦) <span style="color:var(--color-accent)">*</span></label>
-          <input type="number" id="amount" name="amount" class="input-field" placeholder="e.g. 5000000" min="1" step="1" required>
-          <div id="cement-hint" class="field-hint hidden" style="color:var(--color-accent)">Enter the number of bags. Fee is ₦10 per bag.</div>
-        </div>
-
-        <!-- Inspection window -->
-        <div>
-          <label class="field-label" for="inspection_hours">Inspection Window (hours) <span style="color:var(--color-accent)">*</span></label>
-          <input type="number" id="inspection_hours" name="inspection_hours" class="input-field" value="48" min="1" max="720" required>
-          <div class="field-hint">Time the buyer has to inspect before funds auto-release. Default: 48 hours.</div>
-        </div>
-
-        <!-- Terms -->
-        <div>
-          <label class="field-label" for="terms">Additional Agreed Terms <span style="color:var(--color-text-muted);font-weight:400">(optional)</span></label>
-          <textarea id="terms" name="terms" rows="4" class="input-field" placeholder="e.g. Vehicle must have clean papers, no accident history. Payment release contingent on physical inspection at Lagos office." style="resize:vertical;"></textarea>
-        </div>
-
-        <!-- Fee breakdown -->
-        <div id="fee-breakdown" class="rounded-lg p-4 hidden" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
+        <!-- Fee estimate -->
+        <div id="fee-breakdown" class="rounded-lg p-4" hidden style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
           <div class="flex items-center gap-2 mb-3">
             <i data-lucide="receipt" class="w-4 h-4 text-forest-500"></i>
-            <span class="text-[13px] font-semibold text-forest-700">Fee Breakdown</span>
+            <span class="text-[13px] font-semibold text-forest-700">Estimate (final figures are set by DealShield)</span>
           </div>
           <div id="fee-lines"></div>
-          <div class="fee-line fee-total">
-            <span class="fee-label">Total (Amount + Fee)</span>
-            <span class="fee-value" id="fee-total-display">₦0</span>
-          </div>
         </div>
 
-        <!-- Submit -->
+        <div id="form-error" class="error-msg" role="alert" hidden></div>
+
         <div class="pt-2">
           <button type="submit" class="btn-primary w-full" id="review-btn">
             <i data-lucide="file-check" class="w-4 h-4"></i>
-            Review Deal
+            <span id="review-btn-label">Review Listing</span>
           </button>
         </div>
       </form>
     </div>
 
-    <!-- ═══════ STEP 2: REVIEW ═══════ -->
-    <div id="review-step" class="card p-6 sm:p-8 hidden" style="box-shadow: var(--shadow-lg);">
+    <!-- STEP 2: REVIEW -->
+    <div id="review-step" class="card p-6 sm:p-8" hidden style="box-shadow: var(--shadow-lg);">
       <div class="flex items-center gap-2 mb-6">
         <div class="w-8 h-8 rounded border border-forest-400/30 flex items-center justify-center">
           <i data-lucide="clipboard-check" class="w-4 h-4 text-forest-500"></i>
@@ -495,17 +494,12 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
 
       <div id="review-summary" class="mb-6"></div>
 
-      <!-- Fee recap -->
-      <div class="rounded-lg p-4 mb-6" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
+      <div id="review-fee-box" class="rounded-lg p-4 mb-6" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
         <div class="flex items-center gap-2 mb-3">
           <i data-lucide="receipt" class="w-4 h-4 text-forest-500"></i>
-          <span class="text-[13px] font-semibold text-forest-700">Fee Summary</span>
+          <span class="text-[13px] font-semibold text-forest-700">Estimate</span>
         </div>
         <div id="review-fee-lines"></div>
-        <div class="fee-line fee-total">
-          <span class="fee-label">Total Payable</span>
-          <span class="fee-value" id="review-fee-total">₦0</span>
-        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
@@ -515,28 +509,26 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
         </button>
         <button type="button" class="btn-primary flex-1" id="confirm-btn">
           <i data-lucide="shield-check" class="w-4 h-4"></i>
-          Confirm &amp; Submit
+          <span id="confirm-btn-label">Confirm &amp; Submit</span>
         </button>
       </div>
-      <div id="submit-error" class="error-msg hidden text-center"></div>
+      <div id="submit-error" class="error-msg text-center" role="alert" hidden></div>
     </div>
 
-    <!-- ═══════ STEP 3: SUCCESS ═══════ -->
-    <div id="success-step" class="card p-8 text-center hidden" style="box-shadow: var(--shadow-lg);">
+    <!-- STEP 3: SUCCESS (only after a real ID came back) -->
+    <div id="success-step" class="card p-8 text-center" hidden style="box-shadow: var(--shadow-lg);">
       <div class="success-icon mb-5">
         <i data-lucide="check" class="w-8 h-8" style="color:#22C55E"></i>
       </div>
-      <h2 class="text-2xl font-bold text-forest-700 mb-2">Deal Created Successfully</h2>
-      <p class="text-[15px] text-forest-600 mb-2">Your deal is live on DealShield. Share your deal link with the other party — they lock funds and the escrow protection starts.</p>
-        <p id="success-counterparty-note" class="hidden text-[13px] text-forest-500 mb-6">Ask your counterparty to create their DealShield account, then send them this Deal ID. Funds lock the moment they fund the deal.</p>
+      <h2 id="success-title" class="text-2xl font-bold text-forest-700 mb-2">Saved</h2>
+      <p id="success-message" class="text-[15px] text-forest-600 mb-6"></p>
 
       <div class="rounded-lg p-5 mb-6" style="background: var(--color-surface-elevated); border: 1px solid var(--color-border);">
-        <div class="text-[12px] text-forest-600 font-medium mb-2 uppercase tracking-wide">Deal ID</div>
+        <div id="success-label" class="text-[12px] text-forest-600 font-medium mb-2 uppercase tracking-wide">ID</div>
         <div id="success-deal-id" class="text-[15px] font-bold text-forest-700 break-all font-mono"></div>
+        <div id="success-link-row" class="mt-3 text-[13px] text-forest-600 break-all" hidden>Buyer link: <span id="success-link" class="font-mono"></span></div>
         <div class="mt-3 pt-3 border-t border-[var(--color-border)] flex items-center justify-center gap-2">
-          <span class="status-pill" style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(245,158,11,0.12);color:#F59E0B;">
-            <i data-lucide="lock" class="w-3 h-3"></i> Locked
-          </span>
+          <span id="success-status" class="status-pill" style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(245,158,11,0.12);color:#92400E;"></span>
         </div>
       </div>
 
@@ -610,258 +602,13 @@ select.input-field { appearance: none; background-image: url("data:image/svg+xml
 </footer>
 
 
+<script src="/assets/create-deal.js"></script>
 <script>
-  lucide.createIcons();
-
-  // ── State ──
-  let currentStep = 1;
-  let dealData = {};
-  let feeData = { fee: 0, total: 0, lines: [] };
-
-  // ── DOM refs ──
-  const formStep = document.getElementById('form-step');
-  const reviewStep = document.getElementById('review-step');
-  const successStep = document.getElementById('success-step');
-  const dealForm = document.getElementById('deal-form');
-  const feeBreakdown = document.getElementById('fee-breakdown');
-  const feeLines = document.getElementById('fee-lines');
-  const feeTotalDisplay = document.getElementById('fee-total-display');
-  const reviewFeeLines = document.getElementById('review-fee-lines');
-  const reviewFeeTotal = document.getElementById('review-fee-total');
-  const reviewSummary = document.getElementById('review-summary');
-  const submitError = document.getElementById('submit-error');
-
-  // ── Helpers ──
-  function formatNaira(n) {
-    if (isNaN(n) || n === null || n === undefined) n = 0;
-    return '₦' + Math.round(n).toLocaleString('en-NG');
-  }
-
-  function updateStepIndicator(step) {
-    const dots = [document.getElementById('dot-1'), document.getElementById('dot-2'), document.getElementById('dot-3')];
-    const lines = [document.getElementById('line-1'), document.getElementById('line-2')];
-    dots.forEach((d, i) => {
-      d.classList.remove('active', 'done');
-      if (i + 1 < step) { d.classList.add('done'); d.textContent = '✓'; }
-      else if (i + 1 === step) { d.classList.add('active'); d.textContent = String(i + 1); }
-      else { d.textContent = String(i + 1); }
-    });
-    lines.forEach((l, i) => { l.classList.toggle('done', i + 1 < step); });
-  }
-
-  function showStep(step) {
-    currentStep = step;
-    formStep.classList.toggle('hidden', step !== 1);
-    reviewStep.classList.toggle('hidden', step !== 2);
-    successStep.classList.toggle('hidden', step !== 3);
-    updateStepIndicator(step);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // ── Fee calculation ──
-  function calculateFee(category, amount) {
-    amount = Number(amount) || 0;
-    const lines = [];
-
-    if (category === 'cement') {
-      // ₦10 per bag — amount field is number of bags
-      const fee = amount * 10;
-      lines.push({ label: 'Cement fee (₦10/bag)', value: fee });
-      return { fee, total: fee + amount, lines, note: 'amount_is_bags' };
-    }
-
-    if (category === 'crypto') {
-      const fee = amount * 0.005;
-      lines.push({ label: 'Crypto fee (0.5% flat)', value: fee });
-      return { fee, total: fee + amount, lines };
-    }
-
-    // Tiered fee for cars, realestate, gold, fx
-    let rate, rateLabel;
-    if (amount < 500000) { rate = 0.015; rateLabel = '1.5%'; }
-    else if (amount < 5000000) { rate = 0.010; rateLabel = '1.0%'; }
-    else if (amount < 20000000) { rate = 0.005; rateLabel = '0.5%'; }
-    else { rate = 0; rateLabel = '₦100,000 cap'; }
-
-    let fee;
-    if (amount >= 20000000) {
-      fee = 100000;
-      lines.push({ label: `Escrow fee (${rateLabel})`, value: fee });
-    } else {
-      fee = amount * rate;
-      lines.push({ label: `Escrow fee (${rateLabel})`, value: fee });
-    }
-    return { fee, total: fee + amount, lines };
-  }
-
-  function renderFeeBreakdown(container, totalEl, data) {
-    container.innerHTML = data.lines.map(l => `
-      <div class="fee-line">
-        <span class="fee-label">${l.label}</span>
-        <span class="fee-value">${formatNaira(l.value)}</span>
-      </div>
-    `).join('');
-    totalEl.textContent = formatNaira(data.total);
-  }
-
-  // ── Live fee update ──
-  function updateFee() {
-    const category = document.getElementById('category').value;
-    const amount = document.getElementById('amount').value;
-
-    // Toggle cement hint
-    document.getElementById('cement-hint').classList.toggle('hidden', category !== 'cement');
-
-    if (!category || !amount || amount <= 0) {
-      feeBreakdown.classList.add('hidden');
-      return;
-    }
-
-    feeData = calculateFee(category, amount);
-    renderFeeBreakdown(feeLines, feeTotalDisplay, feeData);
-    feeBreakdown.classList.remove('hidden');
-  }
-
-  document.getElementById('category').addEventListener('change', updateFee);
-  document.getElementById('amount').addEventListener('input', updateFee);
-
-  // ── Form submit → review ──
-  dealForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const counterparty = document.getElementById('counterparty').value.trim();
-    const title = document.getElementById('title').value.trim();
-    const category = document.getElementById('category').value;
-    const amount = Number(document.getElementById('amount').value);
-    const inspection_hours = Number(document.getElementById('inspection_hours').value);
-    const terms = document.getElementById('terms').value.trim();
-
-    if (!counterparty || !category || !amount || amount <= 0) return;
-
-    // Recalculate fee to be sure
-    feeData = calculateFee(category, amount);
-
-    dealData = { counterparty, title, category, amount, inspection_hours, terms, fee: feeData.fee };
-
-    // Build review summary
-    const categoryLabels = {
-      cars: 'Cars & Vehicles', crypto: 'Crypto (USDT / BTC)', realestate: 'Real Estate',
-      gold: 'Gold & Precious Metals', fx: 'FX (Dollar Exchange)', cement: 'Cement / Bulk Commodity',
-    };
-    const amountLabel = category === 'cement'
-      ? `${amount.toLocaleString()} bags`
-      : formatNaira(amount);
-
-    reviewSummary.innerHTML = `
-      <div class="summary-row"><span class="summary-label">Counterparty</span><span class="summary-value">${escapeHtml(counterparty)}</span></div>
-      ${title ? `<div class="summary-row"><span class="summary-label">Deal Title</span><span class="summary-value">${escapeHtml(title)}</span></div>` : ''}
-      <div class="summary-row"><span class="summary-label">Category</span><span class="summary-value">${categoryLabels[category] || category}</span></div>
-      <div class="summary-row"><span class="summary-label">Amount</span><span class="summary-value">${amountLabel}</span></div>
-      <div class="summary-row"><span class="summary-label">Inspection Window</span><span class="summary-value">${inspection_hours} hours</span></div>
-      ${terms ? `<div class="summary-row"><span class="summary-label">Terms</span><span class="summary-value" style="max-width:70%">${escapeHtml(terms)}</span></div>` : ''}
-    `;
-
-    renderFeeBreakdown(reviewFeeLines, reviewFeeTotal, feeData);
-    showStep(2);
-  });
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  // ── Back button ──
-  document.getElementById('back-btn').addEventListener('click', () => showStep(1));
-
-  // ── Confirm & submit to API ──
-  document.getElementById('confirm-btn').addEventListener('click', async () => {
-    const btn = document.getElementById('confirm-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Submitting…';
-    lucide.createIcons();
-    submitError.classList.add('hidden');
-
-    try {
-      // Real DealShield backend: authenticated seller lists the item,
-      // escrow deal is created against it. Counterparty is notified and
-      // locks funds when they accept from their side (dashboard/app).
-      const token = localStorage.getItem('access_token');
-      if (!token) {
-        location.href = '/login.html';
-        return;
-      }
-      const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
-
-      // 1. Create the listing for this deal
-      const listingRes = await fetch('/listings', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          title: dealData.title || ('Escrow deal — ' + new Date().toLocaleDateString()),
-          description: (dealData.terms || 'Escrow deal created on dealshield.ng') +
-            ' | Counterparty: ' + dealData.counterparty +
-            ' | Inspection window: ' + dealData.inspection_hours + 'h',
-          category: dealData.category === 'cement' ? 'cement' : dealData.category,
-          price: dealData.amount,
-        }),
-      });
-      if (listingRes.status === 401) { location.href = '/login.html'; return; }
-      if (!listingRes.ok) {
-        const err = await listingRes.json().catch(() => ({}));
-        throw new Error(err.detail || `Could not create listing (${listingRes.status})`);
-      }
-      const listing = await listingRes.json();
-
-      // 2. Buyer-side escrow: if the logged-in user is the payer, they open escrow
-      //    on their own listing — the counterparty will see funds locked on accept.
-      //    Otherwise the counterparty creates escrow against this listing.
-      const escrowRes = await fetch('/escrow/create', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          listing_id: listing.id,
-          insured: false,
-          ...(dealData.category === 'cement' ? { bag_count: dealData.amount } : {}),
-        }),
-      });
-      let dealId = null;
-      if (escrowRes.ok) {
-        const esc = await escrowRes.json();
-        dealId = esc.id;
-      } else {
-        // Counterparty owns escrow creation — listing link is still the deal reference
-        dealId = listing.id;
-      }
-
-      document.getElementById('success-deal-id').textContent = dealId;
-      document.getElementById('success-counterparty-note').classList.remove('hidden');
-      showStep(3);
-    } catch (err) {
-      submitError.textContent = err.message || 'Failed to create deal. Please try again.';
-      submitError.classList.remove('hidden');
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="shield-check" class="w-4 h-4"></i> Confirm &amp; Submit';
-      lucide.createIcons();
-    }
-  });
-
-  // ── New deal button ──
-  document.getElementById('new-deal-btn').addEventListener('click', () => {
-    dealForm.reset();
-    document.getElementById('inspection_hours').value = 48;
-    feeBreakdown.classList.add('hidden');
-    showStep(1);
-  });
-
-  // Navbar scroll effect (shared)
-  var _dsNavbar = document.getElementById('navbar');
-  if (_dsNavbar) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) _dsNavbar.classList.add('nav-scrolled');
-      else _dsNavbar.classList.remove('nav-scrolled');
-    });
-  }
-
+  // Navbar scroll effect (decorative)
+  try {
+    var _dsNavbar = document.getElementById('navbar');
+    if (_dsNavbar) window.addEventListener('scroll', function () { _dsNavbar.classList.toggle('nav-scrolled', window.scrollY > 20); });
+  } catch (e) { /* decorative */ }
 </script>
 
 </div><!-- /content-layer -->
