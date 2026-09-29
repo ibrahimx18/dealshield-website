@@ -1,10 +1,16 @@
 # DealShield robots.txt
-# Allow all crawlers full access
+# Public marketing/legal pages may be indexed. Account pages also carry
+# <meta name="robots" content="noindex">. robots.txt is NOT access control.
 User-agent: *
 Allow: /
-
-# Disallow API endpoints from indexing
 Disallow: /api/
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /dashboard.html
+Disallow: /kyc.html
+Disallow: /settings.html
+Disallow: /transactions.html
+Disallow: /facilitator.html
+Disallow: /create-deal.html
 
-# Reference sitemap
 Sitemap: https://dealshield.com.ng/sitemap.xml
