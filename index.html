@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,7 +15,7 @@
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://dealshield.ng/">
+<meta property="og:url" content="https://dealshield.com.ng/">
 <meta property="og:title" content="DealShield — Escrow Protection for High-Value Transactions in Nigeria">
 <meta property="og:description" content="Neutral escrow protection for Cars, Gold, FX, Real Estate, Crypto and bulk commodities. Verified counterparties, structured verification and controlled fund release.">
 
@@ -28,10 +29,9 @@
 
 <!-- === LIBRARIES === -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
 
 <script>
   tailwind.config = {
@@ -630,6 +630,7 @@
     .fade-in-delay-3 { animation: fadeIn 0.8s ease 0.3s forwards; opacity: 0; }
   }
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen">
 
@@ -1045,7 +1046,7 @@
     <div class="mb-10 lg:mb-12 text-center reveal">
       <div class="eyebrow mb-4" style="justify-content: center;">Fees</div>
       <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-forest-700 tracking-tight mb-4 font-display">Know your protection cost<br>before you commit</h2>
-      <p class="text-[14px] lg:text-[15px] text-forest-600 max-w-lg mx-auto">Calculate exact escrow charges for your transaction. No hidden fees.</p>
+      <p class="text-[14px] lg:text-[15px] text-forest-600 max-w-lg mx-auto">Estimate current service fees. Confirm all charges before funding; funded cancellations or refunds may incur up to NGN 5,000.</p>
     </div>
 
     <div class="card p-8 lg:p-10 reveal">
@@ -1054,7 +1055,7 @@
           <label class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Transaction Category</label>
           <select id="calc-category" onchange="calculateFee()" class="input-field cursor-pointer">
             <option value="standard">General Deals (Cars, Land, FX, Gold)</option>
-            <option value="crypto">Crypto P2P / USDT Swaps (0.5%)</option>
+            <option value="crypto">Crypto (current service fee estimate)</option>
             <option value="cement">Cement Logistics (₦10 per bag)</option>
           </select>
         </div>
@@ -1071,7 +1072,7 @@
             <div id="calc-result" class="text-3xl font-extrabold gradient-green font-display">₦50,000</div>
           </div>
           <div class="flex justify-between items-center pt-3 border-t border-forest-200/20">
-            <span class="text-[13px] text-forest-500 font-medium">Total Amount (Fee + Principal)</span>
+            <span class="text-[13px] text-forest-500 font-medium">Estimated buyer funding</span>
             <span id="calc-total" class="text-[15px] font-bold text-forest-700">₦5,050,000</span>
           </div>
         </div>
@@ -1340,7 +1341,7 @@
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -1352,9 +1353,9 @@
 </footer>
 
 <!-- ═══════════════ AI CHAT MODAL ═══════════════ -->
-<div id="ai-chat-trigger" onclick="toggleChatModal()" class="chat-trigger" aria-label="Open DealShield AI Assistant">
+<button type="button" id="ai-chat-trigger" onclick="toggleChatModal()" class="chat-trigger" aria-label="Open DealShield AI Assistant">
   <i data-lucide="bot" class="w-5 h-5"></i>
-</div>
+</button>
 
 <div id="chat-modal-overlay" class="fixed inset-0 bg-forest-900/30 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
   <div class="w-full max-w-md h-[520px] card rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-forest-200/30">
@@ -1471,31 +1472,23 @@
 
   // Fee Calculator
   function calculateFee() {
-    const cat = document.getElementById('calc-category').value;
+    const category = document.getElementById('calc-category').value;
     const amountInput = document.getElementById('calc-amount');
-    const amountLabel = document.getElementById('amount-label');
-    const breakdownText = document.getElementById('fee-breakdown-text');
-    const resultEl = document.getElementById('calc-result');
-    const totalEl = document.getElementById('calc-total');
-    let val = parseFloat(amountInput.value) || 0;
-    let fee = 0;
-    if (cat === 'cement') {
-      amountLabel.innerText = "Number of Cement Bags";
-      fee = val * 10;
-      breakdownText.innerText = `₦10 per bag (${val.toLocaleString()} bags)`;
-    } else if (cat === 'crypto') {
-      amountLabel.innerText = "Transaction Amount (₦)";
-      fee = val * 0.005;
-      breakdownText.innerText = "0.5% OTC/USDT Escrow Rate";
-    } else {
-      amountLabel.innerText = "Transaction Amount (₦)";
-      if (val < 500000) { fee = val * 0.015; breakdownText.innerText = "1.5% (Under ₦500,000)"; }
-      else if (val <= 5000000) { fee = val * 0.01; breakdownText.innerText = "1.0% (₦500k – ₦5M)"; }
-      else if (val <= 20000000) { fee = val * 0.005; breakdownText.innerText = "0.5% (₦5M – ₦20M)"; }
-      else { fee = 100000; breakdownText.innerText = "Maximum ₦100k cap (Above ₦20M)"; }
+    const value = Number(amountInput.value);
+    const valid = Number.isFinite(value) && value >= 0 && (category !== 'cement' || Number.isInteger(value));
+    document.getElementById('amount-label').textContent = category === 'cement' ? 'Number of cement bags' : 'Transaction amount (NGN)';
+    if (!valid) {
+      document.getElementById('fee-breakdown-text').textContent = 'Enter a valid non-negative amount (whole bags for cement).';
+      document.getElementById('calc-result').textContent = '-';
+      document.getElementById('calc-total').textContent = '-';
+      return;
     }
-    resultEl.innerText = "₦" + Math.round(fee).toLocaleString();
-    totalEl.innerText = "₦" + Math.round(val + fee).toLocaleString();
+    let fee = value < 500000 ? value * 0.015 : value < 5000000 ? value * 0.01 : value < 20000000 ? value * 0.005 : 100000;
+    if (category === 'cement') fee = value * 10;
+    const format = amount => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount);
+    document.getElementById('calc-result').textContent = format(fee);
+    document.getElementById('fee-breakdown-text').textContent = category === 'cement' ? 'NGN 10 per bag. Principal must be specified separately.' : 'Current service commission estimate, deducted from seller proceeds. Gateway costs are additional.';
+    document.getElementById('calc-total').textContent = category === 'cement' ? 'Depends on the price in naira' : format(value + Math.round(Math.min(value * 0.015, 50000) / 2 * 100) / 100);
   }
   calculateFee();
 
@@ -1520,14 +1513,15 @@
     try {
       const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
       const data = await res.json();
+      if (!res.ok || !data.reply) throw new Error('Chat unavailable');
       const botDiv = document.createElement('div');
       botDiv.className = 'bg-forest-50/40 border border-forest-200/20 p-3 rounded-lg max-w-[85%] text-forest-700';
-      botDiv.innerText = data.reply || "DealShield escrow protection guarantees funds are held securely until deal completion.";
+      botDiv.innerText = data.reply;
       messages.appendChild(botDiv);
     } catch (err) {
       const botDiv = document.createElement('div');
       botDiv.className = 'bg-forest-50/40 border border-forest-200/20 p-3 rounded-lg max-w-[85%] text-forest-700';
-      botDiv.innerText = "DealShield protects high-value deals across Nigeria. You can lock escrow funds via bank transfer or USDT.";
+      botDiv.innerText = "The chat service is unavailable. Please try again later. Do not share passwords, identity documents or payment details here.";
       messages.appendChild(botDiv);
     }
     messages.scrollTop = messages.scrollHeight;
