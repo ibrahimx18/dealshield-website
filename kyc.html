@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — KYC Verification</title>
@@ -11,8 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -267,6 +267,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen flex items-center justify-center">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -393,7 +394,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
     </div>
 
     <!-- Form -->
-    <form id="kyc-form" class="space-y-5" onsubmit="handleVerify(event)">
+    <form method="post" id="kyc-form" class="space-y-5" onsubmit="handleVerify(event)">
       <!-- NIN -->
       <div>
         <label class="field-label" for="nin">National Identification Number (NIN)</label>
@@ -429,6 +430,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
         <i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>
         <span id="btn-text">Complete Verification</span>
       </button>
+<div class="mt-4"><label for="rc_number" class="block text-sm font-medium mb-2">CAC registration number (required for business verification)</label><input id="rc_number" class="input-field" autocomplete="off" placeholder="RC number"></div>
     </form>
   </div>
 
@@ -481,7 +483,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -494,16 +496,13 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
 
 
 <script>
-  lucide.createIcons();
+  window.lucide?.createIcons();
 
   const API_BASE = window.location.origin;
   let token = localStorage.getItem('access_token');
 
   // Redirect to login if no token
-  if (!token) {
-    showError('Authentication required. Redirecting to login...');
-    setTimeout(() => { location.href = '/login.html'; }, 1800);
-  }
+  if (!token) location.replace('/login.html');
 
   // Elements
   const form = document.getElementById('kyc-form');
@@ -537,14 +536,14 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
     successBox.classList.add('hidden');
     errorText.textContent = msg;
     errorBox.classList.remove('hidden');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function showSuccess(msg) {
     errorBox.classList.add('hidden');
     successText.textContent = msg;
     successBox.classList.remove('hidden');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function hideAlerts() {
@@ -556,13 +555,13 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
     if (loading) {
       submitBtn.disabled = true;
       btnText.textContent = 'Verifying...';
-      btnIcon.outerHTML = '<span class="spinner" id="btn-icon"></span>';
+      document.getElementById('btn-icon').outerHTML = '<span class="spinner" id="btn-icon"></span>';
     } else {
       submitBtn.disabled = false;
       btnText.textContent = 'Complete Verification';
       const existing = document.getElementById('btn-icon');
       if (existing) existing.outerHTML = '<i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>';
-      lucide.createIcons();
+      window.lucide?.createIcons();
     }
   }
 
@@ -600,6 +599,11 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
     const nin = document.getElementById('nin').value.trim();
     const bvn = document.getElementById('bvn').value.trim();
     const businessName = document.getElementById('business_name').value.trim();
+    if (businessName && !document.getElementById('rc_number').value.trim()) {
+      showError('Enter your CAC registration number for business verification.');
+      setLoading(false);
+      return;
+    }
 
     // Client-side validation
     if (!/^\d{11}$/.test(nin)) {
@@ -616,7 +620,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
     try {
       // Step 1: NIN verification
       activateStep(stepNIN);
-      await apiCall('/auth/verify-nin', {});
+      await apiCall('/auth/verify-nin', { nin });
       markStepDone(stepNIN);
       activateStep(stepBVN);
       showSuccess('NIN verified successfully. Verifying BVN...');
@@ -629,7 +633,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
 
       // Step 3: Business verification (optional)
       if (businessName) {
-        await apiCall('/auth/verify-business', { business_name: businessName });
+        await apiCall('/auth/verify-business', { business_name: businessName, rc_number: document.getElementById('rc_number').value.trim() });
       }
       markStepDone(stepBiz);
 

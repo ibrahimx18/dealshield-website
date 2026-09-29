@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Privacy Policy</title>
@@ -15,8 +16,7 @@
 
 <!-- === LIBRARIES === -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
 <script>
   tailwind.config = {
@@ -385,6 +385,7 @@
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen">
 
@@ -611,7 +612,7 @@
 
 <ul>
 <li>Email: privacy@dealshield.ng</li>
-<li>Website: https://dealshield-website.vercel.app</li>
+<li>Website: https://dealshield.com.ng</li>
 </ul>
 
 <hr>
@@ -664,7 +665,7 @@
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -678,7 +679,7 @@
 </div><!-- /content-layer -->
 
 <script>
-  lucide.createIcons();
+  window.lucide?.createIcons();
 
   // Navbar scroll effect
   var navbar = document.getElementById('navbar');

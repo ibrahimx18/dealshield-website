@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Log In</title>
@@ -15,8 +16,7 @@
 
 <!-- === LIBRARIES === -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
 <script>
   tailwind.config = {
@@ -462,6 +462,7 @@
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -572,7 +573,7 @@
         </div>
 
         <!-- Form -->
-        <form id="login-form" class="space-y-4" novalidate>
+        <form method="post" id="login-form" class="space-y-4" novalidate>
           <!-- Email / Phone -->
           <div>
             <label for="email_or_phone" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
@@ -650,21 +651,21 @@
           <span id="error-message-2fa"></span>
         </div>
 
-        <form id="twofa-form" class="space-y-4" novalidate>
+        <form method="post" id="twofa-form" class="space-y-4" novalidate>
           <div>
             <label for="twofa-code" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-600 mb-2">
-              Authentication Code
+              Authentication or Backup Code
             </label>
             <input
               type="text"
               id="twofa-code"
               name="twofa-code"
               placeholder="000000"
-              maxlength="6"
+              maxlength="8"
               class="input-field text-center text-2xl font-bold tracking-[0.5em]"
               autocomplete="one-time-code"
-              inputmode="numeric"
-              pattern="[0-9]{6}"
+              inputmode="text"
+              pattern="([0-9]{6}|[A-Fa-f0-9]{8})"
               required
             >
           </div>
@@ -737,7 +738,7 @@
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -751,7 +752,7 @@
 
 <script>
   // ── Initialize Lucide Icons ──
-  lucide.createIcons();
+  window.lucide?.createIcons();
 
   // ── Password visibility toggle ──
   function togglePassword() {
@@ -764,7 +765,7 @@
       input.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   // ── Error handling helpers ──
@@ -773,7 +774,7 @@
     const msg = document.getElementById('error-message');
     msg.textContent = message;
     banner.classList.add('visible');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function clearError() {
@@ -874,7 +875,7 @@
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('twofa-section').style.display = 'block';
     document.getElementById('twofa-code').focus();
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function showLoginForm() {
@@ -890,8 +891,8 @@
     clearError();
     const code = document.getElementById('twofa-code').value.trim();
 
-    if (!code || code.length !== 6) {
-      showError2FA('Please enter the 6-digit code from your authenticator app.');
+    if (!/^(?:[0-9]{6}|[a-fA-F0-9]{8})$/.test(code)) {
+      showError2FA('Enter a 6-digit authenticator code or an 8-character backup code.');
       return;
     }
 
@@ -913,6 +914,7 @@
         return;
       }
 
+      if (!data.access_token) { showError2FA('No session token returned. Please try again.'); setSubmitting2FA(false); return; }
       localStorage.setItem('access_token', data.access_token);
       if (data.refresh_token) localStorage.setItem('refresh_token', data.refresh_token);
       window.location.href = '/dashboard.html';
@@ -926,7 +928,7 @@
     const banner = document.getElementById('error-banner-2fa');
     document.getElementById('error-message-2fa').textContent = message;
     banner.classList.add('visible');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function setSubmitting2FA(state) {

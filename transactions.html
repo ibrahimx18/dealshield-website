@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Transactions — DealShield</title>
@@ -12,8 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -373,6 +373,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="min-h-screen">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -436,19 +437,19 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
 
   <!-- Nav -->
   <nav class="flex-1 px-3 py-4 space-y-1">
-    <a class="sidebar-link" onclick="location.href='/dashboard.html'">
+    <a class="sidebar-link" href="/dashboard.html">
       <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
     </a>
-    <a class="sidebar-link active" onclick="location.href='/transactions.html'">
+    <a class="sidebar-link active" href="/transactions.html">
       <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
     </a>
-    <a class="sidebar-link" onclick="location.href='/transactions.html'">
+    <a class="sidebar-link" href="/transactions.html">
       <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
     </a>
-    <a class="sidebar-link" onclick="location.href='/kyc.html'">
+    <a class="sidebar-link" href="/kyc.html">
       <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
     </a>
-    <a class="sidebar-link" onclick="location.href='/settings.html'">
+    <a class="sidebar-link" href="/settings.html">
       <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
     </a>
   </nav>
@@ -483,7 +484,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>
         <div class="hidden sm:block leading-tight">
           <div id="user-name" class="text-sm font-semibold text-forest-700">—</div>
-          <div class="text-[11px] text-forest-500">Verified Account</div>
+          <div class="text-[11px] text-forest-500">Account</div>
         </div>
       </div>
       <button class="text-forest-500 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
@@ -551,7 +552,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -631,18 +632,19 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     refunded:            { cls: 'status-released',  icon: 'rotate-ccw',       label: 'Refunded',            step: 11 },
     split_resolution:    { cls: 'status-released',  icon: 'split',            label: 'Split Resolution',    step: 12 },
     cancelled:           { cls: 'status-pending',   icon: 'x-circle',         label: 'Cancelled',           step: 13 },
+    seller_declined: { cls: 'status-pending', icon: 'x-circle', label: 'Seller Declined', step: 14 },
     expired:             { cls: 'status-pending',   icon: 'clock',            label: 'Expired',             step: 14 },
   };
 
   // Terminal statuses — these are the "end of happy path" or "end of resolution"
-  const TERMINAL_STATUSES = ['closed', 'released', 'refunded', 'split_resolution', 'cancelled', 'expired'];
+  const TERMINAL_STATUSES = ['closed', 'released', 'refunded', 'split_resolution', 'cancelled', 'expired', 'seller_declined'];
 
   // ─────────────────────────────────────────────────────────────
   //  Gateway fee calculation (1.5% capped at ₦50,000, split 50/50)
   // ─────────────────────────────────────────────────────────────
   function calcGatewayFee(amount) {
     const fee = Math.min(amount * 0.015, 50000);
-    return Math.round(fee);
+    return Math.round(fee * 100) / 100;
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -654,10 +656,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     return true;
   }
 
-  function handleLogout() {
-    localStorage.clear();
-    location.href = '/login.html';
-  }
+  function handleLogout() { return DS.logout(); }
 
   function toggleSidebar(force) {
     const sb = document.getElementById('sidebar');
@@ -677,7 +676,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('toast-msg').textContent = msg;
     icon.setAttribute('data-lucide', type === 'error' ? 'alert-circle' : 'check-circle-2');
     icon.className = `w-5 h-5 ${type === 'error' ? 'text-danger' : 'text-positive'}`;
-    lucide.createIcons();
+    window.lucide?.createIcons();
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4000);
   }
@@ -685,8 +684,10 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ─────────────────────────────────────────────────────────────
   //  LIST VIEW
   // ─────────────────────────────────────────────────────────────
+  let currentUser = null;
+  let actionPending = false;
   let allTransactions = [];
-  let currentFilter = 'all';
+  let currentFilter = new URLSearchParams(location.search).get('filter') || 'all';
   let searchTerm = '';
 
   async function loadUser() {
@@ -694,6 +695,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       const res = await API.get('/auth/me');
       if (res.ok) {
         const user = await res.json();
+        currentUser = user;
         document.getElementById('user-name').textContent = user.name || 'User';
       }
     } catch (e) { /* fall back to stored data */ }
@@ -745,8 +747,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <!-- populated by JS -->
       </section>
     `;
-    lucide.createIcons();
-    renderTransactionCards();
+    window.lucide?.createIcons();
+    setFilter(currentFilter);
   }
 
   function setFilter(f) {
@@ -767,11 +769,11 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
 
     // Filter tabs
     if (currentFilter === 'active') {
-      filtered = filtered.filter(t => !['closed', 'cancelled', 'expired', 'released', 'refunded', 'split_resolution'].includes(t.status));
+      filtered = filtered.filter(t => !TERMINAL_STATUSES.includes(t.status));
     } else if (currentFilter === 'disputed') {
       filtered = filtered.filter(t => ['disputed', 'under_investigation'].includes(t.status));
     } else if (currentFilter === 'completed') {
-      filtered = filtered.filter(t => ['closed', 'released'].includes(t.status));
+      filtered = filtered.filter(t => t.status === 'released' || (t.status === 'closed' && !!t.completed_at && !['refund', 'split'].includes(t.admin_resolution)));
     }
 
     // Search
@@ -780,7 +782,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         const id = String(t.id).toLowerCase();
         const cat = (t.category || '').toLowerCase();
         const title = (t.listing_title || '').toLowerCase();
-        return id.includes(searchTerm) || cat.includes(searchTerm) || title.includes(searchTerm);
+        return ('ds-' + id.padStart(6, '0')).includes(searchTerm) || id.includes(searchTerm) || cat.includes(searchTerm) || title.includes(searchTerm);
       });
     }
 
@@ -803,20 +805,20 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <p class="text-sm text-forest-500">${allTransactions.length === 0 ? 'No deals have been created yet.' : 'Try adjusting your filters or search.'}</p>
           ${allTransactions.length === 0 ? `<button class="btn-primary mt-4" onclick="location.href='/create-deal.html'"><i data-lucide="plus" class="w-4 h-4"></i> Create your first deal</button>` : ''}
         </div>`;
-      lucide.createIcons();
+      window.lucide?.createIcons();
       return;
     }
 
     grid.innerHTML = filtered.map(t => {
       const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
       const cat = escapeHtml(t.category || t.listing_title || 'General');
-      const dealId = `DS-${String(t.id).padStart(6, '0')}`;
-      const gatewayFee = t.gateway_fee || calcGatewayFee(t.amount || 0);
+      const dealId = `DS-${String(Number(t.id)).padStart(6, '0')}`;
+      const gatewayFee = t.gateway_fee ?? 0;
       const isFacilitated = t.is_facilitated || t.facilitator_name;
       const hasGateway = t.gateway_fee !== null && t.gateway_fee !== undefined;
 
       return `
-        <div class="card p-5 card-hover cursor-pointer" onclick="location.href='/transactions.html?id=${t.id}'">
+        <div class="card p-5 card-hover cursor-pointer" onclick="location.href='/transactions.html?id=${Number(t.id)}'">
           <!-- Top row -->
           <div class="flex items-start justify-between mb-3">
             <div>
@@ -824,7 +826,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
               <div class="text-xs text-forest-500 mt-0.5">${cat}</div>
             </div>
             <span class="status-pill ${s.cls}">
-              <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
+              <i data-lucide="${s.icon}" class="w-3 h-3"></i>${escapeHtml(s.label)}
             </span>
           </div>
 
@@ -840,7 +842,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>`;
     }).join('');
 
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   async function loadTransactionList() {
@@ -863,7 +865,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <p class="text-sm text-forest-500 mb-4">Please try again later.</p>
           <button class="btn-secondary" onclick="loadTransactionList()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
         </div>`;
-      lucide.createIcons();
+      window.lucide?.createIcons();
     }
   }
 
@@ -900,14 +902,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <button class="btn-primary" onclick="loadDetail()"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Retry</button>
         </div>
       </div>`;
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function renderTimeline(status) {
     const currentStep = STATUS_MAP[status] ? STATUS_MAP[status].step : 0;
     // For terminal/dispute statuses, we don't show a linear progression
     const isDisputePath = ['disputed', 'under_investigation', 'refunded', 'split_resolution'].includes(status);
-    const isCancelledPath = ['cancelled', 'expired'].includes(status);
+    const isCancelledPath = ['cancelled', 'expired', 'seller_declined'].includes(status);
     const isCompletePath = ['released', 'closed'].includes(status);
 
     // Happy path ordering (exclude terminal/diversion statuses from the main timeline)
@@ -924,7 +926,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       let lineCls = '';
       if (isCancelledPath) {
         // Show first few steps as completed up to where it was cancelled, then greyed out
-        if (i < currentIndex || currentIndex === -1) { cls = 'completed'; lineCls = 'completed'; }
+        if (i === 0) { cls = 'completed'; lineCls = 'completed'; }
         else if (i === currentIndex) { cls = 'current'; }
         else { cls = 'future'; }
       } else if (isDisputePath) {
@@ -947,13 +949,13 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   }
 
   function renderFeeBreakdown(t) {
-    const amount = t.amount || 0;
+    const amount = Number(t.amount) || 0;
     const isFacilitated = t.is_facilitated || t.facilitator_name;
-    const facilitatorFee = t.facilitator_fee || 0;
-    const gatewayFee = t.gateway_fee || (t.gateway_fee === 0 ? 0 : calcGatewayFee(amount));
-    const buyerGatewayShare = t.buyer_gateway_fee || Math.round(gatewayFee / 2);
-    const sellerGatewayShare = t.seller_gateway_fee || Math.round(gatewayFee / 2);
-    const dealshieldCommission = t.dealshield_commission || 0;
+    const facilitatorFee = Number(t.facilitator_fee) || 0;
+    const gatewayFee = t.gateway_fee ?? 0;
+    const buyerGatewayShare = t.buyer_gateway_share ?? 0;
+    const sellerGatewayShare = t.seller_gateway_share ?? 0;
+    const dealshieldCommission = t.dealshield_cut ?? 0;
     const facilitatorPayout = t.facilitator_payout || 0;
     const hasGateway = t.gateway_fee !== null && t.gateway_fee !== undefined;
 
@@ -990,15 +992,21 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     if (isFacilitated) {
       rows += `
       <div class="flex items-center justify-between py-2.5 border-b border-[var(--color-border)]">
-        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5 text-forest-500"></i>DealShield Commission (10%)</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5 text-forest-500"></i>DealShield Revenue Recorded</span>
         <span class="text-sm font-bold text-forest-500">${formatNaira(dealshieldCommission)}</span>
       </div>
       <div class="flex items-center justify-between py-2.5">
-        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5 text-positive"></i>Facilitator Payout (90%)</span>
+        <span class="text-sm text-forest-600 flex items-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5 text-positive"></i>Facilitator Payout Recorded</span>
         <span class="text-sm font-bold text-positive">${formatNaira(facilitatorPayout)}</span>
       </div>`;
     }
 
+    rows += `<div class="py-2.5 text-sm text-forest-600">Insurance: ${formatNaira(t.insurance_fee)} · Seller commission: ${formatNaira(t.commission)}</div>`;
+    if (!TERMINAL_STATUSES.includes(t.status)) {
+      const estimatedGateway = ['created', 'seller_accepted'].includes(t.status) ? calcGatewayFee(amount + facilitatorFee + Number(t.insurance_fee || 0)) : Number(gatewayFee);
+      const estimatedBuyerShare = Math.round(estimatedGateway * 50) / 100;
+      rows += `<div class="py-2.5 text-sm text-forest-600">Estimated buyer total: ${formatNaira(amount + facilitatorFee + Number(t.insurance_fee || 0) + estimatedBuyerShare)}<br>Estimated seller net: ${formatNaira(amount - Number(t.commission || 0) - (estimatedGateway - estimatedBuyerShare))}<br>Final transfer amount is shown on the virtual account. Payouts depend on the final resolution.</div>`;
+    }
     return rows;
   }
 
@@ -1062,7 +1070,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <div class="grid grid-cols-2 gap-4">
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Account Number</div>
-            <div class="text-sm font-mono font-bold text-forest-700">${va.account_number || '—'}</div>
+            <div class="text-sm font-mono font-bold text-forest-700">${escapeHtml(va.account_number || '—')}</div>
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Bank Name</div>
@@ -1074,151 +1082,71 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Expires</div>
-            <div class="text-sm font-bold text-forest-700">${va.expiry ? new Date(va.expiry).toLocaleDateString('en-NG', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</div>
+            <div class="text-sm font-bold text-forest-700">${va.expires_at ? new Date(va.expires_at).toLocaleDateString('en-NG', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</div>
           </div>
         </div>
         ${va.account_number ? `
-        <button class="btn-secondary w-full mt-4" onclick="copyAccount('${va.account_number}')">
+        <button class="btn-secondary w-full mt-4" onclick="copyAccount()">
           <i data-lucide="copy" class="w-4 h-4"></i> Copy Account Number
         </button>` : ''}
       </div>`;
   }
 
-  function copyAccount(num) {
-    navigator.clipboard.writeText(num).then(() => showToast('Account number copied', 'success'));
+  function copyAccount(num = currentTransaction.virtual_account.account_number) {
+    navigator.clipboard.writeText(num).then(() => showToast('Account number copied', 'success')).catch(() => showToast('Copy failed. Copy the number manually.', 'error'));
   }
 
-  function renderActionButtons(t) {
-    const status = t.status;
-    const id = t.id;
-    let buttons = '';
+  function transactionRole(transaction) {
+    if (!currentUser) return '';
+    if (String(currentUser.id) === String(transaction.buyer_id)) return 'buyer';
+    if (String(currentUser.id) === String(transaction.seller_id)) return 'seller';
+    if (String(currentUser.id) === String(transaction.facilitator_id)) return 'facilitator';
+    return '';
+  }
 
-    switch (status) {
-      case 'created':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'accept', 'Accept Deal')">
-            <i data-lucide="check" class="w-4 h-4"></i> Accept Deal
-          </button>`;
-        break;
-      case 'seller_accepted':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'fund', 'Fund Deal')">
-            <i data-lucide="wallet" class="w-4 h-4"></i> Fund Deal
-          </button>
-          <button class="btn-secondary" onclick="performAction('${id}', 'generate-account', 'Generate Virtual Account')">
-            <i data-lucide="landmark" class="w-4 h-4"></i> Generate Virtual Account
-          </button>`;
-        break;
-      case 'payment_pending':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'generate-account', 'Generate Virtual Account')">
-            <i data-lucide="landmark" class="w-4 h-4"></i> Generate Virtual Account
-          </button>`;
-        break;
-      case 'funded':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'mark-fulfilled', 'Mark Fulfilled')">
-            <i data-lucide="package-check" class="w-4 h-4"></i> Mark Fulfilled
-          </button>`;
-        break;
-      case 'seller_fulfilling':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'start-review', 'Start Review')">
-            <i data-lucide="eye" class="w-4 h-4"></i> Start Review
-          </button>`;
-        break;
-      case 'buyer_review':
-        buttons = `
-          <button class="btn-primary" onclick="performAction('${id}', 'approve', 'Approve & Release')">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Approve & Release
-          </button>
-          <button class="btn-danger" onclick="performAction('${id}', 'dispute', 'Raise Dispute')">
-            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Raise Dispute
-          </button>`;
-        break;
-      case 'disputed':
-      case 'under_investigation':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-danger/10 border border-danger/20">
-            <i data-lucide="search" class="w-5 h-5 text-danger"></i>
-            <div>
-              <div class="text-sm font-bold text-danger">Under Investigation</div>
-              <div class="text-xs text-forest-500">DealShield is reviewing this dispute. You'll be notified when resolved.</div>
-            </div>
-          </div>`;
-        break;
-      case 'released':
-      case 'closed':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-positive/10 border border-positive/20">
-            <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
-            <div>
-              <div class="text-sm font-bold text-positive">Deal Completed</div>
-              <div class="text-xs text-forest-500">Funds have been released successfully.</div>
-            </div>
-          </div>`;
-        break;
-      case 'refunded':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-400/10 border border-forest-400/20">
-            <i data-lucide="rotate-ccw" class="w-5 h-5 text-forest-500"></i>
-            <div>
-              <div class="text-sm font-bold text-forest-500">Refunded</div>
-              <div class="text-xs text-forest-500">Funds have been refunded to the buyer.</div>
-            </div>
-          </div>`;
-        break;
-      case 'split_resolution':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-400/10 border border-forest-400/20">
-            <i data-lucide="split" class="w-5 h-5 text-forest-500"></i>
-            <div>
-              <div class="text-sm font-bold text-forest-500">Split Resolution</div>
-              <div class="text-xs text-forest-500">Funds were split between buyer and seller.</div>
-            </div>
-          </div>`;
-        break;
-      case 'cancelled':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-50 border border-[var(--color-border-strong)]">
-            <i data-lucide="x-circle" class="w-5 h-5 text-forest-500"></i>
-            <div>
-              <div class="text-sm font-bold text-forest-600">Deal Cancelled</div>
-              <div class="text-xs text-forest-500">This deal has been cancelled.</div>
-            </div>
-          </div>`;
-        break;
-      case 'expired':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-forest-50 border border-[var(--color-border-strong)]">
-            <i data-lucide="clock" class="w-5 h-5 text-forest-500"></i>
-            <div>
-              <div class="text-sm font-bold text-forest-600">Deal Expired</div>
-              <div class="text-xs text-forest-500">This deal has expired without completion.</div>
-            </div>
-          </div>`;
-        break;
-      case 'buyer_approved':
-        buttons = `
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-[var(--radius-md)] bg-positive/10 border border-positive/20">
-            <i data-lucide="check-circle-2" class="w-5 h-5 text-positive"></i>
-            <div>
-              <div class="text-sm font-bold text-positive">Buyer Approved</div>
-              <div class="text-xs text-forest-500">Funds are being released to the seller.</div>
-            </div>
-          </div>`;
-        break;
-      default:
-        buttons = '';
+  function availableActions(transaction) {
+    const role = transactionRole(transaction);
+    const status = transaction.status;
+    const actions = [];
+    if (!['buyer', 'seller'].includes(role)) return actions;
+    if (status === 'created') {
+      if (transaction.is_facilitated && !transaction[role + '_accepted_terms']) actions.push(['accept-terms', 'Accept Deal Terms']);
+      if (!transaction.is_facilitated && role === 'seller') actions.push(['accept', 'Accept Deal']);
+      if (role === 'seller') actions.push(['decline', 'Decline Deal']);
     }
+    if (role === 'buyer' && status === 'seller_accepted') actions.push(['fund', 'Fund from Wallet']);
+    if (role === 'buyer' && ['seller_accepted', 'payment_pending'].includes(status)) actions.push(['generate-account', 'Generate Virtual Account']);
+    if (role === 'seller' && status === 'funded') actions.push(['fulfill', 'Begin Fulfilment']);
+    if (role === 'seller' && status === 'seller_fulfilling') actions.push(['mark-delivered', 'Mark Delivered']);
+    if (role === 'buyer' && status === 'buyer_review') actions.push(['approve', 'Approve & Release']);
+    if (['funded', 'seller_fulfilling', 'buyer_review'].includes(status)) actions.push(['dispute', 'Raise Dispute']);
+    if (['created', 'seller_accepted', 'funded'].includes(status)) actions.push(['cancel', 'Cancel Deal']);
+    if (['released', 'refunded', 'split_resolution', 'seller_declined'].includes(status)) actions.push(['close', 'Close Deal']);
+    return actions;
+  }
 
-    return buttons;
+  function renderActionButtons(transaction) {
+    const actions = availableActions(transaction);
+    const role = transactionRole(transaction);
+    let notice = '';
+    if (transaction.is_facilitated && transaction.status === 'created') {
+      notice = `Buyer terms: ${transaction.buyer_accepted_terms ? 'accepted' : 'pending'} · Seller terms: ${transaction.seller_accepted_terms ? 'accepted' : 'pending'}. Both must accept before funding.`;
+    } else if (['disputed', 'under_investigation'].includes(transaction.status)) {
+      notice = 'DealShield is reviewing this dispute. Funds remain held pending resolution. ' + (transaction.dispute_reason || '');
+    } else if (TERMINAL_STATUSES.includes(transaction.status)) {
+      notice = 'Outcome: ' + (transaction.admin_resolution || transaction.status) + '. ' + (transaction.admin_reason || '');
+    } else if (!actions.length) {
+      notice = role === 'facilitator' ? 'You are the facilitator. Buyer and seller actions are shown in their accounts.' : 'No action available for you at this stage. Refresh to check for updates.';
+    }
+    return `<div class="w-full text-sm text-forest-600">${escapeHtml(notice)}</div>` + actions.map(([action, label]) =>
+      `<button class="${['cancel', 'decline', 'dispute'].includes(action) ? 'btn-danger' : 'btn-primary'}" onclick="performAction('${Number(transaction.id)}', '${action}', '${label}')">${escapeHtml(label)}</button>`
+    ).join('') + '<button class="btn-secondary" onclick="loadDetail()">Refresh Status</button>';
   }
 
   function renderDetail(t) {
     currentTransaction = t;
     const s = STATUS_MAP[t.status] || { cls: 'status-pending', icon: 'circle', label: t.status };
-    const dealId = `DS-${String(t.id).padStart(6, '0')}`;
+    const dealId = `DS-${String(Number(t.id)).padStart(6, '0')}`;
     const cat = escapeHtml(t.category || t.listing_title || 'General');
     const isFacilitated = t.is_facilitated || t.facilitator_name;
 
@@ -1238,7 +1166,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
             <div class="flex items-center gap-3 mb-2">
               <h2 class="text-xl font-extrabold text-forest-700 tracking-tight">${dealId}</h2>
               <span class="status-pill ${s.cls}">
-                <i data-lucide="${s.icon}" class="w-3 h-3"></i>${s.label}
+                <i data-lucide="${s.icon}" class="w-3 h-3"></i>${escapeHtml(s.label)}
               </span>
               ${isFacilitated ? `<span class="facil-badge"><i data-lucide="user-check" class="w-3 h-3"></i>Facilitated</span>` : ''}
             </div>
@@ -1250,6 +1178,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           </div>
         </div>
 
+        ${t.buyer_review_deadline ? `<div class="text-sm text-forest-600 mt-3">Review deadline: ${escapeHtml(new Date(t.buyer_review_deadline).toLocaleString('en-NG'))}. Funds may auto-release after this deadline.</div>` : ''}
+        ${t.logistics_provider || t.tracking_number ? `<div class="text-sm text-forest-600 mt-3">Delivery: ${escapeHtml(t.logistics_provider || '')} ${escapeHtml(t.tracking_number || '')}</div>` : ''}
         <!-- Created date -->
         ${t.created_at ? `<div class="mt-3 text-xs text-forest-500 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Created ${new Date(t.created_at).toLocaleDateString('en-NG', { day: '2-digit', month: 'long', year: 'numeric' })}</div>` : ''}
       </section>
@@ -1320,43 +1250,60 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       </section>
     `;
 
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   async function performAction(id, action, label) {
-    const btns = document.querySelectorAll('#action-buttons button');
-    btns.forEach(b => b.disabled = true);
-
-    // Find the clicked button to show spinner
-    const activeBtns = Array.from(btns).filter(b => b.textContent.includes(label));
-    if (activeBtns[0]) {
-      activeBtns[0].innerHTML = `<span class="spinner"></span> ${label}...`;
+    if (actionPending || !currentTransaction || String(currentTransaction.id) !== String(id) || !availableActions(currentTransaction).some(item => item[0] === action)) return;
+    let body;
+    if (action === 'accept-terms') body = { role: transactionRole(currentTransaction) };
+    if (action === 'fulfill') {
+      const logistics = prompt('Logistics provider or delivery method (optional):', '');
+      if (logistics === null) return;
+      const tracking = prompt('Tracking number or handover reference (optional):', '');
+      if (tracking === null) return;
+      body = { logistics_provider: logistics.trim(), tracking_number: tracking.trim(), notes: '' };
     }
-
+    if (action === 'dispute') {
+      const reason = prompt('Describe the issue (required, up to 1,000 characters):', '');
+      if (reason === null) return;
+      if (!reason.trim() || reason.trim().length > 1000) { showToast('Enter a dispute reason between 1 and 1,000 characters.', 'error'); return; }
+      body = { reason: reason.trim() };
+    }
+    const confirmations = {
+      fund: 'Deduct this deal total, insurance and gateway share from your wallet?',
+      approve: 'Confirm you have inspected and accepted the goods. This releases funds to the seller.',
+      cancel: currentTransaction.status === 'funded' ? 'Cancel this funded deal? Up to ₦5,000 will be deducted from the buyer refund.' : 'Cancel this deal?',
+      decline: 'Decline this deal?',
+      'accept-terms': 'Accept the deal amount, facilitator fee and payment terms shown?',
+      'mark-delivered': 'Confirm delivery is complete. This starts the buyer review period.'
+    };
+    if (confirmations[action] && !confirm(confirmations[action])) return;
+    actionPending = true;
+    document.querySelectorAll('#action-buttons button').forEach(button => button.disabled = true);
     try {
-      const res = await API.post(`/escrow/${id}/${action}`);
+      const res = await API.post(`/escrow/${Number(id)}/${action}`, body);
       const data = await res.json().catch(() => ({}));
-
-      if (res.ok) {
-        showToast(`${label} successful`, 'success');
-        // Reload the transaction detail after a short delay
-        setTimeout(() => loadDetail(), 1000);
-      } else {
-        showToast(data.detail || data.message || `${label} failed`, 'error');
-        btns.forEach(b => b.disabled = false);
-        // Re-render to restore button content
-        if (currentTransaction) renderDetail(currentTransaction);
-      }
+      if (!res.ok) throw new Error(apiError(data, `${label} failed`));
+      showToast(`${label} successful`, 'success');
+      await loadDetail();
     } catch (err) {
-      showToast(`${label} failed: ${err.message}`, 'error');
+      showToast(err.message || 'Request failed. Refresh the deal before trying again.', 'error');
       if (currentTransaction) renderDetail(currentTransaction);
+    } finally {
+      actionPending = false;
     }
+  }
+
+  function apiError(data, fallback) {
+    if (Array.isArray(data.detail)) return data.detail.map(item => item.msg || 'Invalid request').join('; ');
+    return typeof data.detail === 'string' ? data.detail : (data.message || fallback);
   }
 
   async function loadDetail() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
-    if (!id) {
+    if (!id || !/^\d+$/.test(id)) {
       location.href = '/transactions.html';
       return;
     }
@@ -1369,7 +1316,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           renderDetailError('Transaction not found.');
         } else {
           const data = await res.json().catch(() => ({}));
-          renderDetailError(data.detail || data.message);
+          renderDetailError(apiError(data, 'Unable to load transaction.'));
         }
         return;
       }
@@ -1379,8 +1326,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       renderDetail(tx);
 
       // Also try to fetch virtual account details if status suggests one might exist
-      if (['seller_accepted', 'payment_pending', 'funded'].includes(tx.status)) {
-        fetchAccountDetails(tx);
+      if (!['created', 'cancelled', 'expired', 'seller_declined'].includes(tx.status)) {
+        await fetchAccountDetails(tx);
       }
     } catch (err) {
       console.error('Detail load error:', err);
@@ -1397,11 +1344,13 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         if (account && account.account_number) {
           // Merge virtual account into transaction and re-render
           tx.virtual_account = account;
-          renderDetail(tx);
+          if (currentTransaction === tx) renderDetail(tx);
         }
+      } else if (res.status !== 404) {
+        throw new Error('Account lookup failed');
       }
     } catch (e) {
-      // No account yet — silently ignore
+      if (currentTransaction === tx) showToast('Unable to check the virtual account. Refresh before transferring funds.', 'error');
     }
   }
 
@@ -1410,13 +1359,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ─────────────────────────────────────────────────────────────
   (async function init() {
     if (!checkAuth()) return;
-    lucide.createIcons();
+    window.lucide?.createIcons();
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    // Load user name in parallel
-    loadUser();
+    await loadUser();
 
     if (id) {
       await loadDetail();

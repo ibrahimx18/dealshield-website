@@ -1,0 +1,14 @@
+:focus-visible { outline: 3px solid #245c43; outline-offset: 3px; }
+.field-hint, th { color: #476452 !important; }
+.status-on { color: #166534 !important; }
+.status-pending { color: #854d0e !important; }
+.btn-danger, .status-disputed { color: #991b1b !important; }
+.status-locked { color: #854d0e !important; }
+.status-verified, .timeline-step.completed .timeline-label { color: #166534 !important; }
+#mobile-navigation:not([hidden]) { display: flex; flex-direction: column; padding: 1rem; max-height: 75vh; overflow-y: auto; background: #f8faf9; border-bottom: 1px solid #b7d8c8; }
+#mobile-navigation a { min-height: 44px; justify-content: flex-start; }
+@media (min-width: 1024px) { #mobile-navigation { display: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}

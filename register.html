@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealShield — Create Account</title>
@@ -12,8 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -279,6 +279,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="relative min-h-screen flex items-center justify-center">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -364,8 +365,8 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 <main class="w-full relative z-10 max-w-md px-4">
   <div class="card p-6 mt-24 mx-auto shadow-md">
     <h2 class="text-2xl font-bold text-forest-700 mb-1 text-center font-display">Create your DealShield account</h2>
-    <p class="text-forest-600 text-sm text-center mb-5">Secure escrow for every transaction on dealshield.ng</p>
-    <form id="register-form" class="space-y-4" novalidate>
+    <p class="text-forest-600 text-sm text-center mb-5">Secure escrow for every transaction on dealshield.com.ng</p>
+    <form method="post" id="register-form" class="space-y-4" novalidate>
       <!-- Full Name -->
       <div>
         <div class="input-wrap">
@@ -461,7 +462,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -474,7 +475,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
 
 <script>
-  lucide.createIcons();
+  window.lucide?.createIcons();
 
   function togglePassword() {
     const pw = document.getElementById('password');
@@ -486,7 +487,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       pw.type = 'password';
       icon.setAttribute('data-lucide', 'eye');
     }
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function clearErrors() {
@@ -518,8 +519,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       showFieldError('email', 'Please enter a valid email address.');
       valid = false;
     }
-    if (!data.password || data.password.length < 8) {
-      showFieldError('password', 'Password must be at least 8 characters.');
+    if (!data.password || data.password.length < 8 || !/[A-Z]/.test(data.password) || !/[a-z]/.test(data.password) || !/[0-9]/.test(data.password)) {
+      showFieldError('password', 'Password must be at least 8 characters, with uppercase, lowercase and a number.');
+      valid = false;
+    } else if (new TextEncoder().encode(data.password).length > 72) {
+      showFieldError('password', 'Password must not exceed 72 UTF-8 bytes; accented characters and emoji can use more than one byte.');
       valid = false;
     }
     return valid;
@@ -530,9 +534,9 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     clearErrors();
 
     const data = {
-      name: document.getElementById('name').value,
-      phone: document.getElementById('phone').value,
-      email: document.getElementById('email').value,
+      name: document.getElementById('name').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
       password: document.getElementById('password').value
     };
 
@@ -542,7 +546,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     const btnHtml = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Creating account...';
-    lucide.createIcons();
+    window.lucide?.createIcons();
 
     fetch('/auth/register', {
       method: 'POST',
@@ -554,10 +558,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     })
     .then(({ ok, json }) => {
       if (!ok) {
-        throw new Error(json.message || json.detail || json.error || 'Registration failed. Please try again.');
+        throw new Error(DS.errorMessage(json, 'Registration failed. Please try again.'));
       }
       if (json.access_token) {
         localStorage.setItem('access_token', json.access_token);
+        if (json.refresh_token) localStorage.setItem('refresh_token', json.refresh_token);
         const successEl = document.getElementById('success');
         successEl.textContent = 'Account created! Redirecting to verification...';
         successEl.classList.remove('hidden');
@@ -572,7 +577,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       errorEl.classList.remove('hidden');
       btn.disabled = false;
       btn.innerHTML = btnHtml;
-      lucide.createIcons();
+      window.lucide?.createIcons();
     });
   });
 

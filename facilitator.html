@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Facilitate a Deal — DealShield</title>
@@ -9,8 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -246,6 +246,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="min-h-screen">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -306,11 +307,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     <span class="font-bold text-[15px] tracking-tight text-forest-700">DealShield</span>
   </div>
   <nav class="flex-1 px-3 py-4 space-y-1">
-    <a class="sidebar-link" onclick="location.href='/dashboard.html'"><i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard</a>
-    <a class="sidebar-link active" onclick="location.href='/facilitator.html'"><i data-lucide="handshake" class="w-[18px] h-[18px]"></i> Facilitate Deal</a>
-    <a class="sidebar-link" onclick="location.href='/transactions.html'"><i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Transactions</a>
-    <a class="sidebar-link" onclick="location.href='/create-deal.html'"><i data-lucide="plus-circle" class="w-[18px] h-[18px]"></i> Create Deal</a>
-    <a class="sidebar-link" onclick="location.href='/settings.html'"><i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings</a>
+    <a class="sidebar-link" href="/dashboard.html"><i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard</a>
+    <a class="sidebar-link active" href="/facilitator.html"><i data-lucide="handshake" class="w-[18px] h-[18px]"></i> Facilitate Deal</a>
+    <a class="sidebar-link" href="/transactions.html"><i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Transactions</a>
+    <a class="sidebar-link" href="/create-deal.html"><i data-lucide="plus-circle" class="w-[18px] h-[18px]"></i> Create Deal</a>
+    <a class="sidebar-link" href="/settings.html"><i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings</a>
   </nav>
   <div class="px-3 py-4 border-t border-[var(--color-border)]">
     <div class="sidebar-link" onclick="handleLogout()"><i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Log Out</div>
@@ -355,11 +356,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
       <!-- Form -->
       <div class="card p-6 lg:p-8">
-        <form id="facilitator-form" class="space-y-5">
+        <form method="post" id="facilitator-form" class="space-y-5">
           <!-- Deal Title -->
           <div>
             <label for="title" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Deal Title</label>
-            <input type="text" id="title" name="title" placeholder="e.g. Toyota Camry 2018 sale between Bashir & Chukwu" class="input-field" required>
+            <input type="text" id="title" name="title" maxlength="200" placeholder="e.g. Toyota Camry 2018 sale between Bashir & Chukwu" class="input-field" required>
           </div>
 
           <!-- Category -->
@@ -379,11 +380,11 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="deal_amount" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Deal Amount (₦)</label>
-              <input type="number" id="deal_amount" name="deal_amount" placeholder="5000000" min="1000" step="100" class="input-field" required oninput="updateBreakdown()">
+              <input type="number" id="deal_amount" name="deal_amount" placeholder="5000000" min="1000" step="0.01" class="input-field" required oninput="updateBreakdown()">
             </div>
             <div>
               <label for="facilitator_fee" class="block text-[12px] uppercase tracking-wider font-semibold text-forest-500 mb-2">Your Fee (₦)</label>
-              <input type="number" id="facilitator_fee" name="facilitator_fee" placeholder="50000" min="0" step="100" class="input-field" required oninput="updateBreakdown()">
+              <input type="number" id="facilitator_fee" name="facilitator_fee" placeholder="50000" min="0" step="0.01" class="input-field" required oninput="updateBreakdown()">
             </div>
           </div>
 
@@ -401,7 +402,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
           <!-- Live breakdown -->
           <div class="bg-forest-50 border border-[var(--color-border)] rounded-[var(--radius-md)] p-5 space-y-3">
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Fee Breakdown Preview</div>
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Estimated Fees (on successful release)</div>
             <div class="flex justify-between text-sm">
               <span class="text-forest-600">Buyer pays</span>
               <span class="font-semibold text-forest-700" id="buyer-pays">₦0</span>
@@ -411,14 +412,16 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
               <span class="font-semibold text-forest-700" id="seller-receives">₦0</span>
             </div>
             <div class="border-t border-[var(--color-border)] pt-3 flex justify-between text-sm">
-              <span class="text-forest-600">Your payout (90%)</span>
+              <span class="text-forest-600">Your payout (90% of fee)</span>
               <span class="font-semibold text-forest-500" id="facilitator-payout">₦0</span>
             </div>
             <div class="flex justify-between text-sm">
-              <span class="text-forest-600">DealShield fee (10%)</span>
+              <span class="text-forest-600">DealShield fee (10% of fee)</span>
               <span class="font-semibold text-forest-700" id="dealshield-fee">₦0</span>
             </div>
           </div>
+
+          <p class="text-xs text-forest-500">Gateway fee: 1.5% of deal amount plus facilitator fee, capped at ₦50,000 and split equally between buyer and seller. Final transfer instructions appear on the deal. No money moves until funding.</p>
 
           <!-- Submit -->
           <button type="submit" id="submit-btn" class="btn-primary w-full">
@@ -448,9 +451,9 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       <div class="flex justify-between text-sm"><span class="text-forest-500">Seller receives</span><span class="font-semibold text-forest-700" id="success-seller-receives">—</span></div>
       <div class="flex justify-between text-sm"><span class="text-forest-500">Your payout</span><span class="font-semibold text-forest-500" id="success-payout">—</span></div>
     </div>
-    <button class="btn-primary w-full" onclick="location.href='/dashboard.html'">
+    <button class="btn-primary w-full" id="success-view-deal" onclick="location.href='/transactions.html'">
       <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-      View on Dashboard
+      View Deal
     </button>
   </div>
 </div>
@@ -498,7 +501,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -511,15 +514,17 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
 
 
 <script>
-  lucide.createIcons();
+  window.lucide?.createIcons();
 
   function formatNaira(n) { return '₦' + Number(n || 0).toLocaleString('en-NG'); }
 
   function updateBreakdown() {
     const amount = parseFloat(document.getElementById('deal_amount').value) || 0;
     const fee = parseFloat(document.getElementById('facilitator_fee').value) || 0;
-    document.getElementById('buyer-pays').textContent = formatNaira(amount + fee);
-    document.getElementById('seller-receives').textContent = formatNaira(amount);
+    const gateway = Math.round(Math.min((amount + fee) * 0.015, 50000) * 100) / 100;
+    const buyerShare = Math.round(gateway * 50) / 100;
+    document.getElementById('buyer-pays').textContent = formatNaira(amount + fee + buyerShare);
+    document.getElementById('seller-receives').textContent = formatNaira(amount - (gateway - buyerShare));
     document.getElementById('facilitator-payout').textContent = formatNaira(fee * 0.9);
     document.getElementById('dealshield-fee').textContent = formatNaira(fee * 0.1);
   }
@@ -532,7 +537,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     ov.classList.toggle('show', open);
   }
 
-  function handleLogout() { localStorage.clear(); location.href = '/login.html'; }
+  function handleLogout() { return DS.logout(); }
 
   function checkAuth() {
     const token = localStorage.getItem('access_token');
@@ -543,12 +548,13 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   function showError(msg) {
     document.getElementById('error-message').textContent = msg;
     document.getElementById('error-banner').classList.add('visible');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
   function clearError() { document.getElementById('error-banner').classList.remove('visible'); }
 
   document.getElementById('facilitator-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+    if (document.getElementById('submit-btn').disabled || !checkAuth()) return;
     clearError();
 
     const title = document.getElementById('title').value.trim();
@@ -562,8 +568,10 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       showError('Please fill in all fields.');
       return;
     }
-    if (dealAmount < 1000) { showError('Deal amount must be at least ₦1,000.'); return; }
-    if (facilitatorFee < 0) { showError('Facilitator fee cannot be negative.'); return; }
+    if (!Number.isFinite(dealAmount) || dealAmount < 1000) { showError('Deal amount must be at least ₦1,000.'); return; }
+    if (!Number.isFinite(facilitatorFee) || facilitatorFee < 0) { showError('Facilitator fee cannot be negative.'); return; }
+
+    if (buyerPhone.replace(/\D/g, '') === sellerPhone.replace(/\D/g, '')) { showError('Buyer and seller must be different people.'); return; }
 
     const btn = document.getElementById('submit-btn');
     const spinner = document.getElementById('btn-spinner');
@@ -583,8 +591,9 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       });
 
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) { handleLogout(); return; }
       if (!res.ok) {
-        showError(data.detail || data.message || 'Failed to create deal. Please try again.');
+        showError(Array.isArray(data.detail) ? data.detail.map(item => item.msg || 'Invalid request').join('; ') : data.detail || data.message || 'Failed to create deal. Please try again.');
         spinner.classList.remove('visible');
         label.textContent = 'Create Facilitated Deal';
         arrow.style.display = 'inline-block';
@@ -592,15 +601,16 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
         return;
       }
 
-      // Show success modal
-      document.getElementById('success-deal-id').textContent = 'DS-' + String(data.id || data.tx_id || 0).padStart(6, '0');
-      document.getElementById('success-buyer-pays').textContent = formatNaira(dealAmount + facilitatorFee);
-      document.getElementById('success-seller-receives').textContent = formatNaira(dealAmount);
+      if (!Number.isSafeInteger(Number(data.id)) || Number(data.id) <= 0) throw new Error('Missing deal ID');
+      document.getElementById('success-view-deal').onclick = () => { location.href = '/transactions.html?id=' + Number(data.id); };
+      document.getElementById('success-deal-id').textContent = 'DS-' + String(Number(data.id)).padStart(6, '0');
+      document.getElementById('success-buyer-pays').textContent = document.getElementById('buyer-pays').textContent;
+      document.getElementById('success-seller-receives').textContent = document.getElementById('seller-receives').textContent;
       document.getElementById('success-payout').textContent = formatNaira(facilitatorFee * 0.9);
       document.getElementById('success-modal').classList.add('visible');
-      lucide.createIcons();
+      window.lucide?.createIcons();
     } catch (err) {
-      showError('Network error. Please check your connection.');
+      showError('Could not confirm creation. Check Transactions before retrying to avoid a duplicate deal.');
       spinner.classList.remove('visible');
       label.textContent = 'Create Facilitated Deal';
       arrow.style.display = 'inline-block';
@@ -609,7 +619,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
   });
 
   // Init
-  if (checkAuth()) { updateBreakdown(); lucide.createIcons(); }
+  if (checkAuth()) { updateBreakdown(); window.lucide?.createIcons(); }
 
   // Navbar scroll effect (shared)
   var _dsNavbar = document.getElementById('navbar');

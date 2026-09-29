@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<script src="/assets/runtime.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Settings — DealShield</title>
@@ -12,8 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <!-- Libraries -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -332,6 +332,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   }
 
 </style>
+<link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
 <body class="min-h-screen">
 <!-- ═══════════════ LIVING BACKGROUND: Waterfall + Green Mountains ═══════════════ -->
@@ -395,21 +396,19 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
 
   <!-- Nav -->
   <nav class="flex-1 px-3 py-4 space-y-1">
-    <a class="sidebar-link" onclick="location.href='/dashboard.html'">
+    <a class="sidebar-link" href="/dashboard.html">
       <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Dashboard
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
+    <a class="sidebar-link" href="/transactions.html?filter=active">
       <i data-lucide="briefcase" class="w-[18px] h-[18px]"></i> Active Deals
-      <span class="ml-auto text-[11px] bg-forest-50 text-forest-600 px-1.5 py-0.5 rounded-full">6</span>
     </a>
-    <a class="sidebar-link" onclick="setActiveNav(this)">
+    <a class="sidebar-link" href="/transactions.html?filter=completed">
       <i data-lucide="check-circle-2" class="w-[18px] h-[18px]"></i> Completed
     </a>
-    <a class="sidebar-link" onclick="location.href='/kyc.html'">
+    <a class="sidebar-link" href="/kyc.html">
       <i data-lucide="shield-check" class="w-[18px] h-[18px]"></i> Verification
-      <span class="ml-auto text-[11px] bg-forest-400/15 text-forest-500 px-1.5 py-0.5 rounded-full">3</span>
     </a>
-    <a class="sidebar-link active" onclick="setActiveNav(this)">
+    <a class="sidebar-link active" href="/settings.html">
       <i data-lucide="settings" class="w-[18px] h-[18px]"></i> Settings
     </a>
   </nav>
@@ -448,7 +447,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         </div>
         <div class="hidden sm:block leading-tight">
           <div id="user-name" class="text-sm font-semibold text-forest-700">—</div>
-          <div class="text-[11px] text-forest-500">Verified Account</div>
+          <div class="text-[11px] text-forest-500">Account</div>
         </div>
       </div>
       <button class="text-forest-500 hover:text-danger transition-colors" onclick="handleLogout()" title="Log Out">
@@ -509,7 +508,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <i data-lucide="key-round" class="w-[18px] h-[18px] text-forest-500"></i>
         <h2 class="text-sm font-bold text-forest-700">Change Password</h2>
       </div>
-      <form id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
+      <form method="post" id="change-pw-form" class="p-5 space-y-4" onsubmit="changePassword(event)">
         <div id="pw-alert"></div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
@@ -662,7 +661,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       </button>
     </div>
     <div class="p-5 space-y-4">
-      <p class="text-[13px] text-forest-600">Enter a 6-digit code from your authenticator app (or a backup code) to confirm.</p>
+      <p class="text-[13px] text-forest-600">Enter a 6-digit code from your authenticator app to confirm.</p>
       <div id="disable-alert"></div>
       <div>
         <label class="form-label block mb-1.5" for="disable-code">Verification Code</label>
@@ -721,7 +720,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="mail" class="w-3.5 h-3.5"></i> support@dealshield.ng</li>
           <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp Bot</li>
-          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.ng</li>
+          <li class="flex items-center gap-2 text-[13px] text-forest-500"><i data-lucide="globe" class="w-3.5 h-3.5"></i> dealshield.com.ng</li>
         </ul>
       </div>
     </div>
@@ -758,16 +757,21 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   async function apiCall(method, path, body) {
     const opts = { method, headers: authHeaders() };
     if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(path, opts);
-    let data = null;
-    try { data = await res.json(); } catch (e) { /* no json body */ }
-    return { ok: res.ok, status: res.status, data };
+    try {
+      const res = await fetch(path, opts);
+      const data = await res.json().catch(() => null);
+      if (res.status === 401) { handleLogout(); return { ok: false, status: 401, data: { detail: 'Session expired. Please sign in again.' } }; }
+      if (!res.ok && Array.isArray(data?.detail)) data.detail = data.detail.map(item => item.msg || 'Invalid request').join('; ');
+      return { ok: res.ok, status: res.status, data };
+    } catch (error) {
+      return { ok: false, status: 0, data: { detail: 'Network error. Please check your connection and try again.' } };
+    }
   }
 
   function showAlert(container, type, message) {
     const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'x-circle' : 'alert-triangle';
     container.innerHTML = `<div class="alert alert-${type} mb-3"><i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0 mt-0.5"></i><div>${escapeHtml(message)}</div></div>`;
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   // ═══════════════════════════════════════════
@@ -779,7 +783,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     return true;
   }
 
-  function handleLogout() { localStorage.clear(); location.href = '/login.html'; }
+  function handleLogout() { return DS.logout(); }
 
   function setActiveNav(el) {
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
@@ -803,12 +807,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   async function fetch2FAStatus() {
     // GET /auth/me typically includes 2fa_enabled; try it, fall back gracefully
     const res = await apiCall('GET', '/auth/me');
-    if (res.ok && res.data) {
-      const enabled = !!(res.data.two_factor_enabled ?? res.data.twofa_enabled ?? res.data['2fa_enabled']);
+    if (res.ok && typeof res.data?.totp_enabled === 'boolean') {
+      const enabled = !!(res.data.totp_enabled);
       render2FAStatus(enabled);
     } else {
-      // Assume disabled if we can't tell
-      render2FAStatus(false);
+      document.getElementById('twofa-pill').textContent = 'Unavailable';
+      document.getElementById('twofa-status-text').textContent = 'Could not load security status. Refresh to try again.';
+      document.getElementById('btn-enable-2fa').style.display = 'none';
+      document.getElementById('btn-disable-2fa').style.display = 'none';
     }
   }
 
@@ -841,15 +847,17 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       btnEnable.style.display = 'inline-flex';
       btnDisable.style.display = 'none';
     }
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   async function enable2FA() {
+    const button = document.getElementById('btn-enable-2fa');
+    if (button.disabled) return;
+    button.disabled = true;
     const res = await apiCall('POST', '/auth/2fa/enable', {});
+    button.disabled = false;
     if (!res.ok || !res.data) {
-      showAlert(document.createElement('div'), 'error', 'Could not start 2FA enrollment. Please try again.');
-      // still open modal with placeholder so user sees error? Better: show inline alert
-      showInlineAlert('2fa-section', 'error', 'Could not start 2FA enrollment. Please try again.');
+      showInlineAlert('2fa-section', 'error', res.data?.detail || 'Could not start 2FA enrollment. Please try again.');
       return;
     }
     pending2FA = {
@@ -885,11 +893,16 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('verify-code').value = '';
     document.getElementById('verify-alert').innerHTML = '';
     m.classList.add('show');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   function closeEnableModal() {
     document.getElementById('enable-modal').classList.remove('show');
+    pending2FA = null;
+    document.getElementById('twofa-secret').textContent = '';
+    document.getElementById('twofa-uri').textContent = '';
+    document.getElementById('backup-codes-grid').replaceChildren();
+    document.getElementById('verify-code').value = '';
   }
 
   async function verify2FA() {
@@ -918,7 +931,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     document.getElementById('disable-code').value = '';
     document.getElementById('disable-alert').innerHTML = '';
     document.getElementById('disable-modal').classList.add('show');
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
   function closeDisableModal() {
     document.getElementById('disable-modal').classList.remove('show');
@@ -948,7 +961,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     navigator.clipboard.writeText(uri).then(() => {
       showInlineAlert('2fa-section', 'success', 'URI copied to clipboard.');
       setTimeout(() => { const e = document.getElementById('inline-2fa-alert'); if (e) e.remove(); }, 2000);
-    }).catch(() => {});
+    }).catch(() => showInlineAlert('2fa-section', 'error', 'Copy failed. Select and copy the setup URI manually.'));
   }
 
   function downloadBackupCodes() {
@@ -976,8 +989,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       showAlert(alertBox, 'error', 'New passwords do not match.');
       return;
     }
-    if (next.length < 8) {
-      showAlert(alertBox, 'error', 'New password must be at least 8 characters.');
+    if (next.length < 8 || next.length > 128 || !/\p{L}/u.test(next) || !/\d/.test(next)) {
+      showAlert(alertBox, 'error', 'New password must be 8–128 characters with at least one letter and one number.');
       return;
     }
     btn.disabled = true;
@@ -998,8 +1011,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     const input = document.getElementById(inputId);
     const isPw = input.type === 'password';
     input.type = isPw ? 'text' : 'password';
-    btn.querySelector('i').setAttribute('data-lucide', isPw ? 'eye-off' : 'eye');
-    lucide.createIcons();
+    btn.querySelector('[data-lucide]').setAttribute('data-lucide', isPw ? 'eye-off' : 'eye');
+    window.lucide?.createIcons();
   }
 
   // ═══════════════════════════════════════════
@@ -1051,14 +1064,14 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           </div>
           <div class="text-[12px] text-forest-500 mt-0.5 truncate" title="${escapeHtml(ua.raw)}">${escapeHtml(ua.raw) || 'Unknown device'}</div>
           <div class="text-[12px] text-forest-500 mt-1 flex gap-4 flex-wrap">
-            <span><i data-lucide="map-pin" class="w-3 h-3 inline -mt-0.5"></i> ${s.ip || s.ip_address || '—'}</span>
-            <span><i data-lucide="clock" class="w-3 h-3 inline -mt-0.5"></i> Created ${formatDate(s.created_at || s.created)}</span>
-            <span><i data-lucide="hourglass" class="w-3 h-3 inline -mt-0.5"></i> Expires ${formatDate(s.expires_at || s.expires)}</span>
+            <span><i data-lucide="map-pin" class="w-3 h-3 inline -mt-0.5"></i> ${escapeHtml(s.ip_address || '—')}</span>
+            <span><i data-lucide="clock" class="w-3 h-3 inline -mt-0.5"></i> Created ${escapeHtml(formatDate(s.created_at))}</span>
+            <span><i data-lucide="hourglass" class="w-3 h-3 inline -mt-0.5"></i> Expires ${escapeHtml(formatDate(s.expires_at))}</span>
           </div>
         </div>
       </div>`;
     }).join('') + '</div>';
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   // ═══════════════════════════════════════════
@@ -1082,7 +1095,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     const email = escapeHtml(u.email || '—');
     const phone = escapeHtml(u.phone || u.phone_number || '—');
     const tier = escapeHtml(u.badge_tier || u.tier || 'Standard');
-    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name').textContent = u.name || 'User';
 
     const rows = [
       { label: 'Full Name', value: name, icon: 'user' },
@@ -1104,7 +1117,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <div class="text-[14px] text-forest-700 mt-0.5">${r.value}</div>
         </div>
       </div>`).join('') + '</div>';
-    lucide.createIcons();
+    window.lucide?.createIcons();
   }
 
   // ═══════════════════════════════════════════
@@ -1112,7 +1125,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
   // ═══════════════════════════════════════════
   (function init() {
     if (!checkAuth()) return;
-    lucide.createIcons();
+    window.lucide?.createIcons();
     fetch2FAStatus();
     fetchSessions();
     fetchAccount();

@@ -6,45 +6,121 @@
     }
   },
   "rewrites": [
-    { "source": "/api/chat", "destination": "/api/chat" },
-    { "source": "/api/deal", "destination": "/api/deal" },
-    { "source": "/auth/(.*)", "destination": "https://api.dealshield.ng/auth/$1" },
-    { "source": "/escrow/(.*)", "destination": "https://api.dealshield.ng/escrow/$1" },
-    { "source": "/admin/(.*)", "destination": "https://api.dealshield.ng/admin/$1" },
-    { "source": "/listings/(.*)", "destination": "https://api.dealshield.ng/listings/$1" },
-    { "source": "/wallet/(.*)", "destination": "https://api.dealshield.ng/wallet/$1" },
-    { "source": "/login", "destination": "/login.html" },
-    { "source": "/register", "destination": "/register.html" },
-    { "source": "/kyc", "destination": "/kyc.html" },
-    { "source": "/create-deal", "destination": "/create-deal.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/facilitator", "destination": "/facilitator.html" },
-    { "source": "/settings", "destination": "/settings.html" },
-    { "source": "/transactions", "destination": "/transactions.html" }
+    {
+      "source": "/listings",
+      "destination": "https://api.dealshield.ng/listings"
+    },
+    {
+      "source": "/api/chat",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/api/deal",
+      "destination": "/api/deal"
+    },
+    {
+      "source": "/auth/(.*)",
+      "destination": "https://api.dealshield.ng/auth/$1"
+    },
+    {
+      "source": "/escrow/(.*)",
+      "destination": "https://api.dealshield.ng/escrow/$1"
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": "https://api.dealshield.ng/admin/$1"
+    },
+    {
+      "source": "/listings/(.*)",
+      "destination": "https://api.dealshield.ng/listings/$1"
+    },
+    {
+      "source": "/wallet/(.*)",
+      "destination": "https://api.dealshield.ng/wallet/$1"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/register.html"
+    },
+    {
+      "source": "/kyc",
+      "destination": "/kyc.html"
+    },
+    {
+      "source": "/create-deal",
+      "destination": "/create-deal.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard.html"
+    },
+    {
+      "source": "/facilitator",
+      "destination": "/facilitator.html"
+    },
+    {
+      "source": "/settings",
+      "destination": "/settings.html"
+    },
+    {
+      "source": "/transactions",
+      "destination": "/transactions.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.dealshield.ng; frame-ancestors 'none'" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.dealshield.ng; frame-ancestors 'none'"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml"
+        }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
       ]
     }
   ]
