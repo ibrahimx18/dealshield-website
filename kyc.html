@@ -360,28 +360,12 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
       <i data-lucide="shield-check" class="w-7 h-7 text-forest-500"></i>
     </div>
     <h1 class="text-2xl font-bold text-forest-700 mb-2">Verify Your Identity</h1>
-    <p class="text-sm text-forest-600 max-w-sm mx-auto">Complete KYC verification to unlock escrow protection on DealShield. Your data is encrypted and securely stored.</p>
+    <p class="text-sm text-forest-600 max-w-sm mx-auto">Submit your NIN or BVN to start identity verification. Your data is encrypted and securely stored.</p>
   </div>
 
   <div class="card p-6 shadow-lg border border-[var(--color-border)]" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-radius: var(--radius-lg);">
 
-    <!-- Step indicators -->
-    <div class="flex items-center mb-6">
-      <div class="step-indicator active" id="step-nin">
-        <span class="step-dot">1</span>
-        <span>NIN</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-indicator" id="step-bvn">
-        <span class="step-dot">2</span>
-        <span>BVN</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-indicator" id="step-business">
-        <span class="step-dot">3</span>
-        <span>Business</span>
-      </div>
-    </div>
+    <p id="kyc-current-status" class="text-sm text-forest-600 mb-5" role="status">Current status: checking...</p>
 
     <!-- Alerts -->
     <div id="error-box" class="error-msg hidden alert-box" style="background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
@@ -393,50 +377,45 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
       <span id="success-text"></span>
     </div>
 
-    <!-- Form -->
-    <form method="post" id="kyc-form" class="space-y-5" onsubmit="handleVerify(event)">
-      <!-- NIN -->
+    <!-- Form: canonical contract POST /auth/kyc/submit {id_type, id_number, phone} -->
+    <form method="post" action="/kyc.html" id="kyc-form" class="space-y-5" novalidate>
       <div>
-        <label class="field-label" for="nin">National Identification Number (NIN)</label>
+        <label class="field-label" for="id_type">ID type</label>
+        <select id="id_type" name="id_type" class="input-field" required>
+          <option value="nin">National Identification Number (NIN)</option>
+          <option value="bvn">Bank Verification Number (BVN)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="field-label" for="id_number">ID number</label>
         <div class="relative">
           <span class="icon-wrap"><i data-lucide="credit-card" class="w-4 h-4"></i></span>
-          <input type="text" id="nin" name="nin" placeholder="Enter your 11-digit NIN" class="input-field has-icon" maxlength="11" pattern="\d{11}" inputmode="numeric" required>
+          <input type="text" id="id_number" name="id_number" placeholder="11-digit number" class="input-field has-icon" maxlength="11" pattern="\d{11}" inputmode="numeric" autocomplete="off" required>
         </div>
-        <p class="field-hint">11-digit number found on your NIN slip or card.</p>
+        <p class="field-hint">11 digits. Stored encrypted; only a masked form is shown back to you.</p>
       </div>
 
-      <!-- BVN -->
       <div>
-        <label class="field-label" for="bvn">Bank Verification Number (BVN)</label>
+        <label class="field-label" for="phone">Phone number</label>
         <div class="relative">
-          <span class="icon-wrap"><i data-lucide="building-2" class="w-4 h-4"></i></span>
-          <input type="text" id="bvn" name="bvn" placeholder="Enter your 11-digit BVN" class="input-field has-icon" maxlength="11" pattern="\d{11}" inputmode="numeric" required>
+          <span class="icon-wrap"><i data-lucide="phone" class="w-4 h-4"></i></span>
+          <input type="tel" id="phone" name="phone" placeholder="+2348012345678" class="input-field has-icon" maxlength="16" autocomplete="tel" required>
         </div>
-        <p class="field-hint">Dial *565*0# on your registered phone to retrieve your BVN.</p>
+        <p class="field-hint">The phone number linked to this ID.</p>
       </div>
 
-      <!-- Business Name (optional) -->
-      <div>
-        <label class="field-label" for="business_name">Business Name <span class="text-forest-500 font-normal">(optional)</span></label>
-        <div class="relative">
-          <span class="icon-wrap"><i data-lucide="briefcase" class="w-4 h-4"></i></span>
-          <input type="text" id="business_name" name="business_name" placeholder="e.g. Acme Trading Ltd." class="input-field has-icon" maxlength="100">
-        </div>
-        <p class="field-hint">Add a business name if you're verifying as a merchant.</p>
-      </div>
-
-      <!-- Submit -->
       <button type="submit" id="submit-btn" class="btn-primary">
-        <i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>
-        <span id="btn-text">Complete Verification</span>
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
+        <span id="btn-text">Submit for Verification</span>
       </button>
-<div class="mt-4"><label for="rc_number" class="block text-sm font-medium mb-2">CAC registration number (required for business verification)</label><input id="rc_number" class="input-field" autocomplete="off" placeholder="RC number"></div>
+      <p class="field-hint">Submitting does not verify you instantly. Your status will show "Submitted - pending verification" until DealShield completes the check.</p>
     </form>
   </div>
 
   <p class="text-center text-xs text-forest-600 mt-6 flex items-center justify-center gap-1.5">
     <i data-lucide="lock" class="w-3 h-3"></i>
-    Protected by 256-bit encryption. DealShield never shares your KYC data.
+    Your ID number is encrypted at rest. See our Privacy Policy for how KYC data is used.
   </p>
 </main>
 
@@ -496,168 +475,74 @@ h1,h2,h3,h4,h5 { font-family: var(--font-display); }
 
 
 <script>
-  window.lucide?.createIcons();
+  // Initialise DOM references and listeners FIRST; icons last (guarded).
+  (function () {
+    var form = document.getElementById('kyc-form');
+    var submitBtn = document.getElementById('submit-btn');
+    var btnText = document.getElementById('btn-text');
+    var errorBox = document.getElementById('error-box');
+    var errorText = document.getElementById('error-text');
+    var successBox = document.getElementById('success-box');
+    var successText = document.getElementById('success-text');
+    var statusLine = document.getElementById('kyc-current-status');
 
-  const API_BASE = window.location.origin;
-  let token = localStorage.getItem('access_token');
+    function showError(msg) { successBox.classList.add('hidden'); errorText.textContent = msg; errorBox.classList.remove('hidden'); }
+    function showSuccess(msg) { errorBox.classList.add('hidden'); successText.textContent = msg; successBox.classList.remove('hidden'); }
+    function hideAlerts() { errorBox.classList.add('hidden'); successBox.classList.add('hidden'); }
+    function setLoading(on) { submitBtn.disabled = on; btnText.textContent = on ? 'Submitting...' : 'Submit for Verification'; }
 
-  // Redirect to login if no token
-  if (!token) location.replace('/login.html');
+    // Human-readable status. Never claim "verified" unless the backend explicitly says so
+    // via kyc_status === 'verified'.
+    function describe(data) {
+      var s = data && data.kyc_status;
+      if (s === 'verified') return 'Verified';
+      if (s === 'rejected') return 'Rejected - please contact support';
+      if (s === 'pending_verification' || (data && data.submitted_at)) return 'Submitted - pending verification';
+      return 'Not submitted';
+    }
+    function renderStatus(data) {
+      var text = 'Current status: ' + describe(data);
+      if (data && data.id_type && data.id_masked) text += ' (' + String(data.id_type).toUpperCase() + ' ' + data.id_masked + ')';
+      statusLine.textContent = text;
+    }
 
-  // Elements
-  const form = document.getElementById('kyc-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const btnText = document.getElementById('btn-text');
-  const btnIcon = document.getElementById('btn-icon');
-  const errorBox = document.getElementById('error-box');
-  const errorText = document.getElementById('error-text');
-  const successBox = document.getElementById('success-box');
-  const successText = document.getElementById('success-text');
-  const stepNIN = document.getElementById('step-nin');
-  const stepBVN = document.getElementById('step-bvn');
-  const stepBiz = document.getElementById('step-business');
-
-  // Numeric-only input for NIN and BVN
-  ['nin', 'bvn'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('input', () => {
-      el.value = el.value.replace(/\D/g, '').slice(0, 11);
+    document.getElementById('id_number').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
     });
-  });
 
-  function authHeaders() {
-    return {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    };
-  }
-
-  function showError(msg) {
-    successBox.classList.add('hidden');
-    errorText.textContent = msg;
-    errorBox.classList.remove('hidden');
-    window.lucide?.createIcons();
-  }
-
-  function showSuccess(msg) {
-    errorBox.classList.add('hidden');
-    successText.textContent = msg;
-    successBox.classList.remove('hidden');
-    window.lucide?.createIcons();
-  }
-
-  function hideAlerts() {
-    errorBox.classList.add('hidden');
-    successBox.classList.add('hidden');
-  }
-
-  function setLoading(loading) {
-    if (loading) {
-      submitBtn.disabled = true;
-      btnText.textContent = 'Verifying...';
-      document.getElementById('btn-icon').outerHTML = '<span class="spinner" id="btn-icon"></span>';
-    } else {
-      submitBtn.disabled = false;
-      btnText.textContent = 'Complete Verification';
-      const existing = document.getElementById('btn-icon');
-      if (existing) existing.outerHTML = '<i data-lucide="shield-check" class="w-4 h-4" id="btn-icon"></i>';
-      window.lucide?.createIcons();
-    }
-  }
-
-  function markStepDone(stepEl) {
-    stepEl.classList.remove('active');
-    stepEl.classList.add('done');
-    const dot = stepEl.querySelector('.step-dot');
-    dot.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  }
-
-  function activateStep(stepEl) {
-    stepEl.classList.add('active');
-  }
-
-  async function apiCall(endpoint, body = {}) {
-    const res = await fetch(API_BASE + endpoint, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify(body)
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      hideAlerts();
+      var idType = document.getElementById('id_type').value;
+      var idNumber = document.getElementById('id_number').value.trim();
+      var phone = document.getElementById('phone').value.replace(/[\s-]/g, '');
+      if (idType !== 'nin' && idType !== 'bvn') return showError('Choose NIN or BVN.');
+      if (!/^\d{11}$/.test(idNumber)) return showError('The ID number must be exactly 11 digits.');
+      if (!/^\+?\d{7,15}$/.test(phone)) return showError('Enter a valid phone number (digits, optional leading +).');
+      setLoading(true);
+      try {
+        var res = await DS.api('/auth/kyc/submit', { method: 'POST', body: { id_type: idType, id_number: idNumber, phone: phone } });
+        if (res.status === 401) return;
+        if (!res.ok) throw new Error(DS.errorMessage(res.data, 'Submission failed (' + res.status + ').'));
+        document.getElementById('id_number').value = '';
+        renderStatus(res.data);
+        showSuccess(describe(res.data) === 'Verified' ? 'Verified.' : 'Submitted - pending verification. We will update your status once the check is complete.');
+      } catch (err) {
+        showError((err && err.message) || 'Submission failed. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     });
-    let data;
-    try { data = await res.json(); } catch { data = {}; }
-    if (!res.ok) {
-      const msg = data.detail || data.message || data.error || ('Verification failed (' + res.status + ')');
-      throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
-    }
-    return data;
-  }
 
-  async function handleVerify(e) {
-    e.preventDefault();
-    hideAlerts();
-    setLoading(true);
-
-    const nin = document.getElementById('nin').value.trim();
-    const bvn = document.getElementById('bvn').value.trim();
-    const businessName = document.getElementById('business_name').value.trim();
-    if (businessName && !document.getElementById('rc_number').value.trim()) {
-      showError('Enter your CAC registration number for business verification.');
-      setLoading(false);
-      return;
-    }
-
-    // Client-side validation
-    if (!/^\d{11}$/.test(nin)) {
-      showError('NIN must be exactly 11 digits.');
-      setLoading(false);
-      return;
-    }
-    if (!/^\d{11}$/.test(bvn)) {
-      showError('BVN must be exactly 11 digits.');
-      setLoading(false);
-      return;
-    }
+    if (!DS.token()) { location.replace('/login.html'); return; }
+    DS.api('/auth/kyc/status').then(function (res) { if (res.ok) renderStatus(res.data); }).catch(function () { /* status is optional */ });
 
     try {
-      // Step 1: NIN verification
-      activateStep(stepNIN);
-      await apiCall('/auth/verify-nin', { nin });
-      markStepDone(stepNIN);
-      activateStep(stepBVN);
-      showSuccess('NIN verified successfully. Verifying BVN...');
-
-      // Step 2: BVN verification
-      await apiCall('/auth/verify-bvn', { bvn: bvn });
-      markStepDone(stepBVN);
-      activateStep(stepBiz);
-      showSuccess('BVN verified successfully.' + (businessName ? ' Verifying business...' : ' Finalizing...'));
-
-      // Step 3: Business verification (optional)
-      if (businessName) {
-        await apiCall('/auth/verify-business', { business_name: businessName, rc_number: document.getElementById('rc_number').value.trim() });
-      }
-      markStepDone(stepBiz);
-
-      showSuccess('Verification complete! Redirecting to your dashboard...');
-      setLoading(false);
-      submitBtn.disabled = true;
-      btnText.textContent = 'Verified';
-      setTimeout(() => { location.href = '/dashboard.html'; }, 1500);
-
-    } catch (err) {
-      setLoading(false);
-      showError(err.message || 'Verification failed. Please try again.');
-    }
-  }
-
-  // Navbar scroll effect (shared)
-  var _dsNavbar = document.getElementById('navbar');
-  if (_dsNavbar) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) _dsNavbar.classList.add('nav-scrolled');
-      else _dsNavbar.classList.remove('nav-scrolled');
-    });
-  }
-
+      var nav = document.getElementById('navbar');
+      if (nav) window.addEventListener('scroll', function () { nav.classList.toggle('nav-scrolled', window.scrollY > 20); });
+    } catch (e) { /* decorative */ }
+    DS.icons();
+  })();
 </script>
 
 </div><!-- /content-layer -->
