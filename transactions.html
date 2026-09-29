@@ -584,7 +584,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       const res = await fetch(path, {
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
       });
-      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      if (res.status === 401) { DS.clearSession(); location.href = '/login.html'; throw new Error('Unauthorized'); }
       return res;
     },
     async post(path, body) {
@@ -594,7 +594,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: body ? JSON.stringify(body) : undefined
       });
-      if (res.status === 401) { localStorage.clear(); location.href = '/login.html'; throw new Error('Unauthorized'); }
+      if (res.status === 401) { DS.clearSession(); location.href = '/login.html'; throw new Error('Unauthorized'); }
       return res;
     }
   };
@@ -1078,7 +1078,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Expected Amount</div>
-            <div class="text-sm font-bold text-forest-500">${formatNaira(va.expected_amount || va.amount)}</div>
+            <div class="text-sm font-bold text-forest-500">${formatNaira(va.expected_amount ?? va.amount)}</div>
           </div>
           <div>
             <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500 mb-1">Expires</div>
@@ -1223,7 +1223,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
               <i data-lucide="landmark" class="w-5 h-5 text-forest-500"></i>
             </div>
             <div class="text-sm font-semibold text-forest-600 mb-1">No Virtual Account</div>
-            <div class="text-xs text-forest-500">${['seller_accepted', 'payment_pending'].includes(t.status) ? 'Generate a virtual account to fund this deal.' : 'A virtual account has not been generated for this deal.'}</div>
+            <div class="text-xs text-forest-500">${t.account_unavailable ? 'Bank transfer accounts are temporarily unavailable. No account number has been issued.' : ['seller_accepted', 'payment_pending'].includes(t.status) ? 'Generate a virtual account to fund this deal.' : 'A virtual account has not been generated for this deal.'}</div>
           </div>
         </div>`}
       </section>
@@ -1284,6 +1284,12 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
     try {
       const res = await API.post(`/escrow/${Number(id)}/${action}`, body);
       const data = await res.json().catch(() => ({}));
+      if (action === 'generate-account' && res.status === 503) {
+        currentTransaction.account_unavailable = true;
+        renderDetail(currentTransaction);
+        showToast('Bank transfer accounts are unavailable right now. No account number has been issued - do not transfer money for this deal yet.', 'error');
+        return;
+      }
       if (!res.ok) throw new Error(apiError(data, `${label} failed`));
       showToast(`${label} successful`, 'success');
       await loadDetail();
@@ -1346,6 +1352,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           tx.virtual_account = account;
           if (currentTransaction === tx) renderDetail(tx);
         }
+      } else if (res.status === 503) {
+        tx.account_unavailable = true;
+        if (currentTransaction === tx) renderDetail(tx);
       } else if (res.status !== 404) {
         throw new Error('Account lookup failed');
       }
