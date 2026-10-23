@@ -1,2 +1,5 @@
 .vercel
 .env*
+
+# N15: scraped research data - never publish
+.firecrawl/

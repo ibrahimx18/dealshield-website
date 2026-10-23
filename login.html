@@ -829,6 +829,7 @@
 
     try {
       const res = await fetch('/auth/login', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email_or_phone: emailOrPhone, password: password })
@@ -862,7 +863,6 @@
 
       // Store token and redirect
       localStorage.setItem('access_token', data.access_token);
-      if (data.refresh_token) localStorage.setItem('refresh_token', data.refresh_token);
       window.location.href = '/dashboard.html';
     } catch (err) {
       showError('Network error. Please check your connection and try again.');
@@ -903,6 +903,7 @@
 
     try {
       const res = await fetch('/auth/login/2fa', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temp_token: pendingTempToken, totp_code: code })
@@ -919,7 +920,6 @@
 
       if (!data.access_token) { showError2FA('No session token returned. Please try again.'); setSubmitting2FA(false); return; }
       localStorage.setItem('access_token', data.access_token);
-      if (data.refresh_token) localStorage.setItem('refresh_token', data.refresh_token);
       window.location.href = '/dashboard.html';
     } catch (err) {
       showError2FA('Network error. Please try again.');
