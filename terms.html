@@ -493,7 +493,7 @@
 <li><strong>Buyer</strong> deposits payment into DealShield escrow</li>
 <li><strong>Seller</strong> delivers the goods</li>
 <li><strong>Buyer</strong> confirms receipt</li>
-<li>DealShield releases funds to the seller (minus 2.5% commission)</li>
+<li>DealShield releases funds to the seller (minus the DealShield commission and the seller's share of the payment gateway fee)</li>
 </ol>
 
 <p>DealShield acts as a neutral third-party escrow agent. We do not take ownership of goods being traded.</p>
@@ -501,8 +501,9 @@
 <h2>3. Fees</h2>
 
 <ul>
-<li><strong>Commission</strong>: 2.5% of the transaction amount, charged to the seller on completed deals</li>
-<li><strong>Payment Gateway Fees</strong>: Paystack/Flutterwave processing fees (1.5%) apply to deposits</li>
+<li><strong>Commission</strong>: charged to the seller on completed deals: 1.5% below &#8358;500,000; 1% from &#8358;500,000 to below &#8358;5,000,000; 0.5% from &#8358;5,000,000 to below &#8358;20,000,000; a flat &#8358;100,000 from &#8358;20,000,000. Cement deals: &#8358;10 per bag. Facilitated deals pay the facilitator's fee instead (DealShield keeps 10% of it).</li>
+<li><strong>Cancellation / dispute fee</strong>: &#8358;5,000 is deducted from any refund to the buyer when a funded deal is cancelled or a dispute ends in a full or partial refund (never more than the amount being refunded)</li>
+<li><strong>Payment Gateway Fees</strong>: 1.5% of the funded amount (capped at &#8358;50,000), split equally between buyer and seller</li>
 <li><strong>No Hidden Fees</strong>: We do not charge for account creation, wallet storage, or withdrawals</li>
 </ul>
 
@@ -511,7 +512,7 @@
 <h3>Buyers must:</h3>
 <ul>
 <li>Pay the agreed amount into escrow before the seller ships</li>
-<li>Confirm receipt within 48 hours of delivery, or open a dispute</li>
+<li>Confirm receipt within 24 hours of the seller marking the deal delivered, or open a dispute (DealShield sends a notice when this window starts and a reminder before it ends)</li>
 <li>Provide accurate delivery information</li>
 </ul>
 
@@ -533,7 +534,7 @@
 
 <ul>
 <li>Funds in escrow are held safely and cannot be accessed by DealShield for any purpose other than releasing to the seller or refunding the buyer</li>
-<li>If the buyer does not confirm receipt within 7 days and does not open a dispute, funds are automatically released to the seller</li>
+<li>If the buyer does not confirm receipt within 24 hours of the seller marking the deal delivered and does not open a dispute, funds are automatically released to the seller</li>
 <li>If a dispute is opened, DealShield reviews evidence from both parties and resolves within 48 hours</li>
 </ul>
 
@@ -543,7 +544,8 @@
 <li>Either party may open a dispute before funds are released</li>
 <li>DealShield's decision is final and binding</li>
 <li>Evidence includes: chat logs, delivery confirmation, video proof, and tracking data</li>
-<li>If the seller is found at fault, the buyer receives a full refund</li>
+<li>If the seller is found at fault, the buyer is refunded the amount paid, minus the &#8358;5,000 cancellation / dispute fee</li>
+<li>DealShield may also decide a split: part refunded to the buyer (minus the &#8358;5,000 fee) and part released to the seller (minus the commission and gateway share on that part)</li>
 <li>If the buyer is found at fault (e.g., received goods but falsely claimed non-delivery), the seller receives the funds</li>
 </ul>
 
