@@ -34,6 +34,10 @@
 
   function toLogin() { location.href = '/login.html'; }
 
+  // N16: the refresh token now lives only in the HttpOnly ds_refresh cookie (path /auth).
+  // Remove any refresh token an older build left in localStorage.
+  try { localStorage.removeItem('refresh_token'); } catch (e) { /* storage unavailable */ }
+
   var DS = {
     API_BASE: resolveApiBase(),
     loggingOut: false,
@@ -59,6 +63,10 @@
       var init = { method: options.method || (options.body !== undefined ? 'POST' : 'GET'), headers: headers };
       if (options.body !== undefined) init.body = JSON.stringify(options.body);
       var response = await fetch(DS.url(path), init);
+      if (response.status === 401 && options.auth !== false && !options._retried && await DS.refresh()) {
+        options._retried = true;
+        return DS.api(path, options);
+      }
       var data = {};
       try { data = await response.json(); } catch (e) { data = {}; }
       if (response.status === 401 && options.auth !== false) {
@@ -66,6 +74,22 @@
         toLogin();
       }
       return { ok: response.ok, status: response.status, data: data || {} };
+    },
+
+    // N16: rotate the session using the HttpOnly refresh cookie. Returns true when a new
+    // access token was stored. The refresh token is never read or stored by page script.
+    refresh: async function () {
+      try {
+        var response = await fetch(DS.url('/auth/refresh'), {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }, body: '{}'
+        });
+        if (!response.ok) return false;
+        var data = await response.json().catch(function () { return {}; });
+        if (!data || !data.access_token) return false;
+        localStorage.setItem('access_token', data.access_token);
+        return true;
+      } catch (e) { return false; }
     },
 
     // Money as a string with exactly two decimals. Returns null if invalid (must be > 0, max 2 dp).
@@ -83,22 +107,19 @@
       if (DS.loggingOut) return;
       DS.loggingOut = true;
       var access = DS.token();
-      var refresh = null;
-      try { refresh = localStorage.getItem('refresh_token'); } catch (e) { refresh = null; }
-      var revoked = !access && !refresh;
+      var revoked = false;
       var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
       var timer = controller ? setTimeout(function () { controller.abort(); }, 8000) : null;
       try {
-        if (access || refresh) {
-          var headers = { 'Content-Type': 'application/json' };
-          if (access) headers.Authorization = 'Bearer ' + access;
-          var response = await fetch(DS.url('/auth/logout'), {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({ refresh_token: refresh || '' }),
-            signal: controller ? controller.signal : undefined
-          });
-          revoked = response.ok;
-        }
+        // N16: always call logout so the server revokes the session named by the
+        // HttpOnly refresh cookie and clears it, even when no access token is left.
+        var headers = { 'Content-Type': 'application/json' };
+        if (access) headers.Authorization = 'Bearer ' + access;
+        var response = await fetch(DS.url('/auth/logout'), {
+          method: 'POST', headers: headers, credentials: 'include', body: '{}',
+          signal: controller ? controller.signal : undefined
+        });
+        revoked = response.ok;
       } catch (e) { revoked = false; } finally {
         if (timer) clearTimeout(timer);
         clearSession();

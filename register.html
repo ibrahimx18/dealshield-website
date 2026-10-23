@@ -552,6 +552,7 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
     window.DS && DS.icons();
 
     fetch('/auth/register', {
+      credentials: 'include',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -565,7 +566,6 @@ h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spaci
       }
       if (json.access_token) {
         localStorage.setItem('access_token', json.access_token);
-        if (json.refresh_token) localStorage.setItem('refresh_token', json.refresh_token);
         const successEl = document.getElementById('success');
         successEl.textContent = 'Account created! Redirecting to verification...';
         successEl.classList.remove('hidden');
