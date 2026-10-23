@@ -1094,9 +1094,9 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       return;
     }
     const u = res.data;
-    const name = escapeHtml(u.name || u.full_name || '—');
-    const email = escapeHtml(u.email || '—');
-    const phone = escapeHtml(u.phone || u.phone_number || '—');
+    const name = String(u.name || u.full_name || '—');
+    const email = String(u.email || '—');
+    const phone = String(u.phone || u.phone_number || '—');
     const tier = escapeHtml(u.badge_tier || u.tier || 'Standard');
     document.getElementById('user-name').textContent = u.name || 'User';
 
@@ -1104,10 +1104,10 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
       { label: 'Full Name', value: name, icon: 'user' },
       { label: 'Email', value: email, icon: 'mail' },
       { label: 'Phone', value: phone, icon: 'phone' },
-      { label: 'Badge Tier', value: `<span class="status-pill status-on"><i data-lucide="award" class="w-3 h-3"></i> ${tier}</span>`, icon: 'award' },
-      { label: 'NIN Verification', value: vPill(u.nin_verified), icon: 'badge-check' },
-      { label: 'BVN Verification', value: vPill(u.bvn_verified), icon: 'badge-check' },
-      { label: 'Business Verification', value: vPill(u.business_verified), icon: 'building-2' },
+      { label: 'Badge Tier', html: `<span class="status-pill status-on"><i data-lucide="award" class="w-3 h-3"></i> ${tier}</span>`, icon: 'award' },
+      { label: 'NIN Verification', html: vPill(u.nin_verified), icon: 'badge-check' },
+      { label: 'BVN Verification', html: vPill(u.bvn_verified), icon: 'badge-check' },
+      { label: 'Business Verification', html: vPill(u.business_verified), icon: 'building-2' },
     ];
 
     container.innerHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">' + rows.map(r => `
@@ -1116,8 +1116,8 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <i data-lucide="${r.icon}" class="w-[18px] h-[18px] text-forest-600"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">${r.label}</div>
-          <div class="text-[14px] text-forest-700 mt-0.5">${r.value}</div>
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-forest-500">${escapeHtml(r.label)}</div>
+          <div class="text-[14px] text-forest-700 mt-0.5">${r.html !== undefined ? r.html : escapeHtml(r.value)}</div>
         </div>
       </div>`).join('') + '</div>';
     window.DS && DS.icons();

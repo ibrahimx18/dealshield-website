@@ -946,7 +946,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
           <div class="timeline-dot">
             ${cls === 'completed' ? `<i data-lucide="check" class="w-3 h-3"></i>` : (i + 1)}
           </div>
-          <div class="timeline-label">${meta.label}</div>
+          <div class="timeline-label">${escapeHtml(meta.label)}</div>
         </div>`;
     }).join('');
   }
@@ -1204,7 +1204,7 @@ h1,h2,h3,h4,h5 { letter-spacing: -0.03em; font-family: 'Space Grotesk', 'Inter',
         ${['cancelled', 'expired'].includes(t.status) ? `
         <div class="mt-4 p-3 rounded-[var(--radius-md)] bg-forest-50/50 border border-[var(--color-border-strong)] flex items-center gap-2">
           <i data-lucide="info" class="w-4 h-4 text-forest-500 flex-shrink-0"></i>
-          <span class="text-xs text-forest-500">This deal was ${t.status} before completion.</span>
+          <span class="text-xs text-forest-500">This deal was ${escapeHtml(t.status)} before completion.</span>
         </div>` : ''}
       </section>
 
