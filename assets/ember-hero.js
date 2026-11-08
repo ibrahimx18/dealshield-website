@@ -16,8 +16,8 @@
   /* Fallback: static gradient in the same palette */
   if (!gl) {
     canvas.style.background =
-      "radial-gradient(120% 90% at 70% 20%, rgba(201,162,39,0.28) 0%, rgba(138,109,31,0.12) 35%, rgba(6,26,14,0) 65%)," +
-      "radial-gradient(90% 70% at 20% 85%, rgba(201,162,39,0.10) 0%, rgba(6,26,14,0) 60%), #061a0e";
+      "radial-gradient(120% 90% at 70% 20%, rgba(201,162,39,0.28) 0%, rgba(138,109,31,0.12) 35%, rgba(10,14,20,0) 65%)," +
+      "radial-gradient(90% 70% at 20% 85%, rgba(201,162,39,0.10) 0%, rgba(10,14,20,0) 60%), #0a0e14";
     return;
   }
 
@@ -35,8 +35,8 @@
     "             mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), u.x), u.y);",
     "}",
     // ── palette ──
-    "const vec3 OBSIDIAN = vec3(0.016, 0.055, 0.031);",
-    "const vec3 OBSIDIAN2 = vec3(0.027, 0.086, 0.047);",
+    "const vec3 OBSIDIAN = vec3(0.027, 0.039, 0.055);",
+    "const vec3 OBSIDIAN2 = vec3(0.043, 0.062, 0.086);",
     "const vec3 EMBER     = vec3(0.541, 0.427, 0.121);",
     "const vec3 GOLD       = vec3(0.910, 0.760, 0.322);",
     "void main(){",
@@ -53,7 +53,6 @@
     "  float ridge = pow(max(n2, 0.0), 6.0);",
     "  vec3 col = mix(OBSIDIAN, OBSIDIAN2, n1 * 0.8 + 0.1);",
     "  col = mix(col, EMBER, bloom * 0.9);",
-    "  col = mix(col, vec3(0.10, 0.32, 0.20) * 0.55, n1 * 0.28);",
     "  col = mix(col, GOLD, ridge * 0.55);",
     // gentle diagonal sheen keeps the top-left readable behind text
     "  float sheen = smoothstep(1.1, -0.6, uv.x - uv.y);",
@@ -82,7 +81,7 @@
     gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
-  } catch (e) { canvas.style.background = "radial-gradient(120% 90% at 70% 20%, rgba(201,162,39,0.28), rgba(6,26,14,0) 65%), #061a0e"; return; }
+  } catch (e) { canvas.style.background = "radial-gradient(120% 90% at 70% 20%, rgba(201,162,39,0.28), rgba(10,14,20,0) 65%), #0a0e14"; return; }
   gl.useProgram(prog);
 
   var buf = gl.createBuffer();
