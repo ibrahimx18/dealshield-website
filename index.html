@@ -631,42 +631,6 @@
     .fade-in-delay-2 { animation: fadeIn 0.8s ease 0.2s forwards; opacity: 0; }
     .fade-in-delay-3 { animation: fadeIn 0.8s ease 0.3s forwards; opacity: 0; }
   }
-
-  /* ── HERO DARK: Ember Shield treatment (obsidian + gold) ── */
-  .hero-dark .eyebrow {
-    color: #E8C84A !important;
-    border-color: rgba(201,162,39,0.35) !important;
-  }
-  .hero-dark h1 { color: #f5f1e4 !important; }
-  .hero-dark h1 .gradient-green {
-    background: linear-gradient(100deg, #E8C84A 0%, #C9A227 45%, #8a6d1f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero-dark p.text-forest-600 { color: rgba(240,236,222,0.86) !important; }
-  .hero-dark p.text-forest-500 { color: rgba(232,200,74,0.9) !important; border-color: rgba(201,162,39,0.5) !important; }
-  .hero-dark span.text-forest-600 { color: rgba(240,236,222,0.78) !important; }
-  .hero-dark .hero-orb {
-    background: rgba(14,20,28,0.92) !important;
-    border-color: rgba(201,162,39,0.55) !important;
-    box-shadow: 0 0 24px rgba(201,162,39,0.25), inset 0 0 12px rgba(201,162,39,0.12);
-  }
-  .hero-dark .hero-orb i { color: #E8C84A !important; }
-  .hero-dark .hero-shield-glow { box-shadow: 0 0 120px rgba(201,162,39,0.22) !important; }
-  .hero-dark .btn-secondary {
-    background: rgba(201,162,39,0.10);
-    border-color: rgba(201,162,39,0.55);
-    color: #E8C84A;
-  }
-  .hero-dark .btn-secondary:hover { background: rgba(201,162,39,0.2); }
-  .hero-dark { position: relative; }
-  .hero-dark::after {
-    content: "";
-    position: absolute; left: 0; right: 0; bottom: 0; height: 140px;
-    background: linear-gradient(to bottom, rgba(10,14,20,0) 0%, var(--color-bg, #f8faf9) 92%);
-    pointer-events: none; z-index: 1;
-  }
 </style>
 <link rel="stylesheet" href="/assets/audit-accessibility.css">
 </head>
@@ -753,8 +717,7 @@
 </header>
 
 <!-- ═══════════════ HERO ═══════════════ -->
-<section id="hero" class="hero-dark relative pt-28 pb-12 lg:pt-36 lg:pb-20 overflow-hidden bg-[#0a0e14]">
-  <canvas id="ember-hero-bg" aria-hidden="true" class="absolute inset-0 w-full h-full" style="z-index:0"></canvas>
+<section class="relative pt-28 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
   <div class="max-w-7xl mx-auto container-px relative z-10">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
@@ -1568,6 +1531,5 @@
 </script>
 
 </div><!-- /content-layer -->
-<script src="/assets/ember-hero.js" defer></script>
 </body>
 </html>
